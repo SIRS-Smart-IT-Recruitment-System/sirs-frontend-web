@@ -1,0 +1,56 @@
+.socialLogin {
+    margin-top: 25px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #999999;
+    font-size: 11px;
+    margin-bottom: 18px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #dddddd;
+}
+
+.socialButtons {
+    display: flex;
+    gap: 12px;
+}
+
+.socialButtons button {
+    flex: 1;
+    height: 40px;
+    border: 1px solid #cccccc;
+    border-radius: 20px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.socialButtons button:hover {
+    background: #f5f5f5;
+    border-color: #aaaaaa;
+}
+
+.socialButtons button:active {
+    transform: scale(0.97);
+}
+
+.socialButtons img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}

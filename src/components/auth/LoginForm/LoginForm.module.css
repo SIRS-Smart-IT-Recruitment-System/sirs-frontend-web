@@ -1,0 +1,176 @@
+.loginForm {
+    width: 100%;
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.heading h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 1.5px;
+}
+
+.heading p {
+    font-size: 12px;
+    color: #777777;
+    line-height: 1.6;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.formGroup label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333333;
+}
+
+.formGroup input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #cccccc;
+    border-radius: 20px;
+    padding: 0 15px;
+    outline: none;
+    font-size: 11px;
+    transition: border-color 0.2s ease;
+    background-color: #fafafa;
+}
+
+.formGroup input:focus {
+    border-color: #000000;
+    background-color: #ffffff;
+}
+
+.passwordInput {
+    position: relative;
+}
+
+.passwordInput input {
+    padding-right: 55px;
+}
+
+.passwordInput button {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    font-size: 10px;
+    color: #888888;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    font-weight: 600;
+}
+
+.passwordInput button:hover {
+    color: #000000;
+}
+
+.forgotPassword {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.forgotPassword button {
+    border: none;
+    background: none;
+    color: #1685e8;
+    font-size: 11px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+}
+
+.forgotPassword button:hover {
+    opacity: 0.75;
+}
+
+.rememberPassword {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #555555;
+    cursor: pointer;
+    user-select: none;
+}
+
+.rememberPassword input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: #000000;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.loginButton {
+    width: 100%;
+    height: 42px;
+    border: none;
+    border-radius: 20px;
+    background: #000000;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.loginButton:hover {
+    background: #333333;
+}
+
+.loginButton:active {
+    transform: scale(0.98);
+}
+
+.registerLink {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 11px;
+    color: #777777;
+}
+
+.registerLink button {
+    border: none;
+    background: none;
+    color: #1685e8;
+    margin-left: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.registerLink button:hover {
+    opacity: 0.75;
+}
+
+.rememberPassword {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: #555;
+    cursor: pointer;
+}
+
+.rememberPassword input {
+    width: 14px;
+    height: 14px;
+    accent-color: #000;
+    cursor: pointer;
+}

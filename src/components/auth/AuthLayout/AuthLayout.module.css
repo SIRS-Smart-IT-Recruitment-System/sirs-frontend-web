@@ -1,0 +1,146 @@
+.authContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: stretch;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+/* LEFT PANEL */
+
+.leftPanel {
+    width: 60%;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* LOGO */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.logoIcon {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* INTRODUCTION */
+
+.intro {
+    max-width: 380px;
+}
+
+.intro h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+.intro p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #bdbdbd;
+}
+
+/* FOOTER */
+
+.leftFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.leftFooter div {
+    width: 45%;
+    height: 7px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    opacity: 0.7;
+}
+
+.leftFooter div:nth-child(2) {
+    width: 75%;
+    opacity: 0.4;
+}
+
+.leftFooter div:nth-child(3) {
+    opacity: 0.2;
+}
+
+/* RIGHT PANEL */
+
+.rightPanel {
+    width: 40%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+.formContainer {
+    width: 100%;
+    max-width: 350px;
+}
+
+@media screen and (max-width: 1024px) {
+    .leftPanel {
+        width: 45%;
+        padding: 32px;
+    }
+
+    .rightPanel {
+        width: 55%;
+        padding: 32px;
+    }
+
+    .intro h1 {
+        font-size: 28px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .leftPanel {
+        display: none;
+    }
+
+    .rightPanel {
+        width: 100%;
+        padding: 30px 24px;
+    }
+
+    .formContainer {
+        max-width: 400px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .rightPanel {
+        padding: 24px 16px;
+        align-items: flex-start;
+        padding-top: 48px;
+    }
+
+    .formContainer {
+        max-width: 100%;
+    }
+}
