@@ -1,0 +1,102 @@
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 20px;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    font-size: var(--font-size-button);
+    font-weight: var(--font-weight-semibold);
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* =========================
+   PRIMARY
+========================= */
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--color-accent);
+}
+
+/* =========================
+   SECONDARY
+========================= */
+
+.btn-secondary {
+    background-color: var(--color-light-blue);
+    color: var(--color-text-primary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--color-accent);
+    color: var(--color-surface);
+}
+
+/* =========================
+   OUTLINE
+========================= */
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-outline:hover:not(:disabled) {
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+}
+
+/* =========================
+   DANGER
+========================= */
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: var(--color-surface);
+}
+
+.btn-danger:hover:not(:disabled) {
+    opacity: 0.85;
+}
+
+/* =========================
+   DISABLED
+========================= */
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* =========================
+   LOADING SPINNER
+========================= */
+
+.btn-spinner {
+    width: 15px;
+    height: 15px;
+
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+
+    animation: btn-spin 0.7s linear infinite;
+}
+
+@keyframes btn-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
