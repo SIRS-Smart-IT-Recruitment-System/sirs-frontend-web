@@ -1,77 +1,65 @@
 
+import Modal from "../../ui/modal/Modal";
+import Button from "../../ui/button/Button";
+import Input from "../../ui/input/Input";
 import styles from "./ForgotPasswordModal.module.css";
 
 interface ForgotPasswordModalProps {
+    isOpen: boolean;
     onClose: () => void;
     onContinue: () => void;
 }
 
 const ForgotPasswordModal = ({
+                                 isOpen,
                                  onClose,
                                  onContinue
                              }: ForgotPasswordModalProps) => {
 
     return (
-        <div className={styles.overlay}>
-            <div className={styles.modal}>
-
-                <button
-                    type="button"
-                    className={styles.closeButton}
-                    onClick={onClose}>
-                    ×
-                </button>
-
-                <div className={styles.heading}>
-                    <h2>QUÊN MẬT KHẨU?</h2>
-                    <p>
-                        Nhập email để nhận mã xác nhận đặt lại mật khẩu.
-                    </p>
-                </div>
-
-                <form>
-                    <div className={styles.formGroup}>
-                        <label>Email</label>
-
-                        <div className={styles.emailInput}>
-                            <input
-                                type="email"
-                                placeholder="Nhập email của bạn"/>
-
-                            <button
-                                type="button"
-                                className={styles.sendCodeButton}>
-                                Gửi mã
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className={styles.formGroup}>
-                        <label>Mã xác nhận</label>
-
-                        <input
-                            type="text"
-                            placeholder="Nhập mã xác nhận"
-                            maxLength={6}/>
-                    </div>
-
-                    <button
-                        type="button"
-                        className={styles.submitButton}
-                        onClick={onContinue}>
-                        Xác nhận mã
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            title="QUÊN MẬT KHẨU?"
+            footer={
+                <>
+                    <button type="button" className={styles.backButton} onClick={onClose}>
+                        Quay lại đăng nhập
                     </button>
-                </form>
 
-                <button
-                    type="button"
-                    className={styles.backButton}
-                    onClick={onClose}>
-                    Quay lại đăng nhập
-                </button>
+                    <Button type="button" variant="primary" onClick={onContinue}>
+                        Xác nhận mã
+                    </Button>
+                </>
+            }
+        >
+            <p className={styles.subtitle}>
+                Nhập email để nhận mã xác nhận đặt lại mật khẩu.
+            </p>
 
+            <div className={styles.formGroup}>
+                <div className={styles.emailInput}>
+                    <Input
+                        type="text"
+                        label="Email"
+                        placeholder="Nhập email của bạn"
+                    />
+
+                    <Button type="button" variant="secondary" className={styles.sendCodeButton}>
+                        Gửi mã
+                    </Button>
+                </div>
             </div>
-        </div>
+
+            <div className={styles.formGroup}>
+                <Input
+                    type="text"
+                    label="Mã xác nhận"
+                    placeholder="Nhập mã xác nhận"
+                    maxLength={6}
+                />
+            </div>
+        </Modal>
     );
 };
 

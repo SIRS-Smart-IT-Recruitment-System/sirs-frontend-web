@@ -1,0 +1,33 @@
+/* =============================================
+   DESIGN TOKENS (CSS Variables)
+   ============================================= */
+
+:root {
+
+    /* Colors */
+    --color-primary:        #000000;
+    --color-accent:         #333333;
+    --color-surface:        #ffffff;
+    --color-danger:         #ef4444;
+    --color-light-blue:     #e8f0fe;
+    --color-border:         #cccccc;
+
+    --color-text-primary:   #1a1a1a;
+    --color-text-secondary: #777777;
+
+    /* Border Radius */
+    --radius-sm:  6px;
+    --radius-md:  20px;
+    --radius-lg:  16px;
+
+    /* Font sizes */
+    --font-size-label:          12px;
+    --font-size-button:         12px;
+    --font-size-body-default:   13px;
+    --font-size-heading-3:      18px;
+
+    /* Font weights */
+    --font-weight-semibold: 600;
+    --font-weight-bold:     700;
+}
+
