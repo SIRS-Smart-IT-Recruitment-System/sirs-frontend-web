@@ -1,15 +1,24 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 import { useId } from "react";
 import type { SelectHTMLAttributes } from "react";
 import "./Select.css";
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 interface SelectOption {
     label: string;
     value: string;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 interface SelectProps
     extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "children"> {
     label?: string;
@@ -18,6 +27,7 @@ interface SelectProps
     placeholder?: string;
 }
 
+<<<<<<< HEAD
 function Select({
                     label,
                     error,
@@ -28,6 +38,10 @@ function Select({
                     className = "",
                     ...props
                 }: SelectProps) {
+=======
+function Select({label, error, options, placeholder = "Vui lòng chọn", id, disabled = false, className = "", ...props}: SelectProps) {
+
+>>>>>>> origin/master
     const generatedId = useId();
     const selectId = id ?? generatedId;
 

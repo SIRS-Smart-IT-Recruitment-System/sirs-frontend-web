@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 import { useEffect, useId } from "react";
 import type { ReactNode } from "react";
 import "./Modal.css";
@@ -11,6 +14,7 @@ interface ModalProps {
     footer?: ReactNode;
 }
 
+<<<<<<< HEAD
 function Modal({
                    isOpen,
                    onClose,
@@ -18,6 +22,9 @@ function Modal({
                    children,
                    footer,
                }: ModalProps) {
+=======
+function Modal({isOpen, onClose, title, children, footer}: ModalProps) {
+>>>>>>> origin/master
     const titleId = useId();
 
     useEffect(() => {

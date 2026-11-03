@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 import type { ButtonHTMLAttributes } from "react";
 import "./Button.css";
 
@@ -13,6 +16,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     loading?: boolean;
 }
 
+<<<<<<< HEAD
 function Button({
                     children,
                     variant = "primary",
@@ -21,6 +25,9 @@ function Button({
                     className = "",
                     ...props
                 }: ButtonProps) {
+=======
+function Button({children, variant = "primary", loading = false, disabled = false, className = "", ...props}: ButtonProps) {
+>>>>>>> origin/master
 
     return (
         <button
@@ -30,7 +37,10 @@ function Button({
             {...props}
         >
             {loading && <span className="btn-spinner" />}
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
             {children}
         </button>
     );

@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
+<<<<<<< HEAD
 
     padding: 10px 20px;
 
@@ -12,6 +13,13 @@
     font-size: var(--font-size-button);
     font-weight: var(--font-weight-semibold);
 
+=======
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-button);
+    font-weight: var(--font-weight-semibold);
+>>>>>>> origin/master
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -87,11 +95,17 @@
 .btn-spinner {
     width: 15px;
     height: 15px;
+<<<<<<< HEAD
 
     border: 2px solid currentColor;
     border-right-color: transparent;
     border-radius: 50%;
 
+=======
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+>>>>>>> origin/master
     animation: btn-spin 0.7s linear infinite;
 }
 
