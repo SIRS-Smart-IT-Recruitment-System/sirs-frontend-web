@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 import { useState, useId } from "react";
 import type { InputHTMLAttributes } from "react";
 import "./Input.css";
@@ -13,19 +9,7 @@ interface InputProps
     type?: "text" | "password";
 }
 
-<<<<<<< HEAD
-function Input({
-                   label,
-                   error,
-                   type = "text",
-                   id,
-                   disabled = false,
-                   className = "",
-                   ...props
-               }: InputProps) {
-=======
 function Input({label, error, type = "text", id, disabled = false, className = "", ...props}: InputProps) {
->>>>>>> origin/master
 
     const generatedId = useId();
     const inputId = id ?? generatedId;
