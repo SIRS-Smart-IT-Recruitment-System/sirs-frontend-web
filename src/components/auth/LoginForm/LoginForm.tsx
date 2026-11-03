@@ -1,6 +1,7 @@
-import { useState } from "react";
 import styles from "./LoginForm.module.css";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import Button from "../../ui/button/Button";
+import Input from "../../ui/input/Input";
 
 interface LoginFormProps {
     onRegister: () => void;
@@ -11,8 +12,6 @@ const LoginForm = ({
                        onRegister,
                        onForgotPassword
                    }: LoginFormProps) => {
-
-    const [showPassword, setShowPassword] = useState(false);
 
     return (
         <div className={styles.loginForm}>
@@ -28,27 +27,19 @@ const LoginForm = ({
             <form>
 
                 <div className={styles.formGroup}>
-                    <label>Email</label>
-
-                    <input
-                        type="email"
-                        placeholder="Nhập email của bạn"/>
+                    <Input
+                        type="text"
+                        label="Email"
+                        placeholder="Nhập email của bạn"
+                    />
                 </div>
 
                 <div className={styles.formGroup}>
-                    <label>Mật khẩu</label>
-
-                    <div className={styles.passwordInput}>
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            placeholder="Nhập mật khẩu"/>
-
-                        <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}>
-                            {showPassword ? "Ẩn" : "Hiện"}
-                        </button>
-                    </div>
+                    <Input
+                        type="password"
+                        label="Mật khẩu"
+                        placeholder="Nhập mật khẩu"
+                    />
                 </div>
 
                 <div className={styles.forgotPassword}>
@@ -59,16 +50,15 @@ const LoginForm = ({
 
                     <button
                         type="button"
+                        className={styles.forgotPasswordBtn}
                         onClick={onForgotPassword}>
                         Quên mật khẩu?
                     </button>
                 </div>
 
-                <button
-                    type="button"
-                    className={styles.loginButton}>
+                <Button type="button" variant="primary" className={styles.loginButton}>
                     Đăng nhập
-                </button>
+                </Button>
 
             </form>
 
@@ -77,6 +67,7 @@ const LoginForm = ({
 
                 <button
                     type="button"
+                    className={styles.registerLinkBtn}
                     onClick={onRegister}>
                     Đăng ký ngay
                 </button>

@@ -1,70 +1,49 @@
-import { useState } from "react";
+import Modal from "../../ui/modal/Modal";
+import Button from "../../ui/button/Button";
+import Input from "../../ui/input/Input";
 import styles from "./ResetPasswordModal.module.css";
 
 interface ResetPasswordModalProps {
+    isOpen: boolean;
     onClose: () => void;
     onBack: () => void;
 }
 
 const ResetPasswordModal = ({
+                                isOpen,
                                 onClose,
                                 onBack
                             }: ResetPasswordModalProps) => {
 
-    const [showPassword, setShowPassword] = useState(false);
-
     return (
-        <div className={styles.overlay}>
-            <div className={styles.modal}>
-
-                <button
-                    type="button"
-                    className={styles.closeButton}
-                    onClick={onClose}
-                >
-                    ×
-                </button>
-
-                <div className={styles.heading}>
-                    <h2>ĐẶT LẠI MẬT KHẨU</h2>
-                    <p>
-                        Vui lòng nhập mật khẩu mới cho tài khoản.
-                    </p>
-                </div>
-
-                <form>
-                    <div className={styles.formGroup}>
-                        <label>Mật khẩu mới</label>
-
-                        <div className={styles.passwordInput}>
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Nhập mật khẩu mới"/>
-
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}>
-                                {showPassword ? "Ẩn" : "Hiện"}
-                            </button>
-                        </div>
-                    </div>
-
-                    <button
-                        type="button"
-                        className={styles.submitButton}>
-                        Xác nhận
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            title="ĐẶT LẠI MẬT KHẨU"
+            footer={
+                <>
+                    <button type="button" className={styles.backButton} onClick={onBack}>
+                        Quay lại
                     </button>
-                </form>
 
-                <button
-                    type="button"
-                    className={styles.backButton}
-                    onClick={onBack}>
-                    Quay lại
-                </button>
+                    <Button type="button" variant="primary">
+                        Xác nhận
+                    </Button>
+                </>
+            }
+        >
+            <p className={styles.subtitle}>
+                Vui lòng nhập mật khẩu mới cho tài khoản.
+            </p>
 
+            <div className={styles.formGroup}>
+                <Input
+                    type="password"
+                    label="Mật khẩu mới"
+                    placeholder="Nhập mật khẩu mới"
+                />
             </div>
-        </div>
+        </Modal>
     );
 };
 

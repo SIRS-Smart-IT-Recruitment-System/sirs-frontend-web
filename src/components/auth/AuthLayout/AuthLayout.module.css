@@ -3,16 +3,16 @@
     height: 100vh;
     display: flex;
     align-items: stretch;
-    background-color: #ffffff;
+    background-color: var(--color-surface);
     overflow: hidden;
 }
 
 /* LEFT PANEL */
 
 .leftPanel {
-    width: 60%;
-    background-color: #000000;
-    color: #ffffff;
+    width: 50%;
+    background-color: var(--color-primary);
+    color: var(--color-surface);
     padding: 40px;
     display: flex;
     flex-direction: column;
@@ -33,7 +33,7 @@
 .logoIcon {
     width: 25px;
     height: 25px;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--color-surface);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -71,7 +71,7 @@
 .leftFooter div {
     width: 45%;
     height: 7px;
-    background-color: #ffffff;
+    background-color: var(--color-surface);
     border-radius: 4px;
     opacity: 0.7;
 }
@@ -88,8 +88,8 @@
 /* RIGHT PANEL */
 
 .rightPanel {
-    width: 40%;
-    background-color: #ffffff;
+    width: 50%;
+    background-color: var(--color-surface);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,6 +101,7 @@
     width: 100%;
     max-width: 350px;
 }
+
 
 @media screen and (max-width: 1024px) {
     .leftPanel {

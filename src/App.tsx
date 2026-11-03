@@ -1,3 +1,4 @@
+import "./App.css";
 import AuthPage from "./pages/AuthPage/AuthPage";
 
 function App() {

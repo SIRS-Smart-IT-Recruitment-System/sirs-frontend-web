@@ -3,7 +3,6 @@ import { useState } from "react";
 import AuthLayout from "../../components/auth/AuthLayout/AuthLayout";
 import LoginForm from "../../components/auth/LoginForm/LoginForm";
 import RegisterForm from "../../components/auth/RegisterForm/RegisterForm";
-
 import ForgotPasswordModal from "../../components/auth/ForgotPasswordModal/ForgotPasswordModal";
 import ResetPasswordModal from "../../components/auth/ResetPasswordModal/ResetPasswordModal";
 
@@ -15,6 +14,7 @@ function AuthPage() {
 
     return (
         <AuthLayout>
+
             {currentPage === "login" && (
                 <LoginForm
                     onRegister={() => setCurrentPage("register")}
@@ -28,19 +28,18 @@ function AuthPage() {
                 />
             )}
 
-            {activeModal === "forgot" && (
-                <ForgotPasswordModal
-                    onClose={() => setActiveModal(null)}
-                    onContinue={() => setActiveModal("reset")}
-                />
-            )}
+            <ForgotPasswordModal
+                isOpen={activeModal === "forgot"}
+                onClose={() => setActiveModal(null)}
+                onContinue={() => setActiveModal("reset")}
+            />
 
-            {activeModal === "reset" && (
-                <ResetPasswordModal
-                    onClose={() => setActiveModal(null)}
-                    onBack={() => setActiveModal("forgot")}
-                />
-            )}
+            <ResetPasswordModal
+                isOpen={activeModal === "reset"}
+                onClose={() => setActiveModal(null)}
+                onBack={() => setActiveModal("forgot")}
+            />
+
         </AuthLayout>
     );
 }

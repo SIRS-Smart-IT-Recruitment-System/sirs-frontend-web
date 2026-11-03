@@ -1,6 +1,7 @@
-
 import styles from "./RegisterForm.module.css";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import Button from "../../ui/button/Button";
+import Input from "../../ui/input/Input";
 
 interface RegisterFormProps {
     onLogin: () => void;
@@ -18,45 +19,47 @@ const RegisterForm = ({ onLogin }: RegisterFormProps) => {
             <form>
 
                 <div className={styles.formGroup}>
-                    <label>Họ và tên</label>
-                    <input
+                    <Input
                         type="text"
-                        placeholder="Nhập họ và tên"/>
+                        label="Họ và tên"
+                        placeholder="Nhập họ và tên"
+                    />
                 </div>
 
                 <div className={styles.formGroup}>
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        placeholder="Nhập email"/>
+                    <Input
+                        type="text"
+                        label="Email"
+                        placeholder="Nhập email"
+                    />
                 </div>
 
                 <div className={styles.formGroup}>
-                    <label>Mật khẩu</label>
-                    <input
+                    <Input
                         type="password"
-                        placeholder="Nhập mật khẩu"/>
+                        label="Mật khẩu"
+                        placeholder="Nhập mật khẩu"
+                    />
                 </div>
 
                 <div className={styles.formGroup}>
-                    <label>Xác nhận mật khẩu</label>
-                    <input
+                    <Input
                         type="password"
-                        placeholder="Nhập lại mật khẩu"/>
+                        label="Xác nhận mật khẩu"
+                        placeholder="Nhập lại mật khẩu"
+                    />
                 </div>
 
-                <button
-                    type="button"
-                    className={styles.registerButton}>
+                <Button type="button" variant="primary" className={styles.registerButton}>
                     Đăng ký
-                </button>
+                </Button>
 
             </form>
 
             <div className={styles.loginLink}>
                 Đã có tài khoản?
 
-                <button type="button" onClick={onLogin}>
+                <button type="button" className={styles.loginLinkBtn} onClick={onLogin}>
                     Đăng nhập
                 </button>
             </div>
