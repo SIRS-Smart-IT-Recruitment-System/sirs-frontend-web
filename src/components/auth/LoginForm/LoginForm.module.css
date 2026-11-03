@@ -9,14 +9,14 @@
 
 .heading h2 {
     font-size: 22px;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     margin-bottom: 10px;
     letter-spacing: 1.5px;
 }
 
 .heading p {
-    font-size: 12px;
-    color: #777777;
+    font-size: var(--font-size-label);
+    color: var(--color-text-secondary);
     line-height: 1.6;
 }
 
@@ -45,7 +45,7 @@
 .rememberPassword input[type="checkbox"] {
     width: 14px;
     height: 14px;
-    accent-color: #000000;
+    accent-color: var(--color-primary);
     cursor: pointer;
     flex-shrink: 0;
 }
@@ -67,9 +67,9 @@
 /* Nút đăng nhập full width */
 .loginButton {
     width: 100%;
-    border-radius: 20px !important;
+    border-radius: var(--radius-md) !important;
     height: 42px;
-    font-size: 12px;
+    font-size: var(--font-size-button);
     letter-spacing: 0.5px;
 }
 
@@ -78,7 +78,7 @@
     text-align: center;
     margin-top: 20px;
     font-size: 11px;
-    color: #777777;
+    color: var(--color-text-secondary);
 }
 
 .registerLinkBtn {
@@ -87,7 +87,7 @@
     color: #1685e8;
     margin-left: 5px;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     cursor: pointer;
     transition: opacity 0.2s ease;
 }
