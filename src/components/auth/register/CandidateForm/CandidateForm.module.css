@@ -1,0 +1,116 @@
+.candidateForm {
+    width: 100%;
+    padding-top: 8px;
+}
+
+/* ── Heading ── */
+.heading {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.heading h2 {
+    font-size: 20px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    letter-spacing: 1px;
+}
+
+/* ── Camera / Avatar icon (small square, centered, below heading) ── */
+.avatarWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: opacity 0.2s;
+}
+
+.avatar:hover {
+    opacity: 0.8;
+}
+
+/* ── Form ── */
+.formGroup {
+    margin-bottom: 12px;
+}
+
+/* Upload area */
+.uploadLabel {
+    display: block;
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: 6px;
+}
+
+.uploadArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 16px;
+    border: 1.5px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.uploadArea:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-light-blue);
+}
+
+.uploadIcon {
+    width: 28px;
+    height: 28px;
+    color: var(--color-primary);
+}
+
+.uploadIcon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.uploadText {
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.uploadHint {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+}
+
+.submitButton {
+    width: 100% !important;
+    height: 42px;
+    font-size: var(--font-size-button) !important;
+    margin-top: 8px;
+}
+
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

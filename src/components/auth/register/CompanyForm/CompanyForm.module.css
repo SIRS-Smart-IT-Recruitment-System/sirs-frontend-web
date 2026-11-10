@@ -1,0 +1,47 @@
+.companyForm {
+    width: 100%;
+    padding-top: 8px;
+}
+
+/* ── Heading ── */
+.heading {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.heading h2 {
+    font-size: 20px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    letter-spacing: 1px;
+}
+
+/* ── Form ── */
+.formGroup {
+    margin-bottom: 14px;
+}
+
+.submitButton {
+    width: 100% !important;
+    height: 42px;
+    font-size: var(--font-size-button) !important;
+    margin-top: 8px;
+}
+
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

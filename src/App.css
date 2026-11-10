@@ -5,26 +5,26 @@
 :root {
 
     /* Colors */
-    --color-primary:        #000000;
-    --color-accent:         #333333;
+    --color-primary:        #2563EB;
+    --color-accent:         #1D4ED8;
     --color-surface:        #ffffff;
     --color-danger:         #ef4444;
-    --color-light-blue:     #e8f0fe;
-    --color-border:         #cccccc;
+    --color-light-blue:     #EBF4FF;
+    --color-border:         #D1D5DB;
 
-    --color-text-primary:   #1a1a1a;
-    --color-text-secondary: #777777;
+    --color-text-primary:   #111827;
+    --color-text-secondary: #6B7280;
 
     /* Border Radius */
-    --radius-sm:  6px;
-    --radius-md:  20px;
-    --radius-lg:  16px;
+    --radius-sm:  4px;
+    --radius-md:  6px;
+    --radius-lg:  12px;
 
     /* Font sizes */
     --font-size-label:          12px;
-    --font-size-button:         12px;
-    --font-size-body-default:   13px;
-    --font-size-heading-3:      18px;
+    --font-size-button:         14px;
+    --font-size-body-default:   14px;
+    --font-size-heading-3:      20px;
 
     /* Font weights */
     --font-weight-semibold: 600;
