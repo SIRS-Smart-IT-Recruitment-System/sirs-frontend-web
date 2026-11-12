@@ -2,10 +2,10 @@ import { useState } from "react";
 
 import AuthLayout from "../../components/auth/AuthLayout/AuthLayout";
 import LoginForm from "../../components/auth/LoginForm/LoginForm";
-import RegisterForm from "../../components/auth/register/RegisterForm/RegisterForm";
-import RoleSelect from "../../components/auth/register/RoleSelect/RoleSelect";
-import CandidateForm from "../../components/auth/register/CandidateForm/CandidateForm";
-import CompanyForm from "../../components/auth/register/CompanyForm/CompanyForm";
+import RegisterForm from "../../components/auth/Register/RegisterForm/RegisterForm";
+import RoleSelect from "../../components/auth/Register/RoleSelect/RoleSelect";
+import CandidateForm from "../../components/auth/Register/CandidateForm/CandidateForm";
+import CompanyForm from "../../components/auth/Register/CompanyForm/CompanyForm";
 import ForgotPasswordModal from "../../components/auth/ForgotPasswordModal/ForgotPasswordModal";
 import ResetPasswordModal from "../../components/auth/ResetPasswordModal/ResetPasswordModal";
 
