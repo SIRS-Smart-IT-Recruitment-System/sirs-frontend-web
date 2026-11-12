@@ -2,18 +2,31 @@ import { useState } from "react";
 
 import AuthLayout from "../../components/auth/AuthLayout/AuthLayout";
 import LoginForm from "../../components/auth/LoginForm/LoginForm";
-import RegisterForm from "../../components/auth/RegisterForm/RegisterForm";
+import RegisterForm from "../../components/auth/register/RegisterForm/RegisterForm";
+import RoleSelect from "../../components/auth/register/RoleSelect/RoleSelect";
+import CandidateForm from "../../components/auth/register/CandidateForm/CandidateForm";
+import CompanyForm from "../../components/auth/register/CompanyForm/CompanyForm";
 import ForgotPasswordModal from "../../components/auth/ForgotPasswordModal/ForgotPasswordModal";
 import ResetPasswordModal from "../../components/auth/ResetPasswordModal/ResetPasswordModal";
 
+type Page = "login" | "register" | "roleSelect" | "candidateForm" | "companyForm";
 type ModalType = "forgot" | "reset" | null;
 
+const backMap: Partial<Record<Page, Page>> = {
+    roleSelect:    "register",
+    candidateForm: "roleSelect",
+    companyForm:   "roleSelect",
+};
+
 function AuthPage() {
-    const [currentPage, setCurrentPage] = useState("login");
+    const [currentPage, setCurrentPage] = useState<Page>("login");
     const [activeModal, setActiveModal] = useState<ModalType>(null);
 
+    const backPage = backMap[currentPage];
+    const handleBack = backPage ? () => setCurrentPage(backPage) : undefined;
+
     return (
-        <AuthLayout>
+        <AuthLayout onBack={handleBack}>
 
             {currentPage === "login" && (
                 <LoginForm
@@ -25,6 +38,27 @@ function AuthPage() {
             {currentPage === "register" && (
                 <RegisterForm
                     onLogin={() => setCurrentPage("login")}
+                    onContinue={() => setCurrentPage("roleSelect")}
+                />
+            )}
+
+            {currentPage === "roleSelect" && (
+                <RoleSelect
+                    onBack={() => setCurrentPage("register")}
+                    onSelectCandidate={() => setCurrentPage("candidateForm")}
+                    onSelectCompany={() => setCurrentPage("companyForm")}
+                />
+            )}
+
+            {currentPage === "candidateForm" && (
+                <CandidateForm
+                    onBack={() => setCurrentPage("roleSelect")}
+                />
+            )}
+
+            {currentPage === "companyForm" && (
+                <CompanyForm
+                    onBack={() => setCurrentPage("roleSelect")}
                 />
             )}
 
