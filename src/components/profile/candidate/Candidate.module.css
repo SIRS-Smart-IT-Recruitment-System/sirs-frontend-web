@@ -1,0 +1,284 @@
+
+.candidate {
+    width: 100%;
+}
+
+/* Profile card */
+.profileCard {
+    width: 100%;
+    min-height: 145px;
+    padding: 20px 22px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+/* Avatar */
+.avatarWrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.avatar {
+    width: 98px;
+    height: 98px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #222222;
+}
+
+.avatarEdit {
+    position: absolute;
+    right: -1px;
+    bottom: 3px;
+
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background: #eeeeee;
+    color: #555555;
+
+    cursor: pointer;
+}
+
+/* Candidate information */
+.profileInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.nameRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.nameRow h2 {
+    margin: 0;
+
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+
+    color: #171717;
+}
+
+/* Github badge */
+.githubBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+    background: #d9fbe5;
+    color: #22b85b;
+
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.role {
+    margin: 5px 0 12px;
+
+    color: #258b18;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Contact information */
+.contactInfo {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.contactItem {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    color: #292929;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.contactItem svg {
+    flex-shrink: 0;
+}
+
+.separator {
+    color: #248d19;
+    font-size: 13px;
+}
+
+/* Job status */
+.statusWrapper {
+    position: relative;
+}
+
+.jobStatus {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 5px 10px;
+
+    border: none;
+    border-radius: 20px;
+    background: #d9fbe5;
+    color: #269b50;
+
+    font-size: 11px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.statusDot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+    background: #20bd59;
+}
+
+.statusDropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 10;
+
+    min-width: 145px;
+    padding: 5px;
+
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.statusDropdown button {
+    width: 100%;
+    padding: 9px;
+
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+
+    text-align: left;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.statusDropdown button:hover {
+    background: #f3f4f6;
+}
+
+/* Action buttons */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.shareButton,
+.editButton {
+    height: 44px;
+    padding: 0 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    cursor: pointer;
+}
+
+.shareButton {
+    border: 1px solid #91caff;
+    background: #ffffff;
+    color: #168bfa;
+}
+
+.editButton {
+    border: 1px solid #168bfa;
+    background: #168bfa;
+    color: #ffffff;
+}
+
+.shareButton:hover {
+    background: #f0f8ff;
+}
+
+.editButton:hover {
+    background: #0878df;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .profileCard {
+        flex-wrap: wrap;
+    }
+
+    .actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 550px) {
+    .profileCard {
+        padding: 16px;
+        gap: 14px;
+    }
+
+    .avatar {
+        width: 75px;
+        height: 75px;
+    }
+
+    .nameRow h2 {
+        font-size: 20px;
+    }
+
+    .contactInfo {
+        gap: 7px;
+    }
+
+    .actions {
+        flex-wrap: wrap;
+    }
+
+    .shareButton,
+    .editButton {
+        flex: 1;
+        font-size: 12px;
+        padding: 0 8px;
+    }
+}
