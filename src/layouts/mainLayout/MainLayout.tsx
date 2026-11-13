@@ -3,10 +3,10 @@ import { useState } from "react";
 
 import Sidebar, {
     type MenuItem,
-} from "../Sidebar/Sidebar.tsx";
+} from "../../components/layout/Sidebar/Sidebar.tsx";
 
-import Header from "../Header/Header.tsx";
-import styles from "./DashboardLayout.module.css";
+import Header from "../../components/layout/Header/Header.tsx";
+import styles from "./MainLayout.module.css";
 
 interface DashboardLayoutProps {
     children: ReactNode;
@@ -14,7 +14,7 @@ interface DashboardLayoutProps {
     onNavigate?: (item: MenuItem) => void;
 }
 
-function DashboardLayout({
+function MainLayout({
                              children,
                              activeItem = "profile",
                              onNavigate,
@@ -49,4 +49,4 @@ function DashboardLayout({
     );
 }
 
-export default DashboardLayout;
+export default MainLayout;

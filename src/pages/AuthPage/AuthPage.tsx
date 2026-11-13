@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import AuthLayout from "../../components/auth/AuthLayout/AuthLayout";
+import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import LoginForm from "../../components/auth/LoginForm/LoginForm";
 import RegisterForm from "../../components/auth/Register/RegisterForm/RegisterForm";
 import RoleSelect from "../../components/auth/Register/RoleSelect/RoleSelect";
@@ -8,6 +8,12 @@ import CandidateForm from "../../components/auth/Register/CandidateForm/Candidat
 import CompanyForm from "../../components/auth/Register/CompanyForm/CompanyForm";
 import ForgotPasswordModal from "../../components/auth/ForgotPasswordModal/ForgotPasswordModal";
 import ResetPasswordModal from "../../components/auth/ResetPasswordModal/ResetPasswordModal";
+import { register } from "../../services/authService";
+import type { RegisterRequest, CandidateProfileRequest, CandidateRegisterRequest, } from "../../types/authTypes";
+import axios from "axios";
+import { ROLE } from "../../constants/role";
+
+
 
 type Page = "login" | "register" | "roleSelect" | "candidateForm" | "companyForm";
 type ModalType = "forgot" | "reset" | null;
@@ -22,8 +28,62 @@ function AuthPage() {
     const [currentPage, setCurrentPage] = useState<Page>("login");
     const [activeModal, setActiveModal] = useState<ModalType>(null);
 
+    const [registerData, setRegisterData] = useState<RegisterRequest>({
+        email: "",
+        password: "",
+        role: ROLE.CANDIDATE,
+    });
+
+    const [isRegistering, setIsRegistering] = useState(false);
+
     const backPage = backMap[currentPage];
     const handleBack = backPage ? () => setCurrentPage(backPage) : undefined;
+
+    const handleRegisterCandidate = async (
+        candidateData: CandidateProfileRequest
+    ) => {
+        if (isRegistering) return;
+
+        try {
+            setIsRegistering(true);
+
+            const requestData: CandidateRegisterRequest = {
+                ...registerData,
+                ...candidateData,
+                role: ROLE.CANDIDATE,
+            };
+
+            const result = await register(requestData);
+
+            console.log("Register successful:", result);
+
+            alert("Đăng ký tài khoản thành công!");
+
+            setCurrentPage("login");
+
+        } catch (error) {
+            console.error("Register failed:", error);
+
+            if (axios.isAxiosError(error)) {
+                const status = error.response?.status;
+                const backendMessage = error.response?.data?.message;
+
+                if (status === 500) {
+                    alert("Máy chủ đang gặp sự cố. Vui lòng thử lại sau!");
+                } else {
+                    alert(
+                        backendMessage ||
+                        "Đăng ký thất bại. Vui lòng kiểm tra lại thông tin!"
+                    );
+                }
+            } else {
+                alert("Đã xảy ra lỗi. Vui lòng thử lại!");
+            }
+
+        } finally {
+            setIsRegistering(false);
+        }
+    };
 
     return (
         <AuthLayout onBack={handleBack}>
@@ -38,21 +98,37 @@ function AuthPage() {
             {currentPage === "register" && (
                 <RegisterForm
                     onLogin={() => setCurrentPage("login")}
-                    onContinue={() => setCurrentPage("roleSelect")}
+                    onContinue={(email, password) => {
+                        setRegisterData({
+                            email,
+                            password,
+                            role: ROLE.CANDIDATE,
+                        });
+
+                        setCurrentPage("roleSelect");
+                    }}
                 />
             )}
 
             {currentPage === "roleSelect" && (
                 <RoleSelect
                     onBack={() => setCurrentPage("register")}
-                    onSelectCandidate={() => setCurrentPage("candidateForm")}
-                    onSelectCompany={() => setCurrentPage("companyForm")}
+                    onSelectCandidate={() => {
+                        setRegisterData((prev) => ({
+                            ...prev,
+                            role: ROLE.CANDIDATE,
+                        }));
+
+                        setCurrentPage("candidateForm");
+                    }}
+                    onSelectCompany={() => {}}
                 />
             )}
 
             {currentPage === "candidateForm" && (
                 <CandidateForm
                     onBack={() => setCurrentPage("roleSelect")}
+                    onSubmit={handleRegisterCandidate}
                 />
             )}
 

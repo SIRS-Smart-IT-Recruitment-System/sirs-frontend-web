@@ -1,11 +1,11 @@
-import DashboardLayout from "../../../layout/DashboardLayout/DashboardLayout.tsx";
+import MainLayout from "../../../layouts/mainLayout/MainLayout.tsx";
 import Candidate from "../../../components/profile/candidate/Candidate.tsx";
 
 function CandidateProfile() {
     return (
-        <DashboardLayout activeItem="profile">
+        <MainLayout activeItem="profile">
             <Candidate />
-        </DashboardLayout>
+        </MainLayout>
     );
 }
 
