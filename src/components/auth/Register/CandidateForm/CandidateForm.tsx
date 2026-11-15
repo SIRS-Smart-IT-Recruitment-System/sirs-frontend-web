@@ -1,13 +1,15 @@
 import { useState } from "react";
 import styles from "./CandidateForm.module.css";
-import Button from "../../../ui/button/Button";
-import Input from "../../../ui/input/Input";
+import Button from "../../../common/button/Button";
+import Input from "../../../common/input/Input";
+import type { CandidateProfileRequest } from "../../../../types/authTypes";
 
 interface CandidateFormProps {
     onBack?: () => void;
+    onSubmit: (data: CandidateProfileRequest) => Promise<void>;
 }
 
-const CandidateForm = (_props: CandidateFormProps) => {
+const CandidateForm = ({ onSubmit }: CandidateFormProps) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [fullName, setFullName] = useState("");
@@ -21,45 +23,55 @@ const CandidateForm = (_props: CandidateFormProps) => {
         workStatus: "",
     });
 
-    const handleCompleteRegister = () => {
+    const handleCompleteRegister = async () => {
         if (isLoading) return;
 
-        // Bắt đầu Loading
-        setIsLoading(true);
+        const newErrors = {
+            fullName: "",
+            phone: "",
+            workStatus: "",
+        };
 
-        setTimeout(() => {
-            const newErrors = {
-                fullName: "",
-                phone: "",
-                workStatus: "",
+        if (!fullName.trim()) {
+            newErrors.fullName = "Vui lòng nhập họ và tên";
+        }
+
+        if (!phone.trim()) {
+            newErrors.phone = "Vui lòng nhập số điện thoại";
+        } else if (!/^0\d{9}$/.test(phone)) {
+            newErrors.phone =
+                "Số điện thoại phải có 10 chữ số và bắt đầu bằng 0";
+        }
+
+        if (!workStatus.trim()) {
+            newErrors.workStatus = "Vui lòng nhập trạng thái công việc";
+        }
+
+        setErrors(newErrors);
+
+        if (
+            newErrors.fullName ||
+            newErrors.phone ||
+            newErrors.workStatus
+        ) {
+            return;
+        }
+
+        try {
+            setIsLoading(true);
+
+            const candidateData: CandidateProfileRequest = {
+                fullName: fullName.trim(),
+                phone: phone.trim(),
+                bio: bio.trim(),
+                workStatus: workStatus.trim(),
             };
 
-            if (!fullName.trim()) {
-                newErrors.fullName = "Vui lòng nhập họ và tên";
-            }
+            await onSubmit(candidateData);
 
-            if (!phone.trim()) {
-                newErrors.phone = "Vui lòng nhập số điện thoại";
-            } else if (!/^0\d{9}$/.test(phone)) {
-                newErrors.phone = "Số điện thoại phải có 10 chữ số và bắt đầu bằng 0";
-            }
-
-            if (!workStatus.trim()) {
-                newErrors.workStatus = "Vui lòng nhập trạng thái công việc";
-            }
-
+        } finally {
             setIsLoading(false);
-
-            setErrors(newErrors);
-
-            if (
-                !newErrors.fullName &&
-                !newErrors.phone &&
-                !newErrors.workStatus
-            ) {
-                console.log("Thông tin hồ sơ cá nhân hợp lệ");
-            }
-        }, 2000);
+        }
     };
 
     return (
@@ -98,7 +110,7 @@ const CandidateForm = (_props: CandidateFormProps) => {
                 </label>
             </div>
 
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form onSubmit={(e) => {e.preventDefault(); handleCompleteRegister()}}>
                 <div className={styles.formGroup}>
                     <Input
                         type="text"
@@ -192,10 +204,9 @@ const CandidateForm = (_props: CandidateFormProps) => {
                 </div>
 
                 <Button
-                    type="button"
+                    type="submit"
                     variant="primary"
                     className={styles.submitButton}
-                    onClick={handleCompleteRegister}
                     disabled={isLoading}
                 >
                     {isLoading ? (

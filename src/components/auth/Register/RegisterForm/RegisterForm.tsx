@@ -1,12 +1,12 @@
 import styles from "./RegisterForm.module.css";
 import {useState} from "react";
 import SocialLogin from "../../SocialLogin/SocialLogin";
-import Button from "../../../ui/button/Button";
-import Input from "../../../ui/input/Input";
+import Button from "../../../common/button/Button";
+import Input from "../../../common/input/Input";
 
 interface RegisterFormProps {
     onLogin: () => void;
-    onContinue: () => void;
+    onContinue: (email: string, password: string) => void;
 }
 
 const RegisterForm = ({ onLogin, onContinue }: RegisterFormProps) => {
@@ -52,7 +52,7 @@ const RegisterForm = ({ onLogin, onContinue }: RegisterFormProps) => {
             !newErrors.password &&
             !newErrors.confirmPassword
         ) {
-            onContinue();
+            onContinue(email, password);
         }
     };
     return (
@@ -84,6 +84,7 @@ const RegisterForm = ({ onLogin, onContinue }: RegisterFormProps) => {
                         type="password"
                         label="Mật khẩu"
                         placeholder="Nhập mật khẩu"
+                        value={password}
                         onChange={(e) => {
                             setPassword(e.target.value);
                             setErrors((prev) => ({ ...prev, password: "" }));

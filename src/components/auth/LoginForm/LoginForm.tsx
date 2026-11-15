@@ -1,7 +1,7 @@
 import styles from "./LoginForm.module.css";
 import SocialLogin from "../SocialLogin/SocialLogin";
-import Button from "../../ui/button/Button";
-import Input from "../../ui/input/Input";
+import Button from "../../common/button/Button";
+import Input from "../../common/input/Input";
 import {useState} from "react";
 
 interface LoginFormProps {

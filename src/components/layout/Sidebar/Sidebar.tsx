@@ -1,5 +1,5 @@
 import styles from "./Sidebar.module.css";
-import logo from "../../assets/logo.png";
+import logo from "../../../assets/logo.png";
 import {
     LayoutDashboard,
     BriefcaseBusiness,

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./CompanyForm.module.css";
-import Button from "../../../ui/button/Button";
-import Input from "../../../ui/input/Input";
+import Button from "../../../common/button/Button";
+import Input from "../../../common/input/Input";
 
 interface CompanyFormProps {
     onBack?: () => void;

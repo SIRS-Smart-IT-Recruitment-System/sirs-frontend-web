@@ -1,6 +1,6 @@
-import Modal from "../../ui/modal/Modal";
-import Button from "../../ui/button/Button";
-import Input from "../../ui/input/Input";
+import Modal from "../../common/modal/Modal";
+import Button from "../../common/button/Button";
+import Input from "../../common/input/Input";
 import styles from "./ResetPasswordModal.module.css";
 
 interface ResetPasswordModalProps {
