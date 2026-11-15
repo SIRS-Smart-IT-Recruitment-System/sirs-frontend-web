@@ -1,94 +1,66 @@
+import { NavLink } from "react-router-dom";
+import { navigation } from "../../../constants/navigation";
+import type { SidebarRole } from "../../../constants/navigation";
 import styles from "./Sidebar.module.css";
-import logo from "../../../assets/logo.png";
-import {
-    LayoutDashboard,
-    BriefcaseBusiness,
-    CalendarDays,
-    UserRound,
-} from "lucide-react";
-
-export type MenuItem =
-    | "overview"
-    | "jobs"
-    | "interviews"
-    | "profile";
 
 interface SidebarProps {
-    activeItem: MenuItem;
-    onNavigate: (item: MenuItem) => void;
+    role: SidebarRole;
+    progress?: number;
 }
 
-const menuItems = [
-    {
-        id: "overview" as MenuItem,
-        icon: LayoutDashboard,
-        label: "Tổng quan",
-    },
-    {
-        id: "jobs" as MenuItem,
-        icon: BriefcaseBusiness,
-        label: "Tìm kiếm việc làm",
-    },
-    {
-        id: "interviews" as MenuItem,
-        icon: CalendarDays,
-        label: "Lịch phỏng vấn",
-    },
-    {
-        id: "profile" as MenuItem,
-        icon: UserRound,
-        label: "Hồ sơ ứng viên",
-    },
-];
+function Sidebar({ role, progress = 80 }: SidebarProps) {
+    const menuItems = navigation[role];
 
-function Sidebar({ activeItem, onNavigate }: SidebarProps) {
     return (
         <aside className={styles.sidebar}>
-            <div className={styles.logoWrapper}>
-                <img src={logo} alt="SIRS" className={styles.logo} />
+            {/* Logo */}
+            <div className={styles.sidebarLogo}>
+                <span>SIRS</span>
             </div>
 
-            <div className={styles.divider} />
+            {/* Navigation */}
+            <nav className={styles.sidebarNav}>
+                {menuItems.map((item) => (
+                    <NavLink
+                        key={item.path}
+                        to={item.path}
+                        className={({ isActive }) =>
+                            `${styles.sidebarLink} ${
+                                isActive ? styles.active : ""
+                            }`
+                        }
+                    >
+                        <span className={styles.sidebarIcon}>
+                            {item.icon}
+                        </span>
 
-            <nav className={styles.navigation}>
-                {menuItems.map((item) => {
-                    const Icon = item.icon;
+                        <span>{item.label}</span>
+                    </NavLink>
+                ))}
+            </nav>
 
-                    return (
-                        <button
-                            key={item.id}
-                            type="button"
-                            className={`${styles.menuItem} ${
-                                activeItem === item.id ? styles.active : ""
-                            }`}
-                            onClick={() => onNavigate(item.id)}>
+            {/* Profile Progress */}
+            <div className={styles.sidebarProgress}>
+                <h4>Tiến độ hồ sơ</h4>
 
-                            <Icon className={styles.menuIcon} size={20} />
-
-                            <span>{item.label}</span>
-                        </button>
-                    );
-                })}
-
-                <section className={styles.progressCard}>
-                    <h3>Tiến độ hồ sơ</h3>
+                <div className={styles.progressContent}>
+                    <div className={styles.progressCircle}>
+                        {progress}%
+                    </div>
 
                     <div className={styles.progressInfo}>
-                        <div className={styles.progressCircle}>
-                            80%
-                        </div>
-
-                        <div className={styles.progressText}>
-                            <span>Sắp hoàn thành</span>
-                            <p>Hãy bổ sung thông tin còn thiếu</p>
-                        </div>
+                        <span>Đã hoàn thành</span>
+                        <small>Hãy bổ sung thông tin còn thiếu</small>
                     </div>
+                </div>
 
-                    <div className={styles.progressBar}>
-                        <div className={styles.progressValue} />
-                    </div>
-                </section>
-            </nav>
+                <div className={styles.progressBar}>
+                    <div
+                        className={styles.progressBarFill}
+                        style={{ width: `${progress}%` }}
+                    />
+                </div>
+            </div>
         </aside>
     );
 }

@@ -1,0 +1,114 @@
+.card {
+    height: 100%;
+    padding: 20px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.cardHeader h2 {
+    font-size: 18px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.verified {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--color-success);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.document {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+}
+
+.documentIcon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-danger);
+    background-color: #FEF2F2;
+    border-radius: var(--radius-md);
+}
+
+.documentInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.documentInfo h3 {
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    overflow-wrap: anywhere;
+}
+
+.documentInfo span {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+}
+
+.downloadButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    color: var(--color-primary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+.downloadButton:hover {
+    background-color: var(--color-background);
+}
+
+.uploadButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 16px;
+    padding: 11px;
+    color: var(--color-primary);
+    background-color: var(--color-surface);
+    border: 1px dashed var(--color-primary);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.uploadButton:hover {
+    background-color: var(--color-background);
+}
+
+.note {
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}

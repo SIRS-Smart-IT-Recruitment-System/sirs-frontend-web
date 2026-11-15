@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import {
     Search,
@@ -11,7 +12,15 @@ import {
 
 import styles from "./Header.module.css";
 
-function Header() {
+interface HeaderProps {
+    userName?: string;
+    userRole?: string;
+}
+
+function Header({
+                    userName = "Công ty ABC",
+                    userRole = "Nhà tuyển dụng",
+                }: HeaderProps) {
     const [search, setSearch] = useState("");
     const [showAccount, setShowAccount] = useState(false);
 
@@ -57,8 +66,8 @@ function Header() {
 
                 <div className={styles.accountArea}>
                     <div className={styles.accountText}>
-                        <strong>Nguyễn Văn A</strong>
-                        <span>Ứng viên</span>
+                        <strong>{userName}</strong>
+                        <span>{userRole}</span>
                     </div>
 
                     <button

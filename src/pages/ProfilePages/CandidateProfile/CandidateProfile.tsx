@@ -1,9 +1,9 @@
-import MainLayout from "../../../layouts/mainLayout/MainLayout.tsx";
-import Candidate from "../../../components/profile/candidate/Candidate.tsx";
+import MainLayout from "../../../layouts/mainLayout/MainLayout";
+import Candidate from "../../../components/profile/candidate/Candidate";
 
 function CandidateProfile() {
     return (
-        <MainLayout activeItem="profile">
+        <MainLayout role="candidate">
             <Candidate />
         </MainLayout>
     );

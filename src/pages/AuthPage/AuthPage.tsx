@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
 import LoginForm from "../../components/auth/LoginForm/LoginForm";
 import RegisterForm from "../../components/auth/Register/RegisterForm/RegisterForm";
@@ -12,8 +11,6 @@ import { register } from "../../services/authService";
 import type { RegisterRequest, CandidateProfileRequest, CandidateRegisterRequest, } from "../../types/authTypes";
 import axios from "axios";
 import { ROLE } from "../../constants/role";
-
-
 
 type Page = "login" | "register" | "roleSelect" | "candidateForm" | "companyForm";
 type ModalType = "forgot" | "reset" | null;

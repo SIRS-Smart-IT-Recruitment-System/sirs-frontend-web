@@ -1,49 +1,36 @@
 import type { ReactNode } from "react";
-import { useState } from "react";
-
-import Sidebar, {
-    type MenuItem,
-} from "../../components/layout/Sidebar/Sidebar.tsx";
-
+import Sidebar from "../../components/layout/Sidebar/Sidebar.tsx";
+import type { SidebarRole } from "../../constants/navigation";
 import Header from "../../components/layout/Header/Header.tsx";
 import styles from "./MainLayout.module.css";
 
-interface DashboardLayoutProps {
+interface MainLayoutProps {
     children: ReactNode;
-    activeItem?: MenuItem;
-    onNavigate?: (item: MenuItem) => void;
+    role: SidebarRole;
+    progress?: number;
+    userName?: string;
+    userRole?: string;
 }
 
 function MainLayout({
-                             children,
-                             activeItem = "profile",
-                             onNavigate,
-                         }: DashboardLayoutProps) {
-    const [currentItem, setCurrentItem] =
-        useState<MenuItem>(activeItem);
-
-    const handleNavigate = (item: MenuItem) => {
-        setCurrentItem(item);
-        onNavigate?.(item);
-    };
-
+                        children,
+                        role,
+                        progress,
+                        userName = "Công ty ABC",
+                        userRole = "Nhà tuyển dụng",
+                    }: MainLayoutProps) {
     return (
-        <div className={styles.dashboard}>
+        <div className={styles.layout}>
             <div className={styles.sidebarArea}>
-                <Sidebar
-                    activeItem={currentItem}
-                    onNavigate={handleNavigate}
-                />
+                <Sidebar role={role} progress={progress} />
             </div>
 
             <div className={styles.mainArea}>
                 <div className={styles.headerArea}>
-                    <Header />
+                    <Header userName={userName} userRole={userRole} />
                 </div>
 
-                <main className={styles.contentArea}>
-                    {children}
-                </main>
+                <main className={styles.contentArea}>{children}</main>
             </div>
         </div>
     );

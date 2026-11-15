@@ -1,167 +1,136 @@
-
 .sidebar {
-    width: 350px;
-    min-width: 256px;
-    height: 100vh;
-    background: #f8faff;
+    width: 220px;
+    min-width: 220px;
+    height: 100%;
+    min-height: 100vh;
+    padding: var(--spacing-4);
+    box-sizing: border-box;
+    background-color: var(--color-surface);
     display: flex;
     flex-direction: column;
-    padding: 0 12px;
-    box-sizing: border-box;
+    border-right: var(--border-width-thin) solid var(--color-border-light);
 }
 
-.logoWrapper {
-    height: 85px;
+/* Logo */
+.sidebarLogo {
+    height: 58px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-bottom: var(--border-width-thin) solid var(--color-border-light);
+    margin-bottom: var(--spacing-4);
+    flex-shrink: 0;
 }
 
-.logo {
-    width: 76px;
-    height: auto;
-    object-fit: contain;
+.sidebarLogo span {
+    color: var(--color-primary);
+    font-size: 24px;
+    font-weight: var(--font-weight-bold);
+    font-style: italic;
 }
 
-.divider {
-    height: 1px;
-    width: 100%;
-    background: var(--color-border);
-    margin-bottom: 8px;
-}
-
-.navigation {
+/* Navigation */
+.sidebarNav {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    padding-top: 2px;
+    gap: var(--spacing-2);
 }
 
-.menuItem {
-    width: 100%;
-    height: 34px;
+.sidebarLink {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 0 14px;
-    border: 1px solid transparent;
-    border-radius: 22px;
-    background: transparent;
+    gap: var(--spacing-2);
+    min-height: 38px;
+    padding: var(--spacing-2);
+    box-sizing: border-box;
+    border-radius: var(--radius-full);
+    text-decoration: none;
     color: var(--color-text-primary);
-    font-size: 13px;
-    font-weight: 500;
-    text-align: left;
-    cursor: pointer;
-    transition: 0.2s ease;
+    font-size: var(--font-size-body-default);
+    font-weight: var(--font-weight-medium);
+    transition: background-color 0.2s ease;
 }
 
-.menuItem:hover {
-    background: var(--color-light-blue);
-}
-
-.menuIcon {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    color: var(--color-text-secondary);
-    stroke-width: 1.8;
-}
-
-.active .menuIcon {
+.sidebarLink:hover {
+    background-color: var(--color-info-bg);
     color: var(--color-primary);
 }
 
 .active {
-    color: var(--color-accent);
-    background: #e6f0ff;
-    border-color: #bfdbfe;
-    font-weight: 600;
+    background-color: var(--color-info-bg);
+    color: var(--color-primary);
+    border: var(--border-width-thin) solid var(--color-light-blue);
 }
 
-/* ProfilePages progress */
-.progressCard {
-    width: 100%;
-    margin-top: 24px;
-    padding: 24px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    box-sizing: border-box;
+.sidebarIcon {
+    width: 20px;
+    flex-shrink: 0;
+    text-align: center;
+    font-size: 16px;
 }
 
-.progressCard h3 {
-    margin: 0 0 20px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #222;
+/* Profile Progress */
+.sidebarProgress {
+    margin-top: auto;
+    padding: var(--spacing-3);
+    border: var(--border-width-thin) solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+}
+
+.sidebarProgress h4 {
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-2);
+}
+
+.progressContent {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-2);
+}
+
+.progressCircle {
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    font-size: var(--font-size-label);
+    flex-shrink: 0;
 }
 
 .progressInfo {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
 }
 
-.progressCircle {
-    width: 60px;
-    height: 60px;
-    border: 5px solid #2196f3;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 700;
-    color: #2196f3;
-    flex-shrink: 0;
+.progressInfo span {
+    color: var(--color-primary);
+    font-size: var(--font-size-label);
 }
 
-.progressText span {
-    font-size: 15px;
-    font-weight: 600;
-    color: #222;
-}
-
-.progressText p {
-    margin: 6px 0 0;
-    font-size: 13px;
-    color: #777;
+.progressInfo small {
+    color: var(--color-text-muted);
+    font-size: 10px;
 }
 
 .progressBar {
     width: 100%;
-    height: 8px;
-    margin-top: 28px;
-    margin-bottom: 8px;
-    background: #e5e7eb;
-    border-radius: 10px;
+    height: 4px;
+    background-color: var(--color-border-light);
+    border-radius: var(--radius-full);
     overflow: hidden;
 }
 
-.progressValue {
-    width: 80%;
+.progressBarFill {
     height: 100%;
-    background: #2196f3;
-    border-radius: 10px;
-}
-
-@media (max-width: 768px) {
-    .sidebar {
-        width: 76px;
-        min-width: 76px;
-        padding: 0 7px;
-    }
-
-    .menuItem {
-        justify-content: center;
-        padding: 0;
-    }
-
-    .menuItem > span:last-child {
-        display: none;
-    }
-
-    .logo {
-        width: 58px;
-    }
+    background-color: var(--color-primary);
+    border-radius: var(--radius-full);
 }
