@@ -1,0 +1,103 @@
+.card {
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    background: var(--color-background);
+    border-radius: 8px;
+}
+
+.title h3 {
+    margin: 0;
+    font-size: 15px;
+    color: var(--color-text-primary);
+}
+
+.title p {
+    margin: 4px 0 0;
+    font-size: 11px;
+    color: #64748b;
+}
+
+.addButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 10px;
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: white;
+    color: var(--color-primary);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.addButton:hover {
+    background: var(--color-background);
+}
+
+.skillGrid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 14px 12px;
+}
+
+.skillItem {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+    font-size: 12px;
+    color: var(--color-text-primary);
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    background: var(--color-primary);
+    border-radius: 50%;
+}
+
+@media (max-width: 1000px) {
+    .skillGrid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .skillGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 400px) {
+    .skillGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

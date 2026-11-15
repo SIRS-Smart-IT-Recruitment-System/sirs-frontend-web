@@ -1,5 +1,5 @@
 import { Pencil, Eye } from "lucide-react";
-import MainLayout from "../../../layouts/mainLayout/MainLayout";
+import MainLayout from "../../../layouts/main-layout/MainLayout";
 import CompanyInfo from "../../../components/profile/recruiter/company-info/CompanyInfo";
 import ContactInfo from "../../../components/profile/recruiter/contact-info/ContactInfo";
 import CompanyIntroduction from "../../../components/profile/recruiter/company-introduction/CompanyIntroduction";

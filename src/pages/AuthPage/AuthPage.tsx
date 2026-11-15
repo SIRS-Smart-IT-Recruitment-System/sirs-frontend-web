@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AuthLayout from "../../layouts/AuthLayout/AuthLayout";
+import AuthLayout from "../../layouts/Auth-layout/AuthLayout";
 import LoginForm from "../../components/auth/LoginForm/LoginForm";
 import RegisterForm from "../../components/auth/Register/RegisterForm/RegisterForm";
 import RoleSelect from "../../components/auth/Register/RoleSelect/RoleSelect";

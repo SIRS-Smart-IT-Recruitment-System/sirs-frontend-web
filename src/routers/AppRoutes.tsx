@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { ROUTES } from "./routePaths";
 import AuthPage from "../pages/AuthPage/AuthPage.tsx";
 import RecruiterProfile from "../pages/ProfilePages/recruiter-profile/RecruiterProfile.tsx";
-import CandidateProfile from "../pages/ProfilePages/CandidateProfile/CandidateProfile.tsx";
+import CandidateProfile from "../pages/ProfilePages/candidate-profile/CandidateProfile.tsx";
 
 function NotFoundPage() {
     return (
