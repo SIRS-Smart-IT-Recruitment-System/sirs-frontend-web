@@ -11,10 +11,12 @@ import ForgotPasswordModal from "../../components/auth/ForgotPasswordModal/Forgo
 import ResetPasswordModal from "../../components/auth/ResetPasswordModal/ResetPasswordModal";
 import { register } from "../../services/authService";
 import { createCandidateProfile } from "../../services/candidateProfileService";
+import { createCompanyProfile } from "../../services/companyProfileService";
 
 import type {
     RegisterRequest,
     CandidateProfileRequest,
+    CompanyProfileRequest,
 } from "../../types/authTypes";
 
 import { ROLE } from "../../constants/role";
@@ -172,6 +174,81 @@ function AuthPage() {
         }
     };
 
+    // Đăng ký tài khoản và tạo hồ sơ Doanh nghiệp (Recruiter)
+    const handleRegisterCompany = async (
+        companyData: CompanyProfileRequest
+    ) => {
+        if (isRegistering) return;
+
+        try {
+            setIsRegistering(true);
+
+            // Bước 1: Đăng ký tài khoản Recruiter
+            const accountData: RegisterRequest = {
+                ...registerData,
+                email: registerData.email.trim(),
+                role: ROLE.RECRUITER,
+            };
+
+            const registerResult = await register(accountData);
+
+            console.log(
+                "Register recruiter account successful:",
+                registerResult
+            );
+
+            // Lưu token đăng nhập vào localStorage
+            if (registerResult?.accessToken) {
+                localStorage.setItem("accessToken", registerResult.accessToken);
+            }
+            if (registerResult?.role) {
+                localStorage.setItem("role", registerResult.role);
+            }
+
+            // Bước 2: Tạo hồ sơ Company
+            const profileResult = await createCompanyProfile(companyData);
+
+            console.log(
+                "Create company profile successful:",
+                profileResult
+            );
+
+            // Thông báo thành công
+            alert("Đăng ký tài khoản và hồ sơ doanh nghiệp thành công!");
+
+            // Bước 3: Chuyển hướng sang trang Recruiter Profile
+            navigate(ROUTES.RECRUITER.PROFILE);
+
+        } catch (error) {
+            console.error("Company registration failed:", error);
+
+            if (axios.isAxiosError(error)) {
+                const status = error.response?.status;
+                const backendMessage = error.response?.data?.message;
+
+                if (status === 400) {
+                    alert(backendMessage || "Thông tin đăng ký không hợp lệ!");
+                } else if (status === 401) {
+                    alert(backendMessage || "Bạn chưa được xác thực. Vui lòng đăng nhập lại!");
+                } else if (status === 403) {
+                    alert(backendMessage || "Bạn không có quyền thực hiện thao tác này!");
+                } else if (status === 409) {
+                    alert(backendMessage || "Email hoặc mã số doanh nghiệp đã tồn tại!");
+                } else if (status === 500) {
+                    alert("Máy chủ đang gặp sự cố. Vui lòng thử lại sau!");
+                } else if (!error.response) {
+                    alert("Không thể kết nối đến API Gateway. Vui lòng kiểm tra kết nối mạng!");
+                } else {
+                    alert(backendMessage || "Đăng ký thất bại. Vui lòng thử lại!");
+                }
+            } else {
+                alert("Đã xảy ra lỗi. Vui lòng thử lại!");
+            }
+        } finally {
+            setIsRegistering(false);
+        }
+    };
+
     return (
         <AuthLayout onBack={handleBack}>
 
@@ -213,6 +290,10 @@ function AuthPage() {
                         setCurrentPage("candidateForm");
                     }}
                     onSelectCompany={() => {
+                        setRegisterData((prev) => ({
+                            ...prev,
+                            role: ROLE.RECRUITER,
+                        }));
                         setCurrentPage("companyForm");
                     }}
                 />
@@ -230,6 +311,8 @@ function AuthPage() {
             {currentPage === "companyForm" && (
                 <CompanyForm
                     onBack={() => setCurrentPage("roleSelect")}
+                    onSubmit={handleRegisterCompany}
+                    isLoading={isRegistering}
                 />
             )}
 

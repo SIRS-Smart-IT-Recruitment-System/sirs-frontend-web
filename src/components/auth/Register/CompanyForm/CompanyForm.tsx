@@ -2,13 +2,21 @@ import { useState } from "react";
 import styles from "./CompanyForm.module.css";
 import Button from "../../../common/button/Button";
 import Input from "../../../common/input/Input";
+import type { CompanyProfileRequest } from "../../../types/authTypes";
 
 interface CompanyFormProps {
     onBack?: () => void;
+    onSubmit?: (data: CompanyProfileRequest) => Promise<void>;
+    isLoading?: boolean;
 }
 
-const CompanyForm = (_props: CompanyFormProps) => {
-    const [isLoading, setIsLoading] = useState(false);
+const CompanyForm = ({
+    onSubmit,
+    isLoading: externalLoading = false,
+}: CompanyFormProps) => {
+    const [internalLoading, setInternalLoading] = useState(false);
+    const isLoading = externalLoading || internalLoading;
+
     const [companyName, setCompanyName] = useState("");
     const [address, setAddress] = useState("");
     const [businessId, setBusinessId] = useState("");
@@ -21,51 +29,58 @@ const CompanyForm = (_props: CompanyFormProps) => {
         representative: "",
     });
 
-    const handleCompleteRegister = () => {
+    const handleCompleteRegister = async () => {
         if (isLoading) return;
 
-        // Bắt đầu Loading
-        setIsLoading(true);
+        const newErrors = {
+            companyName: "",
+            address: "",
+            businessId: "",
+            representative: "",
+        };
 
-        setTimeout(() => {
-            const newErrors = {
-                companyName: "",
-                address: "",
-                businessId: "",
-                representative: "",
-            };
+        if (!companyName.trim()) {
+            newErrors.companyName = "Vui lòng nhập tên doanh nghiệp";
+        }
 
-            if (!companyName.trim()) {
-                newErrors.companyName = "Vui lòng nhập tên doanh nghiệp";
+        if (!address.trim()) {
+            newErrors.address = "Vui lòng nhập địa chỉ trụ sở";
+        }
+
+        if (!businessId.trim()) {
+            newErrors.businessId = "Vui lòng nhập mã số doanh nghiệp";
+        } else if (!/^\d{10}(\d{3})?$/.test(businessId.trim())) {
+            newErrors.businessId = "Mã số doanh nghiệp phải gồm 10 hoặc 13 chữ số";
+        }
+
+        if (!representative.trim()) {
+            newErrors.representative = "Vui lòng nhập tên người đại diện";
+        }
+
+        setErrors(newErrors);
+
+        if (
+            newErrors.companyName ||
+            newErrors.address ||
+            newErrors.businessId ||
+            newErrors.representative
+        ) {
+            return;
+        }
+
+        if (onSubmit) {
+            try {
+                setInternalLoading(true);
+                await onSubmit({
+                    companyName: companyName.trim(),
+                    headquartersAddress: address.trim(),
+                    businessRegistrationNumber: businessId.trim(),
+                    legalRepresentative: representative.trim(),
+                });
+            } finally {
+                setInternalLoading(false);
             }
-
-            if (!address.trim()) {
-                newErrors.address = "Vui lòng nhập địa chỉ trụ sở";
-            }
-
-            if (!businessId.trim()) {
-                newErrors.businessId = "Vui lòng nhập mã số doanh nghiệp";
-            } else if (!/^\d{10}(\d{3})?$/.test(businessId)) {
-                newErrors.businessId = "Mã số doanh nghiệp phải gồm 10 hoặc 13 chữ số";
-            }
-
-            if (!representative.trim()) {
-                newErrors.representative = "Vui lòng nhập tên người đại diện";
-            }
-
-            setIsLoading(false);
-
-            setErrors(newErrors);
-
-            if (
-                !newErrors.companyName &&
-                !newErrors.address &&
-                !newErrors.businessId &&
-                !newErrors.representative
-            ) {
-                console.log("Thông tin doanh nghiệp hợp lệ");
-            }
-        }, 2000);
+        }
     };
 
     return (

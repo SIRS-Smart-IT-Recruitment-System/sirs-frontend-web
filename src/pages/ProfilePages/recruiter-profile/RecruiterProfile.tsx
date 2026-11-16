@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Pencil, Eye } from "lucide-react";
 import MainLayout from "../../../layouts/main-layout/MainLayout";
 import CompanyInfo from "../../../components/profile/recruiter/company-info/CompanyInfo";
@@ -6,14 +7,33 @@ import CompanyIntroduction from "../../../components/profile/recruiter/company-i
 import BusinessLicense from "../../../components/profile/recruiter/business-license/BusinessLicense";
 import ImageGallery from "../../../components/profile/recruiter/image-gallery/ImageGallery";
 import ActiveJobs from "../../../components/profile/recruiter/active-jobs/ActiveJobs";
+import { getCompanyProfile } from "../../../services/companyProfileService";
+import type { CompanyProfileResponse } from "../../../types/authTypes";
 import styles from "./RecruiterProfile.module.css";
 
 function RecruiterProfile() {
+    const [companyProfile, setCompanyProfile] = useState<CompanyProfileResponse | null>(null);
+
+    useEffect(() => {
+        const fetchCompany = async () => {
+            try {
+                const data = await getCompanyProfile();
+                setCompanyProfile(data);
+            } catch (error) {
+                console.warn("Chưa tải được hồ sơ công ty từ API hoặc chưa có dữ liệu:", error);
+            }
+        };
+
+        fetchCompany();
+    }, []);
+
+    const companyName = companyProfile?.companyName || "Công ty ABC";
+
     return (
         <MainLayout
             role="recruiter"
             progress={80}
-            userName="Công ty ABC"
+            userName={companyName}
             userRole="Nhà tuyển dụng"
         >
             <div className={styles.page}>
@@ -53,7 +73,11 @@ function RecruiterProfile() {
                     {/* Left Column */}
                     <div className={styles.leftColumn}>
                         <div className={styles.companyCard}>
-                            <CompanyInfo />
+                            <CompanyInfo
+                                companyName={companyProfile?.companyName}
+                                taxCode={companyProfile?.businessRegistrationNumber}
+                                address={companyProfile?.headquartersAddress}
+                            />
                         </div>
 
                         <div className={styles.introductionCard}>
@@ -68,7 +92,9 @@ function RecruiterProfile() {
                     {/* Right Column */}
                     <div className={styles.rightColumn}>
                         <div className={styles.contactCard}>
-                            <ContactInfo />
+                            <ContactInfo
+                                contactPerson={companyProfile?.legalRepresentative}
+                            />
                         </div>
 
                         <div className={styles.licenseCard}>

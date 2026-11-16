@@ -17,3 +17,21 @@ export interface CandidateProfileRequest {
     avatarUrl: string;
     jobStatus: string;
 }
+
+export interface CompanyProfileRequest {
+    companyName: string;
+    headquartersAddress: string;
+    businessRegistrationNumber: string;
+    legalRepresentative: string;
+}
+
+export interface CompanyProfileResponse {
+    companyId: string;
+    userId: string;
+    companyName: string;
+    headquartersAddress: string;
+    businessRegistrationNumber: string;
+    legalRepresentative: string;
+    createdAt?: string;
+    updatedAt?: string;
+}

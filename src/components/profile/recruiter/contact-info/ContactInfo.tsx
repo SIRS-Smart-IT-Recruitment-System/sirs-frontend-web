@@ -1,4 +1,3 @@
-
 import {
     Mail,
     Phone,
@@ -9,7 +8,21 @@ import {
 import { company } from "../recruiterProfileData";
 import styles from "./ContactInfo.module.css";
 
-function ContactInfo() {
+interface ContactInfoProps {
+    contactPerson?: string;
+    position?: string;
+    email?: string;
+    phone?: string;
+}
+
+function ContactInfo({
+    contactPerson,
+    position = company.position,
+    email = company.email,
+    phone = company.phone,
+}: ContactInfoProps) {
+    const displayContactPerson = contactPerson || company.contactPerson;
+
     return (
         <section className={styles.card}>
             {/* Tiêu đề */}
@@ -26,8 +39,8 @@ function ContactInfo() {
                     </div>
 
                     <div className={styles.contactInfo}>
-                        <span>Người đại diện liên hệ</span>
-                        <p>{company.contactPerson}</p>
+                        <span>Người đại diện theo pháp luật</span>
+                        <p>{displayContactPerson}</p>
                     </div>
                 </div>
 
@@ -39,7 +52,7 @@ function ContactInfo() {
 
                     <div className={styles.contactInfo}>
                         <span>Chức vụ</span>
-                        <p>{company.position}</p>
+                        <p>{position}</p>
                     </div>
                 </div>
 
@@ -51,7 +64,7 @@ function ContactInfo() {
 
                     <div className={styles.contactInfo}>
                         <span>Email liên hệ</span>
-                        <p>{company.email}</p>
+                        <p>{email}</p>
                     </div>
                 </div>
 
@@ -63,7 +76,7 @@ function ContactInfo() {
 
                     <div className={styles.contactInfo}>
                         <span>Số điện thoại</span>
-                        <p>{company.phone}</p>
+                        <p>{phone}</p>
                     </div>
                 </div>
             </div>
