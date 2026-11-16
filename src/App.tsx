@@ -1,9 +1,8 @@
 import "./App.css";
-import AuthPage from "./pages/AuthPage/AuthPage";
-
+import AppRoutes from "./routers/AppRoutes.tsx";
 
 function App() {
-    return <AuthPage />;
+    return <AppRoutes />;
 }
 
 export default App;

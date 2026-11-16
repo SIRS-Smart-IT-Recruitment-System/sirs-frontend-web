@@ -1,21 +1,23 @@
+
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 10px 20px;
-    border: 1px solid transparent;
+    gap: var(--spacing-2);
+
+    padding: 10px var(--spacing-5);
+
+    border: var(--border-width-thin) var(--border-style-solid) transparent;
     border-radius: var(--radius-md);
+
     font-size: var(--font-size-button);
     font-weight: var(--font-weight-semibold);
+
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-/* =========================
-   PRIMARY
-========================= */
-
+/* PRIMARY */
 .btn-primary {
     background-color: var(--color-primary);
     color: var(--color-surface);
@@ -25,10 +27,7 @@
     background-color: var(--color-accent);
 }
 
-/* =========================
-   SECONDARY
-========================= */
-
+/* SECONDARY */
 .btn-secondary {
     background-color: var(--color-light-blue);
     color: var(--color-text-primary);
@@ -39,10 +38,7 @@
     color: var(--color-surface);
 }
 
-/* =========================
-   OUTLINE
-========================= */
-
+/* OUTLINE */
 .btn-outline {
     background-color: transparent;
     color: var(--color-primary);
@@ -54,10 +50,7 @@
     color: var(--color-surface);
 }
 
-/* =========================
-   DANGER
-========================= */
-
+/* DANGER */
 .btn-danger {
     background-color: var(--color-danger);
     color: var(--color-surface);
@@ -67,25 +60,21 @@
     opacity: 0.85;
 }
 
-/* =========================
-   DISABLED
-========================= */
-
+/* DISABLED */
 .btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-/* =========================
-   LOADING SPINNER
-========================= */
-
+/* LOADING SPINNER */
 .btn-spinner {
     width: 15px;
     height: 15px;
+
     border: 2px solid currentColor;
     border-right-color: transparent;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
+
     animation: btn-spin 0.7s linear infinite;
 }
 

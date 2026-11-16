@@ -1,0 +1,79 @@
+.card {
+    height: 100%;
+    padding: 20px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.cardHeader h2 {
+    font-size: 18px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.addButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    color: var(--color-primary);
+    background-color: var(--color-background);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.addButton:hover {
+    opacity: 0.8;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.imageItem {
+    min-width: 0;
+}
+
+.imagePlaceholder {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    background-color: var(--color-background);
+    border-radius: var(--radius-md);
+}
+
+.meeting {
+    background-color: #E8F3FC;
+}
+
+.workspace {
+    background-color: #EFF6FF;
+}
+
+.imageItem p {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    text-align: center;
+}
+
+.note {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+}

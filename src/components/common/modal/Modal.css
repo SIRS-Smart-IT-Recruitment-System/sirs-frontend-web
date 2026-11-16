@@ -1,11 +1,14 @@
+
 .modal-overlay {
     position: fixed;
     inset: 0;
     z-index: 1000;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+
+    padding: var(--spacing-5);
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -24,7 +27,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 24px;
+
+    padding: var(--spacing-5) var(--spacing-6);
 }
 
 .modal-title {
@@ -36,9 +40,11 @@
 .modal-close {
     border: none;
     background: transparent;
-    color: #6B7280;
+
+    color: var(--color-text-secondary);
     font-size: 28px;
     line-height: 1;
+
     cursor: pointer;
 }
 
@@ -46,19 +52,19 @@
     color: var(--color-danger);
 }
 
-
 .modal-body {
-    padding: 24px;
+    padding: var(--spacing-6);
+
     color: var(--color-text-primary);
     font-size: var(--font-size-body-default);
 }
 
-
 .modal-footer {
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
-    padding: 16px 24px;
+    gap: var(--spacing-3);
+
+    padding: var(--spacing-4) var(--spacing-6);
 }
 
 @keyframes modal-appear {
@@ -81,6 +87,6 @@
     .modal-header,
     .modal-body,
     .modal-footer {
-        padding: 16px;
+        padding: var(--spacing-4);
     }
 }

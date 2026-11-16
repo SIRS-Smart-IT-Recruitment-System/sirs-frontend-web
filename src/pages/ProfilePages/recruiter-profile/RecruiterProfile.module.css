@@ -1,0 +1,233 @@
+
+.page {
+    width: 100%;
+    min-height: 100%;
+    padding: 8px 20px 24px;
+    box-sizing: border-box;
+    background-color: var(--color-background);
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.pageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.pageTitle {
+    min-width: 0;
+}
+
+.pageTitle h1 {
+    font-size: 24px;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+    color: var(--color-text-primary);
+}
+
+.pageTitle p {
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+/* =========================
+   HEADER ACTIONS
+========================= */
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.editButton,
+.previewButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 42px;
+    padding: 0 14px;
+
+    border-radius: var(--radius-md);
+
+    font-family: var(--font-primary);
+    font-size: var(--font-size-button);
+    font-weight: var(--font-weight-medium);
+
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.editButton {
+    color: var(--color-text-white);
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+
+.editButton:hover {
+    opacity: 0.9;
+}
+
+.previewButton {
+    color: var(--color-primary);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-primary);
+}
+
+.previewButton:hover {
+    background-color: var(--color-background);
+}
+
+/* =========================
+   PROFILE GRID
+========================= */
+
+.contentGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+    width: 100%;
+}
+
+/* Hai cột độc lập */
+
+.leftColumn,
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+    align-items: stretch;
+}
+
+/* Các card không bị kéo giãn theo chiều cao */
+
+.leftColumn > *,
+.rightColumn > * {
+    width: 100%;
+    min-width: 0;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1024px) {
+    .page {
+        padding: 8px 12px 20px;
+    }
+
+    .pageHeader {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .headerActions {
+        width: 100%;
+    }
+
+    .contentGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+    .page {
+        padding: 8px 4px 16px;
+    }
+
+    .pageTitle h1 {
+        font-size: 20px;
+    }
+
+    .pageTitle p {
+        font-size: 13px;
+    }
+
+    .headerActions {
+        flex-wrap: wrap;
+    }
+
+    .editButton,
+    .previewButton {
+        flex: 1;
+        min-width: 0;
+        padding: 0 8px;
+        font-size: 12px;
+    }
+
+    .contentGrid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    /* Đưa các card về thứ tự hiển thị trên mobile */
+
+    .leftColumn,
+    .rightColumn {
+        display: contents;
+    }
+
+    .companyCard {
+        grid-area: company;
+    }
+
+    .contactCard {
+        grid-area: contact;
+    }
+
+    .introductionCard {
+        grid-area: introduction;
+    }
+
+    .licenseCard {
+        grid-area: license;
+    }
+
+    .galleryCard {
+        grid-area: gallery;
+    }
+
+    .jobsCard {
+        grid-area: jobs;
+    }
+
+    .contentGrid {
+        grid-template-areas:
+            "company"
+            "contact"
+            "introduction"
+            "license"
+            "gallery"
+            "jobs";
+    }
+}
+
+@media (max-width: 400px) {
+    .headerActions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .editButton,
+    .previewButton {
+        width: 100%;
+        flex: none;
+    }
+}

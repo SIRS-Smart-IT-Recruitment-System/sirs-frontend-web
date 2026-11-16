@@ -7,10 +7,6 @@
     background-color: var(--color-surface);
 }
 
-/* ═══════════════════════════════════════
-   LEFT PANEL
-═══════════════════════════════════════ */
-
 .leftPanel {
     position: relative;
     width: 60%;
@@ -37,7 +33,6 @@
     line-height: 1.75;
 }
 
-/* Illustration (qc.png) – phủ toàn bộ left panel */
 .illustrationWrapper {
     position: absolute;
     inset: 0;
@@ -52,10 +47,6 @@
     object-position: center center;
 }
 
-/* ═══════════════════════════════════════
-   RIGHT PANEL
-═══════════════════════════════════════ */
-
 .rightPanel {
     position: relative;
     width: 40%;
@@ -65,7 +56,6 @@
     overflow-y: auto;
 }
 
-/* ── Header: absolute góc trên trái, không chiếm không gian ── */
 .panelHeader {
     position: absolute;
     top: 20px;
@@ -90,7 +80,6 @@
     background: var(--color-light-blue);
 }
 
-/* ── Vùng căn giữa thật sự: Logo + Form thành 1 cụm ── */
 .centerArea {
     position: relative;
     flex: 1;
@@ -101,7 +90,6 @@
     padding: 20px 40px;
 }
 
-/* Logo (logo.png) – cách tiêu đề form 65px */
 .logoWrapper {
     position: static;
     display: flex;
@@ -117,15 +105,10 @@
     object-fit: contain;
 }
 
-/* Form container */
 .formContainer {
     width: 100%;
     max-width: 400px;
 }
-
-/* ═══════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
 
 @media screen and (max-width: 1200px) {
     .leftPanel {
