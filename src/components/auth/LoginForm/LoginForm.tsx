@@ -71,6 +71,14 @@ const LoginForm = ({
 
             console.log("Login successful:", result);
 
+            // Lưu token đăng nhập vào localStorage
+            if (result?.accessToken) {
+                localStorage.setItem("accessToken", result.accessToken);
+            }
+            if (result?.role) {
+                localStorage.setItem("role", result.role);
+            }
+
             // Chuyển kết quả đăng nhập về AuthPage
             if (onLoginSuccess) {
                 onLoginSuccess(result);

@@ -82,6 +82,14 @@ function AuthPage() {
                 registerResult
             );
 
+            // Lưu token và thông tin đăng nhập tự động để bước sau gọi API tạo hồ sơ
+            if (registerResult?.accessToken) {
+                localStorage.setItem("accessToken", registerResult.accessToken);
+            }
+            if (registerResult?.role) {
+                localStorage.setItem("role", registerResult.role);
+            }
+
             // Bước 2: Tạo hồ sơ Candidate
             const profileResult = await createCandidateProfile(
                 candidateData
