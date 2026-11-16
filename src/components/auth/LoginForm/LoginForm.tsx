@@ -4,10 +4,13 @@ import Button from "../../common/button/Button";
 import Input from "../../common/input/Input";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { login } from "../../../services/authService";
 import type { LoginRequest } from "../../../types/authTypes";
+import { ROUTES } from "../../../routers/routePaths";
+import { ROLE } from "../../../constants/role";
 
 interface LoginFormProps {
     onRegister: () => void;
@@ -20,6 +23,7 @@ const LoginForm = ({
                        onForgotPassword,
                        onLoginSuccess,
                    }: LoginFormProps) => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -79,11 +83,16 @@ const LoginForm = ({
                 localStorage.setItem("role", result.role);
             }
 
-            // Chuyển kết quả đăng nhập về AuthPage
+            // Chuyển kết quả đăng nhập về AuthPage hoặc tự chuyển hướng
             if (onLoginSuccess) {
                 onLoginSuccess(result);
             } else {
-                alert("Đăng nhập thành công!");
+                const userRole = (result?.role || "").toUpperCase();
+                if (userRole === ROLE.RECRUITER) {
+                    navigate(ROUTES.RECRUITER.PROFILE);
+                } else {
+                    navigate(ROUTES.CANDIDATE.PROFILE);
+                }
             }
 
         } catch (error) {

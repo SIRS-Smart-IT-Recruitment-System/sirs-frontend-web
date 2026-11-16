@@ -1,5 +1,7 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../routers/routePaths";
 import {
     Search,
     SlidersHorizontal,
@@ -21,8 +23,15 @@ function Header({
                     userName = "Công ty ABC",
                     userRole = "Nhà tuyển dụng",
                 }: HeaderProps) {
+    const navigate = useNavigate();
     const [search, setSearch] = useState("");
     const [showAccount, setShowAccount] = useState(false);
+
+    const handleLogout = () => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("role");
+        navigate(ROUTES.LOGIN);
+    };
 
     return (
         <header className={styles.header}>
@@ -87,7 +96,7 @@ function Header({
                                 Thông tin tài khoản
                             </button>
 
-                            <button type="button">
+                            <button type="button" onClick={handleLogout}>
                                 <LogOut size={17} />
                                 Đăng xuất
                             </button>

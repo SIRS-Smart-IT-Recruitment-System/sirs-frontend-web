@@ -59,6 +59,17 @@ function AuthPage() {
         ? () => setCurrentPage(backPage)
         : undefined;
 
+    // Xử lý sau khi đăng nhập thành công: chuyển hướng theo vai trò
+    const handleLoginSuccess = (loginResult: any) => {
+        const userRole = (loginResult?.role || localStorage.getItem("role") || "").toUpperCase();
+
+        if (userRole === ROLE.RECRUITER) {
+            navigate(ROUTES.RECRUITER.PROFILE);
+        } else {
+            navigate(ROUTES.CANDIDATE.PROFILE);
+        }
+    };
+
     // Đăng ký tài khoản và tạo hồ sơ Candidate
     const handleRegisterCandidate = async (
         candidateData: CandidateProfileRequest
@@ -169,6 +180,7 @@ function AuthPage() {
                 <LoginForm
                     onRegister={() => setCurrentPage("register")}
                     onForgotPassword={() => setActiveModal("forgot")}
+                    onLoginSuccess={handleLoginSuccess}
                 />
             )}
 
