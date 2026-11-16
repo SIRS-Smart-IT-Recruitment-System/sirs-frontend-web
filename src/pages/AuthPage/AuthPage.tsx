@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import AuthLayout from "../../layouts/Auth-layout/AuthLayout";
 import LoginForm from "../../components/auth/LoginForm/LoginForm";
 import RegisterForm from "../../components/auth/Register/RegisterForm/RegisterForm";
@@ -8,34 +10,56 @@ import CompanyForm from "../../components/auth/Register/CompanyForm/CompanyForm"
 import ForgotPasswordModal from "../../components/auth/ForgotPasswordModal/ForgotPasswordModal";
 import ResetPasswordModal from "../../components/auth/ResetPasswordModal/ResetPasswordModal";
 import { register } from "../../services/authService";
-import type { RegisterRequest, CandidateProfileRequest, CandidateRegisterRequest, } from "../../types/authTypes";
-import axios from "axios";
-import { ROLE } from "../../constants/role";
+import { createCandidateProfile } from "../../services/candidateProfileService";
 
-type Page = "login" | "register" | "roleSelect" | "candidateForm" | "companyForm";
+import type {
+    RegisterRequest,
+    CandidateProfileRequest,
+} from "../../types/authTypes";
+
+import { ROLE } from "../../constants/role";
+import { ROUTES } from "../../routers/routePaths";
+
+type Page =
+    | "login"
+    | "register"
+    | "roleSelect"
+    | "candidateForm"
+    | "companyForm";
+
 type ModalType = "forgot" | "reset" | null;
 
+// Quản lý điều hướng quay lại
 const backMap: Partial<Record<Page, Page>> = {
-    roleSelect:    "register",
+    roleSelect: "register",
     candidateForm: "roleSelect",
-    companyForm:   "roleSelect",
+    companyForm: "roleSelect",
 };
 
 function AuthPage() {
+    const navigate = useNavigate();
+
     const [currentPage, setCurrentPage] = useState<Page>("login");
     const [activeModal, setActiveModal] = useState<ModalType>(null);
 
+    // Lưu thông tin đăng ký tài khoản
     const [registerData, setRegisterData] = useState<RegisterRequest>({
         email: "",
         password: "",
         role: ROLE.CANDIDATE,
     });
 
+    // Trạng thái xử lý đăng ký
     const [isRegistering, setIsRegistering] = useState(false);
 
+    // Xử lý nút quay lại
     const backPage = backMap[currentPage];
-    const handleBack = backPage ? () => setCurrentPage(backPage) : undefined;
 
+    const handleBack = backPage
+        ? () => setCurrentPage(backPage)
+        : undefined;
+
+    // Đăng ký tài khoản và tạo hồ sơ Candidate
     const handleRegisterCandidate = async (
         candidateData: CandidateProfileRequest
     ) => {
@@ -44,33 +68,80 @@ function AuthPage() {
         try {
             setIsRegistering(true);
 
-            const requestData: CandidateRegisterRequest = {
+            // Bước 1: Đăng ký tài khoản Candidate
+            const accountData: RegisterRequest = {
                 ...registerData,
-                ...candidateData,
+                email: registerData.email.trim(),
                 role: ROLE.CANDIDATE,
             };
 
-            const result = await register(requestData);
+            const registerResult = await register(accountData);
 
-            console.log("Register successful:", result);
+            console.log(
+                "Register account successful:",
+                registerResult
+            );
 
-            alert("Đăng ký tài khoản thành công!");
+            // Bước 2: Tạo hồ sơ Candidate
+            const profileResult = await createCandidateProfile(
+                candidateData
+            );
 
-            setCurrentPage("login");
+            console.log(
+                "Create candidate profile successful:",
+                profileResult
+            );
+
+            // Thông báo đăng ký thành công
+            alert("Đăng ký tài khoản và hồ sơ thành công!");
+
+            // Bước 3: Chuyển đến trang Candidate Profile
+            navigate(ROUTES.CANDIDATE.PROFILE);
 
         } catch (error) {
-            console.error("Register failed:", error);
+            console.error(
+                "Candidate registration failed:",
+                error
+            );
 
             if (axios.isAxiosError(error)) {
                 const status = error.response?.status;
-                const backendMessage = error.response?.data?.message;
 
-                if (status === 500) {
-                    alert("Máy chủ đang gặp sự cố. Vui lòng thử lại sau!");
+                const backendMessage =
+                    error.response?.data?.message;
+
+                if (status === 400) {
+                    alert(
+                        backendMessage ||
+                        "Thông tin đăng ký không hợp lệ!"
+                    );
+                } else if (status === 401) {
+                    alert(
+                        backendMessage ||
+                        "Bạn chưa được xác thực. Vui lòng đăng nhập lại!"
+                    );
+                } else if (status === 403) {
+                    alert(
+                        backendMessage ||
+                        "Bạn không có quyền thực hiện thao tác này!"
+                    );
+                } else if (status === 409) {
+                    alert(
+                        backendMessage ||
+                        "Email hoặc thông tin đã tồn tại!"
+                    );
+                } else if (status === 500) {
+                    alert(
+                        "Máy chủ đang gặp sự cố. Vui lòng thử lại sau!"
+                    );
+                } else if (!error.response) {
+                    alert(
+                        "Không thể kết nối đến API Gateway. Vui lòng kiểm tra kết nối mạng!"
+                    );
                 } else {
                     alert(
                         backendMessage ||
-                        "Đăng ký thất bại. Vui lòng kiểm tra lại thông tin!"
+                        "Đăng ký thất bại. Vui lòng thử lại!"
                     );
                 }
             } else {
@@ -85,6 +156,7 @@ function AuthPage() {
     return (
         <AuthLayout onBack={handleBack}>
 
+            {/* Đăng nhập */}
             {currentPage === "login" && (
                 <LoginForm
                     onRegister={() => setCurrentPage("register")}
@@ -92,6 +164,7 @@ function AuthPage() {
                 />
             )}
 
+            {/* Đăng ký tài khoản */}
             {currentPage === "register" && (
                 <RegisterForm
                     onLogin={() => setCurrentPage("login")}
@@ -107,6 +180,7 @@ function AuthPage() {
                 />
             )}
 
+            {/* Chọn vai trò */}
             {currentPage === "roleSelect" && (
                 <RoleSelect
                     onBack={() => setCurrentPage("register")}
@@ -118,10 +192,13 @@ function AuthPage() {
 
                         setCurrentPage("candidateForm");
                     }}
-                    onSelectCompany={() => {}}
+                    onSelectCompany={() => {
+                        setCurrentPage("companyForm");
+                    }}
                 />
             )}
 
+            {/* Đăng ký hồ sơ Candidate */}
             {currentPage === "candidateForm" && (
                 <CandidateForm
                     onBack={() => setCurrentPage("roleSelect")}
@@ -129,18 +206,21 @@ function AuthPage() {
                 />
             )}
 
+            {/* Đăng ký hồ sơ Company */}
             {currentPage === "companyForm" && (
                 <CompanyForm
                     onBack={() => setCurrentPage("roleSelect")}
                 />
             )}
 
+            {/* Quên mật khẩu */}
             <ForgotPasswordModal
                 isOpen={activeModal === "forgot"}
                 onClose={() => setActiveModal(null)}
                 onContinue={() => setActiveModal("reset")}
             />
 
+            {/* Đặt lại mật khẩu */}
             <ResetPasswordModal
                 isOpen={activeModal === "reset"}
                 onClose={() => setActiveModal(null)}

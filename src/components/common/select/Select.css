@@ -1,4 +1,3 @@
-
 .select-group {
     display: flex;
     flex-direction: column;
@@ -16,17 +15,13 @@
     width: 100%;
     min-height: 42px;
     padding: 10px var(--spacing-3);
-
     border: var(--border-width-thin) var(--border-style-solid) var(--color-border);
     border-radius: var(--radius-md);
-
     background-color: var(--color-surface);
     color: var(--color-text-primary);
-
     font-size: var(--font-size-body-default);
     outline: none;
     cursor: pointer;
-
     transition: border-color 0.2s ease;
 }
 
