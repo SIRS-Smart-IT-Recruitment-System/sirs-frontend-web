@@ -61,13 +61,28 @@ const CandidateForm = ({ onSubmit }: CandidateFormProps) => {
         try {
             setIsLoading(true);
 
+            // Chuyển đổi trạng thái công việc sang Enum chuẩn của Backend
+            const mapJobStatus = (status: string): string => {
+                const s = status.toLowerCase();
+                if (s.includes("tìm") || s.includes("open") || s === "open_for_work") {
+                    return "OPEN_FOR_WORK";
+                }
+                if (s.includes("sẵn") || s.includes("cơ hội") || s.includes("ready") || s === "ready_for_opportunity") {
+                    return "READY_FOR_OPPORTUNITY";
+                }
+                if (s.includes("chưa") || s.includes("không") || s === "not_looking") {
+                    return "NOT_LOOKING";
+                }
+                return "OPEN_FOR_WORK";
+            };
+
             const candidateData: CandidateProfileRequest = {
                 name: fullName.trim(),
                 phoneNumber: phone.trim(),
                 bio: bio.trim(),
                 cvUrl: "",
                 avatarUrl: "",
-                jobStatus: workStatus.trim(),
+                jobStatus: mapJobStatus(workStatus),
             };
 
             await onSubmit(candidateData);
