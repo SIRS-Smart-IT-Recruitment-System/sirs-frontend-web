@@ -4,6 +4,7 @@ import Button from "../../../common/button/Button";
 import Input from "../../../common/input/Input";
 import type { CandidateProfileRequest } from "../../../../types/authTypes";
 
+
 interface CandidateFormProps {
     onBack?: () => void;
     onSubmit: (data: CandidateProfileRequest) => Promise<void>;
@@ -61,10 +62,12 @@ const CandidateForm = ({ onSubmit }: CandidateFormProps) => {
             setIsLoading(true);
 
             const candidateData: CandidateProfileRequest = {
-                fullName: fullName.trim(),
-                phone: phone.trim(),
+                name: fullName.trim(),
+                phoneNumber: phone.trim(),
                 bio: bio.trim(),
-                workStatus: workStatus.trim(),
+                cvUrl: "",
+                avatarUrl: "",
+                jobStatus: workStatus.trim(),
             };
 
             await onSubmit(candidateData);

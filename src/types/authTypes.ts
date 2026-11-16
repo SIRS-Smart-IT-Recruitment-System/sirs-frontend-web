@@ -1,18 +1,19 @@
-import { ROLE } from "../constants/role";
-
 export interface RegisterRequest {
     email: string;
     password: string;
-    role: typeof ROLE[keyof typeof ROLE];
+    role: "CANDIDATE" | "RECRUITER";
+}
+
+export interface LoginRequest {
+    email: string;
+    password: string;
 }
 
 export interface CandidateProfileRequest {
-    fullName: string;
-    phone: string;
+    name: string;
+    phoneNumber: string;
     bio: string;
-    workStatus: string;
+    cvUrl: string;
+    avatarUrl: string;
+    jobStatus: string;
 }
-
-export interface CandidateRegisterRequest
-    extends RegisterRequest,
-        CandidateProfileRequest {}
