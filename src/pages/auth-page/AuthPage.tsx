@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthLayout from "../../layouts/templates/auth-layout/AuthLayout";
 import LoginForm from "../../features/auth/login-form/LoginForm";
@@ -9,6 +9,7 @@ import CandidateForm from "../../features/auth/register/candidate-form/Candidate
 import CompanyForm from "../../features/auth/register/company-form/CompanyForm";
 import ForgotPasswordModal from "../../features/auth/forgot-password-modal/ForgotPasswordModal";
 import ResetPasswordModal from "../../features/auth/reset-password-modal/ResetPasswordModal";
+import Toast from "../../components/common/toast/Toast";
 import { register } from "../../services/authService";
 import { createCandidateProfile } from "../../services/candidateProfileService";
 import { createCompanyProfile } from "../../services/companyProfileService";
@@ -40,9 +41,20 @@ const backMap: Partial<Record<Page, Page>> = {
 
 function AuthPage() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [currentPage, setCurrentPage] = useState<Page>("login");
     const [activeModal, setActiveModal] = useState<ModalType>(null);
+    const [toastMessage, setToastMessage] = useState<string | null>(
+        location.state?.toastMessage || null
+    );
+
+    useEffect(() => {
+        if (location.state?.toastMessage) {
+            setToastMessage(location.state.toastMessage);
+            window.history.replaceState({}, document.title);
+        }
+    }, [location.state]);
 
     // Lưu thông tin đăng ký tài khoản
     const [registerData, setRegisterData] = useState<RegisterRequest>({
@@ -251,6 +263,13 @@ function AuthPage() {
 
     return (
         <AuthLayout onBack={handleBack}>
+            {toastMessage && (
+                <Toast
+                    message={toastMessage}
+                    type="success"
+                    onClose={() => setToastMessage(null)}
+                />
+            )}
 
             {/* Đăng nhập */}
             {currentPage === "login" && (

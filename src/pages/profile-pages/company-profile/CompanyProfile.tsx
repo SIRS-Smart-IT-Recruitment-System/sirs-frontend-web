@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Pencil, Eye, Building2, MapPin, Hash, User } from "lucide-react";
+import { ROUTES } from "../../../routers/routePaths";
 
 import MainLayout from "../../../layouts/templates/main-layout/MainLayout";
 
@@ -39,6 +41,15 @@ function validateTaxCode(code: string): string {
 }
 
 function CompanyProfile() {
+    const navigate = useNavigate();
+    const token = localStorage.getItem("accessToken");
+
+    useEffect(() => {
+        if (!token) {
+            navigate(ROUTES.LOGIN, { replace: true });
+        }
+    }, [navigate, token]);
+
     const [companyProfile, setCompanyProfile] = useState<CompanyProfileResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
@@ -56,6 +67,8 @@ function CompanyProfile() {
     const [formError, setFormError] = useState<Partial<Record<keyof CompanyProfileRequest, string>>>({});
 
     useEffect(() => {
+        if (!token) return;
+
         const fetchCompanyProfile = async () => {
             try {
                 setIsLoading(true);
