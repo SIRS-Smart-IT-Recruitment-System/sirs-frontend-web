@@ -1,4 +1,4 @@
-export type SidebarRole = "candidate" | "recruiter";
+export type SidebarRole = "candidate" | "company";
 
 export interface NavigationItem {
     label: string;
@@ -30,30 +30,30 @@ export const navigation: Record<SidebarRole, NavigationItem[]> = {
         },
     ],
 
-    recruiter: [
+    company: [
         {
             label: "Tổng quan",
-            path: "/recruiter/dashboard",
+            path: "/company/dashboard",
             icon: "▦",
         },
         {
             label: "Quản lý tuyển dụng",
-            path: "/recruiter/jobs",
+            path: "/company/jobs",
             icon: "▣",
         },
         {
             label: "Lịch phỏng vấn",
-            path: "/recruiter/interviews",
+            path: "/company/interviews",
             icon: "▦",
         },
         {
             label: "Quản lý ứng viên",
-            path: "/recruiter/candidates",
+            path: "/company/candidates",
             icon: "♙",
         },
         {
             label: "Hồ sơ nhà tuyển dụng",
-            path: "/recruiter/profile",
+            path: "/company/profile",
             icon: "♧",
         },
     ],
