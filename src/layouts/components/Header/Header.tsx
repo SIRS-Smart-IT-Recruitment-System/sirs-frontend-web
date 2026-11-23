@@ -14,6 +14,9 @@ import {
 import {ROUTES} from "../../../routers/routePaths.ts";
 import type {SidebarRole} from "../../../constants/navigation.ts";
 import {HEADER_CONFIG} from "../../../constants/headerConfig.ts";
+import Modal from "../../../components/common/modal/Modal";
+import Button from "../../../components/common/button/Button";
+import {logout} from "../../../services/authService";
 
 import styles from "./Header.module.css";
 
@@ -28,6 +31,8 @@ function Header({role, userName, userRole}: HeaderProps) {
 
     const [search, setSearch] = useState("");
     const [showAccount, setShowAccount] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     // Lấy cấu hình Header theo role
     const config = HEADER_CONFIG[role];
@@ -36,14 +41,31 @@ function Header({role, userName, userRole}: HeaderProps) {
     const displayName =
         userName?.trim() || config.defaultUserName;
 
-    // Xử lý đăng xuất
-    const handleLogout = () => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("role");
-
+    // Xử lý mở Modal đăng xuất
+    const handleOpenLogoutModal = () => {
         setShowAccount(false);
+        setShowLogoutModal(true);
+    };
 
-        navigate(ROUTES.LOGIN);
+    // Xác nhận đăng xuất
+    const handleConfirmLogout = async () => {
+        try {
+            setIsLoggingOut(true);
+            await logout();
+        } catch (error) {
+            console.error("Lỗi khi đăng xuất:", error);
+        } finally {
+            setIsLoggingOut(false);
+            setShowLogoutModal(false);
+            navigate(ROUTES.LOGIN, {
+                replace: true,
+                state: { toastMessage: "Đăng xuất thành công" },
+            });
+        }
+    };
+
+    const handleCancelLogout = () => {
+        setShowLogoutModal(false);
     };
 
     return (
@@ -112,7 +134,7 @@ function Header({role, userName, userRole}: HeaderProps) {
 
                             <button
                                 type="button"
-                                onClick={handleLogout}
+                                onClick={handleOpenLogoutModal}
                             >
                                 <LogOut size={17}/>
                                 Đăng xuất
@@ -121,6 +143,36 @@ function Header({role, userName, userRole}: HeaderProps) {
                     )}
                 </div>
             </div>
+
+            <Modal
+                isOpen={showLogoutModal}
+                onClose={handleCancelLogout}
+                title="Xác nhận đăng xuất"
+                footer={
+                    <>
+                        <Button
+                            type="button"
+                            variant="secondary"
+                            onClick={handleCancelLogout}
+                            disabled={isLoggingOut}
+                        >
+                            Hủy
+                        </Button>
+                        <Button
+                            type="button"
+                            variant="danger"
+                            onClick={handleConfirmLogout}
+                            loading={isLoggingOut}
+                        >
+                            Đăng xuất
+                        </Button>
+                    </>
+                }
+            >
+                <p className={styles.logoutModalText}>
+                    Bạn có chắc chắn muốn đăng xuất không?
+                </p>
+            </Modal>
         </header>
     );
 }

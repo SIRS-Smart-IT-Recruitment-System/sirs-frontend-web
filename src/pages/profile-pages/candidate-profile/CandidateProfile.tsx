@@ -1,7 +1,9 @@
 
 import { useEffect, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { Phone, Pencil } from "lucide-react";
+import { ROUTES } from "../../../routers/routePaths";
 
 import MainLayout from "../../../layouts/templates/main-layout/MainLayout";
 
@@ -84,6 +86,15 @@ function getStatusBadge(status: CandidateJobStatus) {
 }
 
 function CandidateProfile() {
+    const navigate = useNavigate();
+    const token = localStorage.getItem("accessToken");
+
+    useEffect(() => {
+        if (!token) {
+            navigate(ROUTES.LOGIN, { replace: true });
+        }
+    }, [navigate, token]);
+
     const [profile, setProfile] =
         useState<CandidateProfileResponse | null>(null);
 
@@ -110,6 +121,8 @@ function CandidateProfile() {
 
     // Lấy hồ sơ ứng viên
     useEffect(() => {
+        if (!token) return;
+
         const fetchProfile = async () => {
             try {
                 setIsLoading(true);

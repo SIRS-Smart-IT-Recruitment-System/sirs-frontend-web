@@ -3,6 +3,7 @@ import { ROUTES } from "./routePaths";
 import AuthPage from "../pages/auth-page/AuthPage.tsx";
 import CompanyProfile from "../pages/profile-pages/company-profile/CompanyProfile.tsx";
 import CandidateProfile from "../pages/profile-pages/candidate-profile/CandidateProfile.tsx";
+import ProtectedRoute from "./ProtectedRoute.tsx";
 
 function NotFoundPage() {
     return (
@@ -33,12 +34,20 @@ function AppRoutes() {
 
             <Route
                 path={ROUTES.CANDIDATE.PROFILE}
-                element={<CandidateProfile />}
+                element={
+                    <ProtectedRoute>
+                        <CandidateProfile />
+                    </ProtectedRoute>
+                }
             />
 
             <Route
                 path={ROUTES.RECRUITER.PROFILE}
-                element={<CompanyProfile />}
+                element={
+                    <ProtectedRoute>
+                        <CompanyProfile />
+                    </ProtectedRoute>
+                }
             />
 
             <Route
