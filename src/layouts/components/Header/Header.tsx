@@ -111,7 +111,7 @@ function Header({role, userName, userRole}: HeaderProps) {
                 <div className={styles.accountArea}>
                     <div className={styles.accountText}>
                         <strong>{displayName}</strong>
-                        <span>{config.userRole}</span>
+                        <span>{userRole || config.userRole}</span>
                     </div>
 
                     <button

@@ -3,6 +3,7 @@ import { ROUTES } from "./routePaths";
 import AuthPage from "../pages/auth-page/AuthPage.tsx";
 import CompanyProfile from "../pages/profile-pages/company-profile/CompanyProfile.tsx";
 import CandidateProfile from "../pages/profile-pages/candidate-profile/CandidateProfile.tsx";
+import GitVerificationPage from "../pages/git-page/GitVerificationPage.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
 
 function NotFoundPage() {
@@ -37,6 +38,15 @@ function AppRoutes() {
                 element={
                     <ProtectedRoute>
                         <CandidateProfile />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path={ROUTES.CANDIDATE.GIT_VERIFICATION}
+                element={
+                    <ProtectedRoute>
+                        <GitVerificationPage />
                     </ProtectedRoute>
                 }
             />

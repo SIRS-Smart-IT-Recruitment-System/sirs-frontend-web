@@ -7,6 +7,7 @@ export const ROUTES = {
     CANDIDATE: {
         DASHBOARD: "/candidate/dashboard",
         PROFILE: "/candidate/profile",
+        GIT_VERIFICATION: "/candidate/git-verification",
     },
 
     RECRUITER: {
