@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ROUTES } from "./routePaths";
-import AuthPage from "../pages/AuthPage/AuthPage.tsx";
-import RecruiterProfile from "../pages/ProfilePages/recruiter-profile/RecruiterProfile.tsx";
-import CandidateProfile from "../pages/ProfilePages/candidate-profile/CandidateProfile.tsx";
+import AuthPage from "../pages/auth-page/AuthPage.tsx";
+import CompanyProfile from "../pages/profile-pages/company-profile/CompanyProfile.tsx";
+import CandidateProfile from "../pages/profile-pages/candidate-profile/CandidateProfile.tsx";
 
 function NotFoundPage() {
     return (
@@ -38,7 +38,7 @@ function AppRoutes() {
 
             <Route
                 path={ROUTES.RECRUITER.PROFILE}
-                element={<RecruiterProfile />}
+                element={<CompanyProfile />}
             />
 
             <Route

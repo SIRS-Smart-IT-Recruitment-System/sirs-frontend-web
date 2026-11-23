@@ -10,8 +10,8 @@ export const ROUTES = {
     },
 
     RECRUITER: {
-        DASHBOARD: "/recruiter/dashboard",
-        PROFILE: "/recruiter/profile",
+        DASHBOARD: "/company/dashboard",
+        PROFILE: "/company/profile",
     },
 
     NOT_FOUND: "*",
