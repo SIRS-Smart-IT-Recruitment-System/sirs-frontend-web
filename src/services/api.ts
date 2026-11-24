@@ -1,4 +1,3 @@
-
 import axios from "axios";
 
 const api = axios.create({
@@ -10,10 +9,28 @@ const api = axios.create({
 
 // Tự động đính kèm Access Token
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem("accessToken");
+    const url = config.url || "";
 
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+    // Những API không cần Access Token
+    const publicEndpoints = [
+        "/api/v1/auth/login",
+        "/api/v1/auth/register",
+    ];
+
+    const isPublicEndpoint = publicEndpoints.some(
+        (endpoint) => url.includes(endpoint)
+    );
+
+    // Chỉ gửi token khi API không phải public
+    if (!isPublicEndpoint) {
+        const token = localStorage.getItem("accessToken");
+
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+    } else {
+        // Đảm bảo không gửi token cũ vào Login/Register
+        delete config.headers.Authorization;
     }
 
     return config;
