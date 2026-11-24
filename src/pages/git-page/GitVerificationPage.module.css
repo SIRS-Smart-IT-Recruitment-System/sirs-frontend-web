@@ -1,256 +1,547 @@
-.container {
-    padding: 32px;
-    max-width: 1200px;
-    margin: 0 auto;
+.page {
+    width: 100%;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 20px;
+    box-sizing: border-box;
+    padding: 8px 24px 32px;
 }
 
-.headerSection {
+/* ==========================================================
+   HEADER SECTION
+========================================================== */
+.headerCard {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg, 12px);
+    padding: 20px 24px;
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
 }
 
-.title {
-    font-size: 26px;
+.headerInfo h1 {
+    font-size: 22px;
     font-weight: 700;
     color: var(--color-text-primary);
-    margin: 0;
+    margin: 0 0 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.subtitle {
-    font-size: 15px;
+.headerInfo p {
+    font-size: 14px;
     color: var(--color-text-secondary);
     margin: 0;
 }
 
-/* Card base */
-.card {
-    background: var(--color-surface);
-    border-radius: 12px;
+/* ==========================================================
+   STEPPER NAVIGATION (TABS)
+========================================================== */
+.stepperContainer {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border-light);
-    padding: 24px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.cardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--color-border-light);
-}
-
-.cardTitle {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--color-text-primary);
-    margin: 0;
-    display: flex;
-    align-items: center;
+    border-radius: var(--radius-lg, 12px);
+    padding: 6px;
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
     gap: 8px;
 }
 
-/* Step 1: Connect Form */
-.connectForm {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 600px;
-}
-
-.connectedProfile {
+.stepTab {
+    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: var(--color-surface-secondary);
-    padding: 16px 20px;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 16px;
     border-radius: 8px;
-    border: 1px solid var(--color-border-light);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
 }
 
-.profileInfo {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.profileMeta h4 {
-    margin: 0 0 4px 0;
-    font-size: 16px;
+.stepTab:hover:not(:disabled) {
+    background-color: var(--color-surface-hover, #F1F5F9);
     color: var(--color-text-primary);
 }
 
-.profileMeta p {
+.stepTabActive {
+    background-color: #EFF6FF !important;
+    color: var(--color-primary) !important;
+}
+
+.stepTabCompleted {
+    color: #059669;
+}
+
+.stepNumber {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: var(--color-border-light);
+    color: var(--color-text-secondary);
+}
+
+.stepTabActive .stepNumber {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.stepTabCompleted .stepNumber {
+    background-color: #10B981;
+    color: white;
+}
+
+/* ==========================================================
+   STEP 1: CONNECT GITHUB
+========================================================== */
+.connectCard {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg, 12px);
+    padding: 40px 32px;
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 680px;
+    margin: 20px auto;
+}
+
+.githubLogoBadge {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #0F172A;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+
+.connectTitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 10px 0;
+}
+
+.connectDesc {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 28px 0;
+}
+
+.githubConnectBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #24292e;
+    color: #ffffff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.githubConnectBtn:hover {
+    background: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.githubConnectBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.toggleManualLink {
+    margin-top: 20px;
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* ==========================================================
+   STEP 2: REPOSITORIES SELECTION
+========================================================== */
+.accountBar {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg, 12px);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+.accountLeft {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.accountAvatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border-light);
+}
+
+.accountDetails h4 {
+    margin: 0 0 3px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.accountDetails p {
     margin: 0;
     font-size: 13px;
     color: var(--color-text-secondary);
 }
 
-/* Step 2: Repositories Selection */
-.selectionNotice {
+/* Repo Controls Bar */
+.repoControls {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg, 12px);
+    padding: 16px 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+.searchBox {
+    position: relative;
+    flex: 1;
+    min-width: 240px;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
     font-size: 14px;
-    color: var(--color-text-secondary);
+    outline: none;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
 }
 
-.selectedBadge {
+.searchInput:focus {
+    border-color: var(--color-primary);
+}
+
+.searchIcon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+}
+
+.selectionIndicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
     font-weight: 600;
-    color: var(--color-primary);
-    background: #EFF6FF;
-    padding: 4px 10px;
-    border-radius: 6px;
+    color: var(--color-text-primary);
 }
 
+.counterPill {
+    background: #EFF6FF;
+    color: var(--color-primary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid #BFDBFE;
+}
+
+/* Grid Repo Cards */
 .repoGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 16px;
-    max-height: 480px;
-    overflow-y: auto;
-    padding: 4px;
 }
 
 .repoCard {
-    background: var(--color-surface);
+    background-color: var(--color-surface);
     border: 1.5px solid var(--color-border-light);
-    border-radius: 10px;
-    padding: 16px;
+    border-radius: var(--radius-lg, 12px);
+    padding: 18px;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
 }
 
 .repoCard:hover {
     border-color: var(--color-primary);
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .repoCardSelected {
-    border-color: var(--color-primary);
-    background: #F0F7FF;
+    border-color: var(--color-primary) !important;
+    background: #F8FAFC !important;
+    box-shadow: 0 0 0 1px var(--color-primary);
 }
 
 .repoTop {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    gap: 12px;
     margin-bottom: 8px;
 }
 
 .repoName {
-    font-weight: 600;
     font-size: 15px;
+    font-weight: 700;
     color: var(--color-text-primary);
     word-break: break-word;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .repoDesc {
     font-size: 13px;
     color: var(--color-text-secondary);
-    margin: 4px 0 12px 0;
-    line-height: 1.4;
+    line-height: 1.45;
+    margin: 4px 0 14px 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.repoMeta {
+.repoMetaRow {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-border-light);
     font-size: 12px;
+    color: var(--color-text-secondary);
+}
+
+.repoTags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.repoStats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     color: var(--color-text-muted);
 }
 
-.repoActionRow {
+/* Floating Action Bottom Bar */
+.bottomActionBar {
+    position: sticky;
+    bottom: 20px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg, 12px);
+    padding: 14px 24px;
     display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid var(--color-border-light);
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 10;
 }
 
-/* Step 3: Report Section */
-.reportHeaderGrid {
-    display: grid;
-    grid-template-columns: 280px 1fr;
+/* ==========================================================
+   STEP 3: REPORT & DASHBOARD
+========================================================== */
+.reportActionRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* Hero Score Card */
+.heroScoreCard {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    border-radius: var(--radius-lg, 12px);
+    padding: 28px 32px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 24px;
-    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.15);
 }
 
-.overallScoreCard {
+.heroLeft {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.scoreCircle {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    border: 5px solid #3B82F6;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1554A5 0%, #2196F3 100%);
-    color: white;
-    border-radius: 12px;
-    padding: 24px;
-    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
 }
 
-.overallNumber {
-    font-size: 54px;
+.scoreNumber {
+    font-size: 38px;
     font-weight: 800;
     line-height: 1;
-    margin-bottom: 6px;
+    color: white;
 }
 
-.overallLabel {
+.scoreOutOf {
+    font-size: 11px;
+    color: #94A3B8;
+    margin-top: 2px;
+}
+
+.heroMeta h3 {
+    margin: 0 0 6px 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+}
+
+.heroMeta p {
+    margin: 0 0 10px 0;
     font-size: 14px;
-    opacity: 0.9;
+    color: #CBD5E1;
 }
 
-.scoreBreakdownGrid {
+/* Metrics 4-Box Grid */
+.metricsGrid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 16px;
 }
 
-.scoreItem {
-    background: var(--color-surface-secondary);
+.metricCard {
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border-light);
-    border-radius: 8px;
-    padding: 16px;
+    border-radius: var(--radius-lg, 12px);
+    padding: 18px 20px;
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.scoreItemTitle {
+.metricHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.metricTitle {
     font-size: 13px;
     font-weight: 600;
     color: var(--color-text-secondary);
-    margin-bottom: 6px;
 }
 
-.scoreItemValue {
+.metricValue {
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--color-text-primary);
+    margin-bottom: 8px;
 }
 
-/* Insights */
-.insightsSection {
+.progressBarContainer {
+    width: 100%;
+    height: 6px;
+    background-color: var(--color-surface-hover, #F1F5F9);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progressBarFill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+}
+
+/* Insights Section */
+.insightsCard {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg, 12px);
+    padding: 24px;
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    margin-top: 20px;
+    gap: 18px;
 }
 
-.insightGroup h5 {
-    margin: 0 0 8px 0;
-    font-size: 14px;
+.insightsSectionTitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tagGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tagGroupLabel {
+    font-size: 13px;
     font-weight: 600;
+    color: var(--color-text-secondary);
 }
 
 .tagList {
@@ -260,65 +551,84 @@
 }
 
 .tagSuccess {
-    background: #ECFDF5;
+    background-color: #ECFDF5;
     color: #065F46;
+    border: 1px solid #A7F3D0;
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 13px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 6px;
 }
 
 .tagWarning {
-    background: #FFFBEB;
+    background-color: #FFFBEB;
     color: #92400E;
+    border: 1px solid #FDE68A;
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 13px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 6px;
 }
 
 .recommendationBox {
-    background: #EFF6FF;
+    background-color: #EFF6FF;
     border-left: 4px solid var(--color-primary);
-    padding: 14px 18px;
     border-radius: 6px;
+    padding: 14px 18px;
     font-size: 14px;
     color: #1E3A8A;
     line-height: 1.5;
 }
 
-/* Evaluated Repos Table */
-.evaluatedTable {
+/* Repos Table Card */
+.tableCard {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg, 12px);
+    padding: 20px 24px;
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
+.tableTitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 16px 0;
+}
+
+.detailTable {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 16px;
     font-size: 14px;
 }
 
-.evaluatedTable th {
+.detailTable th {
     text-align: left;
-    padding: 10px 14px;
-    background: var(--color-surface-secondary);
+    padding: 12px 14px;
+    background-color: var(--color-surface-secondary);
     color: var(--color-text-secondary);
     font-weight: 600;
     border-bottom: 1px solid var(--color-border-light);
 }
 
-.evaluatedTable td {
-    padding: 12px 14px;
+.detailTable td {
+    padding: 14px;
     border-bottom: 1px solid var(--color-border-light);
     color: var(--color-text-primary);
 }
 
-.checkYes {
-    color: var(--color-success);
+.statusCheck {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     font-weight: 600;
+    color: #10B981;
 }
 
-.checkNo {
+.statusNone {
     color: var(--color-text-muted);
 }
