@@ -1,4 +1,4 @@
-import { FolderOpen, ExternalLink, Plus } from "lucide-react";
+import { FolderOpen, Plus } from "lucide-react";
 import styles from "./CandidatePortfolio.module.css";
 
 function CandidatePortfolio() {

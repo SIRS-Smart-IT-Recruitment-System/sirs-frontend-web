@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Pencil, Eye, Building2, MapPin, Hash, User } from "lucide-react";
+import { Pencil, Eye } from "lucide-react";
 import { ROUTES } from "../../../routers/routePaths";
 
 import MainLayout from "../../../layouts/templates/main-layout/MainLayout";
@@ -16,7 +16,6 @@ import Modal from "../../../components/common/modal/Modal";
 import Button from "../../../components/common/button/Button";
 import Input from "../../../components/common/input/Input";
 import Spinner from "../../../components/common/spinner/Spinner";
-import Badge from "../../../components/common/badge/Badge";
 
 import {
     getCompanyProfile,

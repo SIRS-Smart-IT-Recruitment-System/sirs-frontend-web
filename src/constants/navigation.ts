@@ -28,6 +28,11 @@ export const navigation: Record<SidebarRole, NavigationItem[]> = {
             path: "/candidate/profile",
             icon: "♙",
         },
+        {
+            label: "Đánh giá Git",
+            path: "/candidate/git-verification",
+            icon: "⌥",
+        },
     ],
 
     company: [
