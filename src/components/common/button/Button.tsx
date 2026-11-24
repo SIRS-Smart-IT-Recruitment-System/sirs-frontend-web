@@ -12,7 +12,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     loading?: boolean;
 }
 
-function Button({children, variant = "primary", loading = false, disabled = false, className = "", ...props}: ButtonProps) {
+function Button({ children, variant = "primary", loading = false, disabled = false, className = "", ...props }: ButtonProps) {
 
     return (
         <button

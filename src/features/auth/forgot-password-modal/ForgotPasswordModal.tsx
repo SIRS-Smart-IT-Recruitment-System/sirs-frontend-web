@@ -10,10 +10,10 @@ interface ForgotPasswordModalProps {
 }
 
 const ForgotPasswordModal = ({
-                                 isOpen,
-                                 onClose,
-                                 onContinue
-                             }: ForgotPasswordModalProps) => {
+    isOpen,
+    onClose,
+    onContinue
+}: ForgotPasswordModalProps) => {
 
     return (
         <Modal

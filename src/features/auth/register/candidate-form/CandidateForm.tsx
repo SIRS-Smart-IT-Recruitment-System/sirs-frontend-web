@@ -20,19 +20,19 @@ const JOB_STATUS_OPTIONS: {
     label: string;
     value: CandidateJobStatus;
 }[] = [
-    {
-        label: "Đang tìm việc",
-        value: "OPEN_FOR_WORK",
-    },
-    {
-        label: "Sẵn sàng nhận cơ hội",
-        value: "READY_FOR_OPPORTUNITY",
-    },
-    {
-        label: "Không tìm việc",
-        value: "NOT_LOOKING",
-    },
-];
+        {
+            label: "Đang tìm việc",
+            value: "OPEN_FOR_WORK",
+        },
+        {
+            label: "Sẵn sàng nhận cơ hội",
+            value: "READY_FOR_OPPORTUNITY",
+        },
+        {
+            label: "Không tìm việc",
+            value: "NOT_LOOKING",
+        },
+    ];
 
 const CandidateForm = ({ onSubmit }: CandidateFormProps) => {
     const [isLoading, setIsLoading] = useState(false);

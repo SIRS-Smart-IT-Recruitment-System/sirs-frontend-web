@@ -19,13 +19,13 @@ interface CompanyInfoProps {
 }
 
 function CompanyInfo({
-                         companyName,
-                         taxCode,
-                         address,
-                         size,
-                         website,
-                         fields = [],
-                     }: CompanyInfoProps) {
+    companyName,
+    taxCode,
+    address,
+    size,
+    website,
+    fields = [],
+}: CompanyInfoProps) {
     return (
         <section className={styles.card}>
             <div className={styles.cardHeader}>

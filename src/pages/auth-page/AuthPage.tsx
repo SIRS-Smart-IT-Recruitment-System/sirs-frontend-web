@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthLayout from "../../layouts/templates/auth-layout/AuthLayout";
@@ -45,16 +45,7 @@ function AuthPage() {
 
     const [currentPage, setCurrentPage] = useState<Page>("login");
     const [activeModal, setActiveModal] = useState<ModalType>(null);
-    const [toastMessage, setToastMessage] = useState<string | null>(
-        location.state?.toastMessage || null
-    );
-
-    useEffect(() => {
-        if (location.state?.toastMessage) {
-            setToastMessage(location.state.toastMessage);
-            window.history.replaceState({}, document.title);
-        }
-    }, [location.state]);
+    const toastMessage = location.state?.toastMessage as string | undefined;
 
     // Lưu thông tin đăng ký tài khoản
     const [registerData, setRegisterData] = useState<RegisterRequest>({
@@ -267,7 +258,7 @@ function AuthPage() {
                 <Toast
                     message={toastMessage}
                     type="success"
-                    onClose={() => setToastMessage(null)}
+                    onClose={() => navigate(location.pathname, { replace: true, state: null })}
                 />
             )}
 

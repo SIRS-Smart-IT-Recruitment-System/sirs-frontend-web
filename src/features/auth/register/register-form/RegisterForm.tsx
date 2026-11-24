@@ -1,5 +1,5 @@
 import styles from "./RegisterForm.module.css";
-import {useState} from "react";
+import { useState } from "react";
 import SocialLogin from "../../social-login/SocialLogin.tsx";
 import Button from "../../../../components/common/button/Button.tsx";
 import Input from "../../../../components/common/input/Input.tsx";

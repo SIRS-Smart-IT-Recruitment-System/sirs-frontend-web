@@ -116,9 +116,8 @@ function CVStorage() {
                     cvFiles.map((file) => (
                         <div
                             key={file.id}
-                            className={`${styles.cvItem} ${
-                                selectedCV === file.id ? styles.active : ""
-                            }`}
+                            className={`${styles.cvItem} ${selectedCV === file.id ? styles.active : ""
+                                }`}
                         >
                             <div className={styles.fileIcon}>
                                 <FileText size={20} />

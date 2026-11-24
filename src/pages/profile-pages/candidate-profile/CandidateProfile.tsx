@@ -38,19 +38,19 @@ const JOB_STATUS_OPTIONS: {
     label: string;
     value: CandidateJobStatus;
 }[] = [
-    {
-        label: "Đang tìm việc",
-        value: "OPEN_FOR_WORK",
-    },
-    {
-        label: "Sẵn sàng nhận cơ hội",
-        value: "READY_FOR_OPPORTUNITY",
-    },
-    {
-        label: "Không tìm việc",
-        value: "NOT_LOOKING",
-    },
-];
+        {
+            label: "Đang tìm việc",
+            value: "OPEN_FOR_WORK",
+        },
+        {
+            label: "Sẵn sàng nhận cơ hội",
+            value: "READY_FOR_OPPORTUNITY",
+        },
+        {
+            label: "Không tìm việc",
+            value: "NOT_LOOKING",
+        },
+    ];
 
 function getStatusBadge(status: CandidateJobStatus) {
     const map: Record<
@@ -58,11 +58,11 @@ function getStatusBadge(status: CandidateJobStatus) {
         {
             label: string;
             variant:
-                | "success"
-                | "warning"
-                | "info"
-                | "danger"
-                | "default";
+            | "success"
+            | "warning"
+            | "info"
+            | "danger"
+            | "default";
         }
     > = {
         OPEN_FOR_WORK: {
@@ -143,7 +143,7 @@ function CandidateProfile() {
         };
 
         fetchProfile();
-    }, []);
+    }, [token]);
 
     // Mở modal chỉnh sửa
     const handleOpenEdit = () => {

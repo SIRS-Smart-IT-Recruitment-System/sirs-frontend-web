@@ -89,7 +89,7 @@ function CompanyProfile() {
         };
 
         fetchCompanyProfile();
-    }, []);
+    }, [token]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

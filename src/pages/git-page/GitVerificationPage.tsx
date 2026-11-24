@@ -47,28 +47,8 @@ export default function GitVerificationPage() {
     const [selectedRepoIds, setSelectedRepoIds] = useState<string[]>([]);
     const [report, setReport] = useState<GitVerificationReport | null>(null);
 
-    // 1. Lấy thông tin ứng viên hiện tại
-    useEffect(() => {
-        const init = async () => {
-            try {
-                setIsLoading(true);
-                const profile = await getCandidateProfile();
-                if (profile && profile.candidateId) {
-                    setCandidateId(profile.candidateId);
-                    await loadData(profile.candidateId);
-                }
-            } catch (err: any) {
-                console.error("Lỗi khởi tạo hồ sơ:", err);
-                setError("Không thể tải thông tin ứng viên.");
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        init();
-    }, []);
-
     // Load Repos và Báo cáo đã có
-    const loadData = async (cId: string) => {
+    async function loadData(cId: string) {
         try {
             // Lấy danh sách repos
             try {
@@ -95,7 +75,27 @@ export default function GitVerificationPage() {
         } catch (e) {
             console.error(e);
         }
-    };
+    }
+
+    // 1. Lấy thông tin ứng viên hiện tại
+    useEffect(() => {
+        const init = async () => {
+            try {
+                setIsLoading(true);
+                const profile = await getCandidateProfile();
+                if (profile && profile.candidateId) {
+                    setCandidateId(profile.candidateId);
+                    await loadData(profile.candidateId);
+                }
+            } catch (err: any) {
+                console.error("Lỗi khởi tạo hồ sơ:", err);
+                setError("Không thể tải thông tin ứng viên.");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        init();
+    }, []);
 
     // Bước 1: Kết nối tài khoản GitHub
     const handleConnectGithub = async (e: React.FormEvent) => {
@@ -129,7 +129,7 @@ export default function GitVerificationPage() {
             const syncRes = await gitAnalysisService.syncRepositories(candidateId);
             setRepos(syncRes.data || []);
             setSuccessMessage("Đã đồng bộ danh sách repository mới nhất từ GitHub!");
-        } catch (err: any) {
+        } catch {
             setError("Đồng bộ thất bại. Vui lòng thử lại sau.");
         } finally {
             setIsSyncing(false);

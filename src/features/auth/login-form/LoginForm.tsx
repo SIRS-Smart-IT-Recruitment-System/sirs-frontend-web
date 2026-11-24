@@ -19,10 +19,10 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({
-                       onRegister,
-                       onForgotPassword,
-                       onLoginSuccess,
-                   }: LoginFormProps) => {
+    onRegister,
+    onForgotPassword,
+    onLoginSuccess,
+}: LoginFormProps) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -218,7 +218,7 @@ const LoginForm = ({
                     disabled={isLoading}
                 >
                     {isLoading ? (
-                            <>
+                        <>
                             Đang đăng nhập...
                         </>
                     ) : (

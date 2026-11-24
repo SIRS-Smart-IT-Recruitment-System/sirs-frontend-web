@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
     Search,
@@ -11,12 +11,12 @@ import {
     LogOut,
 } from "lucide-react";
 
-import {ROUTES} from "../../../routers/routePaths.ts";
-import type {SidebarRole} from "../../../constants/navigation.ts";
-import {HEADER_CONFIG} from "../../../constants/headerConfig.ts";
+import { ROUTES } from "../../../routers/routePaths.ts";
+import type { SidebarRole } from "../../../constants/navigation.ts";
+import { HEADER_CONFIG } from "../../../constants/headerConfig.ts";
 import Modal from "../../../components/common/modal/Modal";
 import Button from "../../../components/common/button/Button";
-import {logout} from "../../../services/authService";
+import { logout } from "../../../services/authService";
 
 import styles from "./Header.module.css";
 
@@ -26,7 +26,7 @@ interface HeaderProps {
     userRole?: string | undefined
 }
 
-function Header({role, userName, userRole}: HeaderProps) {
+function Header({ role, userName, userRole }: HeaderProps) {
     const navigate = useNavigate();
 
     const [search, setSearch] = useState("");
@@ -72,7 +72,7 @@ function Header({role, userName, userRole}: HeaderProps) {
         <header className={styles.header}>
             <div className={styles.searchArea}>
                 <div className={styles.searchBox}>
-                    <Search size={19}/>
+                    <Search size={19} />
 
                     <input
                         type="text"
@@ -87,7 +87,7 @@ function Header({role, userName, userRole}: HeaderProps) {
                     className={styles.filterButton}
                     title="Bộ lọc"
                 >
-                    <SlidersHorizontal size={20}/>
+                    <SlidersHorizontal size={20} />
                 </button>
             </div>
 
@@ -97,7 +97,7 @@ function Header({role, userName, userRole}: HeaderProps) {
                     className={styles.iconButton}
                     title="Trợ giúp"
                 >
-                    <CircleHelp size={21}/>
+                    <CircleHelp size={21} />
                 </button>
 
                 <button
@@ -105,7 +105,7 @@ function Header({role, userName, userRole}: HeaderProps) {
                     className={styles.iconButton}
                     title="Thông báo"
                 >
-                    <Bell size={21}/>
+                    <Bell size={21} />
                 </button>
 
                 <div className={styles.accountArea}>
@@ -121,14 +121,14 @@ function Header({role, userName, userRole}: HeaderProps) {
                         aria-label="Tài khoản"
                         aria-expanded={showAccount}
                     >
-                        <UserRound size={27}/>
-                        <ChevronDown size={17}/>
+                        <UserRound size={27} />
+                        <ChevronDown size={17} />
                     </button>
 
                     {showAccount && (
                         <div className={styles.accountDropdown}>
                             <button type="button">
-                                <UserRound size={17}/>
+                                <UserRound size={17} />
                                 Thông tin tài khoản
                             </button>
 
@@ -136,7 +136,7 @@ function Header({role, userName, userRole}: HeaderProps) {
                                 type="button"
                                 onClick={handleOpenLogoutModal}
                             >
-                                <LogOut size={17}/>
+                                <LogOut size={17} />
                                 Đăng xuất
                             </button>
                         </div>
