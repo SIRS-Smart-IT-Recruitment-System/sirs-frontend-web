@@ -1,0 +1,43 @@
+name: Auto Create & Merge PR
+
+on:
+  push:
+    branches-ignore:
+      - master
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-pr-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Auto Create and Merge Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          CURRENT_BRANCH="${GITHUB_REF#refs/heads/}"
+          
+          TARGET_BRANCH="master"
+          if git ls-remote --heads origin main | grep -q 'refs/heads/main'; then
+            TARGET_BRANCH="main"
+          fi
+
+          PR_URL=$(gh pr list --head "$CURRENT_BRANCH" --base "$TARGET_BRANCH" --json url --jq '.[0].url')
+
+          if [ -z "$PR_URL" ]; then
+            PR_URL=$(gh pr create \
+              --base "$TARGET_BRANCH" \
+              --head "$CURRENT_BRANCH" \
+              --title "Auto PR: $CURRENT_BRANCH" \
+              --body "Auto created by GitHub Actions")
+          fi
+
+          gh pr merge "$PR_URL" --merge --auto --delete-branch || \
+          gh pr merge "$PR_URL" --admin --merge --delete-branch || \
+          gh pr merge "$PR_URL" --merge
