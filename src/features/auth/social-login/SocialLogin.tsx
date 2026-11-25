@@ -1,7 +1,8 @@
-import styles from "./SocialLogin.module.css";
+import { Button } from "../../../components/common";
 
 import googleIcon from "../../../assets/gg.png";
 import facebookIcon from "../../../assets/facebook.png";
+import styles from "./SocialLogin.module.css";
 
 const SocialLogin = () => {
     return (
@@ -13,15 +14,15 @@ const SocialLogin = () => {
 
             <div className={styles.socialButtons}>
 
-                <button type="button">
+                <Button type="button" variant="outline" className={styles.socialBtn}>
                     <img src={googleIcon} alt="Google" />
-                    Google
-                </button>
+                    <span>Google</span>
+                </Button>
 
-                <button type="button">
+                <Button type="button" variant="outline" className={styles.socialBtn}>
                     <img src={facebookIcon} alt="Facebook" />
-                    Facebook
-                </button>
+                    <span>Facebook</span>
+                </Button>
 
             </div>
 

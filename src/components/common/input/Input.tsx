@@ -1,25 +1,34 @@
 import { useState, useId } from "react";
-import type { InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes, ReactNode } from "react";
 import "./Input.css";
 
 interface InputProps
     extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
     label?: string;
     error?: string;
-    type?: "text" | "password";
+    type?: "text" | "password" | "email" | "number";
+    leftIcon?: ReactNode;
 }
 
-function Input({label, error, type = "text", id, disabled = false, className = "", ...props}: InputProps) {
+function Input({
+    label,
+    error,
+    type = "text",
+    leftIcon,
+    id,
+    disabled = false,
+    className = "",
+    ...props
+}: InputProps) {
 
     const generatedId = useId();
     const inputId = id ?? generatedId;
 
-
     const [showPassword, setShowPassword] = useState(false);
 
-
-    const inputType =
-        type === "password" && showPassword ? "text" : type;
+    const inputType = type === "password" && showPassword ? "text" : type;
+    const hasIcon = Boolean(leftIcon);
+    const hasToggle = type === "password";
 
     return (
         <div className="input-group">
@@ -29,7 +38,13 @@ function Input({label, error, type = "text", id, disabled = false, className = "
                 </label>
             )}
 
-            <div className={`input-wrapper ${error ? "has-error" : ""}`}>
+            <div className={`input-wrapper ${hasIcon ? "has-icon" : ""} ${hasToggle ? "has-toggle" : ""} ${error ? "has-error" : ""}`}>
+                {leftIcon && (
+                    <span className="input-icon" aria-hidden="true">
+                        {leftIcon}
+                    </span>
+                )}
+
                 <input
                     id={inputId}
                     type={inputType}
@@ -46,6 +61,7 @@ function Input({label, error, type = "text", id, disabled = false, className = "
                         className="password-toggle"
                         onClick={() => setShowPassword(!showPassword)}
                         disabled={disabled}
+                        aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
                     >
                         {showPassword ? "Ẩn" : "Hiện"}
                     </button>
@@ -54,8 +70,8 @@ function Input({label, error, type = "text", id, disabled = false, className = "
 
             {error && (
                 <span id={`${inputId}-error`} className="input-error">
-          {error}
-        </span>
+                    {error}
+                </span>
             )}
         </div>
     );
