@@ -82,7 +82,7 @@ const AuthLayout = ({ children, onBack }: AuthLayoutProps) => {
                                     </div>
                                     <div className={styles.candidateInfo}>
                                         <h3 className={styles.candidateName}>
-                                            Nguyễn Minh Long
+                                            Đặng Văn Nghĩa
                                             <Badge variant="success" size="sm" className={styles.activeTag}>
                                                 Active
                                             </Badge>
