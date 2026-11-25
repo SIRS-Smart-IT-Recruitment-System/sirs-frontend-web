@@ -1,54 +1,123 @@
+/* =============================================
+   LOGIN FORM — synced with Apple-style design
+   ============================================= */
+
 .loginForm {
     width: 100%;
 }
 
+/* ---- Heading ---- */
 .heading {
     text-align: center;
     margin-bottom: 24px;
 }
 
 .heading h2 {
-    font-size: 22px;
-    font-weight: var(--font-weight-bold);
+    font-size: 24px;
+    font-weight: 700;
     color: var(--color-primary);
-    letter-spacing: 1.5px;
+    letter-spacing: -0.025em;
     margin-bottom: 8px;
 }
 
 .heading p {
-    font-size: var(--font-size-label);
-    color: var(--color-text-secondary);
-    line-height: 1.6;
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.625;
+    max-width: 360px;
+    margin: 0 auto;
+    font-weight: 400;
 }
 
+/* ---- Form groups & Input overrides (scoped inside loginForm) ---- */
 .formGroup {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
-/* Remember + Forgot row */
+.loginForm :global(.input-group) {
+    gap: 6px;
+}
+
+.loginForm :global(.input-label) {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #334155;
+}
+
+.loginForm :global(.input-wrapper) {
+    min-height: 46px;
+    background-color: rgba(248, 250, 252, 0.6);
+    border-color: #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.loginForm :global(.input-wrapper:focus-within) {
+    border-color: #2563eb;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.loginForm :global(.input-wrapper.has-error) {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.10);
+}
+
+.loginForm :global(.input-field) {
+    padding: 12px 14px;
+    font-size: 14px;
+}
+
+.loginForm :global(.input-wrapper.has-icon .input-field) {
+    padding-left: 42px;
+}
+
+.loginForm :global(.input-wrapper.has-toggle .input-field) {
+    padding-right: 56px;
+}
+
+.loginForm :global(.password-toggle) {
+    right: 10px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.loginForm :global(.password-toggle:hover) {
+    color: #1e293b;
+}
+
+/* ---- Remember + Forgot row ---- */
 .forgotPassword {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+    margin-top: 4px;
 }
 
-.rememberPassword {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+.forgotPassword .rememberCheckbox {
+    gap: 8px;
+}
+
+.rememberCheckbox :global(.checkbox-box) {
+    width: 16px;
+    height: 16px;
+    border-width: 1.5px;
+    border-radius: 5px;
+    border-color: #cbd5e1;
+}
+
+.rememberCheckbox :global(.checkbox-input:checked + .checkbox-box) {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.rememberCheckbox :global(.checkbox-label) {
     font-size: var(--font-size-label);
     color: var(--color-text-secondary);
-    cursor: pointer;
-    user-select: none;
-}
-
-.rememberPassword input[type="checkbox"] {
-    width: 14px;
-    height: 14px;
-    accent-color: var(--color-primary);
-    cursor: pointer;
-    flex-shrink: 0;
 }
 
 .forgotPasswordBtn {
@@ -56,27 +125,43 @@
     background: none;
     color: var(--color-primary);
     font-size: var(--font-size-label);
+    font-weight: var(--font-weight-semibold);
     cursor: pointer;
     transition: opacity 0.2s;
     flex-shrink: 0;
+    padding: 0;
 }
 
 .forgotPasswordBtn:hover {
     opacity: 0.75;
+    text-decoration: underline;
 }
 
-/* Submit button */
-.submitButton {
-    width: 100% !important;
-    height: 42px;
-    font-size: var(--font-size-button) !important;
-    letter-spacing: 0.3px;
+/* ---- Submit button ---- */
+.loginForm .submitButton {
+    width: 100%;
+    height: 46px;
+    background-color: #1556ad;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    box-shadow: 0 4px 14px rgba(21, 86, 173, 0.25);
 }
 
-/* register link */
+.loginForm .submitButton:hover:not(:disabled) {
+    background-color: #11468f;
+    box-shadow: 0 4px 18px rgba(21, 86, 173, 0.35);
+}
+
+.loginForm .submitButton:active:not(:disabled) {
+    transform: scale(0.99);
+}
+
+/* ---- Register link ---- */
 .registerLink {
     text-align: center;
-    margin-top: 18px;
+    margin-top: 20px;
     font-size: var(--font-size-label);
     color: var(--color-text-secondary);
 }
@@ -87,29 +172,13 @@
     color: var(--color-primary);
     margin-left: 4px;
     font-size: var(--font-size-label);
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-bold);
     cursor: pointer;
     transition: opacity 0.2s;
+    padding: 0;
 }
 
 .registerLinkBtn:hover {
     opacity: 0.75;
-}
-
-.spinner {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.35);
-    border-top-color: #ffffff;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    vertical-align: middle;
-    flex-shrink: 0;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    text-decoration: underline;
 }
