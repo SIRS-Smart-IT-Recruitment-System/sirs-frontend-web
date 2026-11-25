@@ -26,7 +26,6 @@ import {
 import MainLayout from "../../layouts/templates/main-layout/MainLayout";
 import Spinner from "../../components/common/spinner/Spinner";
 import Badge from "../../components/common/badge/Badge";
-import Input from "../../components/common/input/Input";
 import Button from "../../components/common/button/Button";
 import { getCandidateProfile } from "../../services/candidateProfileService";
 import { gitAnalysisService } from "../../services/gitAnalysisService";
@@ -73,11 +72,6 @@ export default function GitVerificationPage() {
     // GitHub account state
     const [account, setAccount] = useState<GithubAccount | null>(null);
     const [isConnected, setIsConnected] = useState(false);
-
-    // Manual PAT form fallback
-    const [showManualForm, setShowManualForm] = useState(false);
-    const [githubUsername, setGithubUsername] = useState("");
-    const [accessToken, setAccessToken] = useState("");
 
     // Repositories & Report state
     const [repos, setRepos] = useState<GithubRepository[]>([]);
@@ -198,32 +192,7 @@ export default function GitVerificationPage() {
         } catch (err: any) {
             console.error(err);
             const msg = err.response?.data?.message || err.message || "Chưa cấu hình GitHub OAuth trên server.";
-            setError(`${msg} Bạn có thể kết nối tạm bằng Personal Access Token bên dưới.`);
-            setShowManualForm(true);
-            setIsSyncing(false);
-        }
-    };
-
-    // Manual PAT connection
-    const handleConnectManual = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!candidateId || !githubUsername.trim() || !accessToken.trim()) return;
-
-        try {
-            setIsSyncing(true);
-            setError(null);
-            const accData = await gitAnalysisService.connectGithub(candidateId, githubUsername.trim(), accessToken.trim());
-            setAccount(accData);
-            setIsConnected(true);
-            setSuccessMessage("Kết nối tài khoản GitHub thành công!");
-
-            const syncRepos = await gitAnalysisService.syncRepositories(candidateId);
-            setRepos(syncRepos || []);
-            setCurrentStep("connect");
-        } catch (err: any) {
-            console.error(err);
-            setError("Kết nối thất bại. Vui lòng kiểm tra lại Username và Access Token.");
-        } finally {
+            setError(`${msg} Vui lòng thử lại sau.`);
             setIsSyncing(false);
         }
     };
@@ -544,44 +513,6 @@ export default function GitVerificationPage() {
                                     </svg>
                                     <span>{isSyncing ? "Đang xử lý kết nối..." : "Ủy quyền trực tiếp qua GitHub"}</span>
                                 </button>
-
-                                <button
-                                    type="button"
-                                    className={styles.manualLink}
-                                    onClick={() => setShowManualForm(!showManualForm)}
-                                >
-                                    {showManualForm ? "Ẩn tùy chọn Personal Access Token" : "Hoặc kết nối bằng Personal Access Token thủ công"}
-                                </button>
-
-                                {showManualForm && (
-                                    <form onSubmit={handleConnectManual} style={{ width: "100%", maxWidth: 360, marginTop: 20, textAlign: "left" }}>
-                                        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                                            <Input
-                                                label="GitHub Username"
-                                                placeholder="vd: octocat"
-                                                value={githubUsername}
-                                                onChange={(e) => setGithubUsername(e.target.value)}
-                                                required
-                                            />
-                                            <div>
-                                                <Input
-                                                    label="Personal Access Token (classic)"
-                                                    type="password"
-                                                    placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
-                                                    value={accessToken}
-                                                    onChange={(e) => setAccessToken(e.target.value)}
-                                                    required
-                                                />
-                                                <span style={{ fontSize: 11, color: "#64748B", display: "block", marginTop: 4 }}>
-                                                    Yêu cầu scopes tối thiểu: <code>read:user, repo</code>
-                                                </span>
-                                            </div>
-                                            <Button variant="primary" type="submit" disabled={isSyncing}>
-                                                {isSyncing ? "Đang kết nối..." : "Xác nhận kết nối PAT"}
-                                            </Button>
-                                        </div>
-                                    </form>
-                                )}
 
                                 <div className={styles.securityNoteFooter}>
                                     <ShieldCheck size={16} color="#2563EB" />

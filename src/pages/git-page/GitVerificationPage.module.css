@@ -531,18 +531,6 @@
     box-shadow: 0 6px 20px rgba(36, 41, 47, 0.4);
 }
 
-.manualLink {
-    background: none;
-    border: none;
-    color: #2563EB;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 16px;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-}
-
 /* ==========================================================
    RIGHT SIDEBAR WIDGETS
 ========================================================== */
