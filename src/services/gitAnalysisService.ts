@@ -69,17 +69,6 @@ export const gitAnalysisService = {
         return response.data;
     },
 
-    // 1. Kết nối tài khoản GitHub thủ công
-    connectGithub: async (candidateId: string, githubUsername: string, accessToken: string) => {
-        const response = await api.post<GithubAccount>("/api/v1/git/connect", {
-            candidateId,
-            githubUsername,
-            accessToken,
-            profileUrl: `https://github.com/${githubUsername}`,
-        });
-        return response.data;
-    },
-
     // 2. Đồng bộ Repositories từ GitHub
     syncRepositories: async (candidateId: string) => {
         const response = await api.post<GithubRepository[]>(`/api/v1/git/sync/${candidateId}`);
