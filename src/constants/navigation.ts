@@ -4,6 +4,7 @@ export interface NavigationItem {
     label: string;
     path: string;
     icon: string;
+    badge?: string;
 }
 
 export const navigation: Record<SidebarRole, NavigationItem[]> = {
@@ -32,6 +33,7 @@ export const navigation: Record<SidebarRole, NavigationItem[]> = {
             label: "Đánh giá Git",
             path: "/candidate/git-verification",
             icon: "⌥",
+            badge: "Mới",
         },
     ],
 

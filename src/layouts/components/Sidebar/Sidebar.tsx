@@ -35,6 +35,7 @@ function Sidebar({ role, progress = 80 }: SidebarProps) {
                         </span>
 
                         <span>{item.label}</span>
+                        {item.badge && <span className={styles.navBadge}>{item.badge}</span>}
                     </NavLink>
                 ))}
             </nav>

@@ -12,6 +12,7 @@
 }
 
 .input-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
     width: 100%;
@@ -19,7 +20,7 @@
     background-color: var(--color-surface);
     border: var(--border-width-thin) var(--border-style-solid) var(--color-border);
     border-radius: var(--radius-md);
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .input-wrapper:focus-within {
@@ -41,6 +42,14 @@
     font-size: var(--font-size-body-default);
 }
 
+.input-wrapper.has-icon .input-field {
+    padding-left: 42px;
+}
+
+.input-wrapper.has-toggle .input-field {
+    padding-right: 56px;
+}
+
 .input-field::placeholder {
     color: #9CA3AF;
 }
@@ -50,14 +59,36 @@
     opacity: 0.6;
 }
 
+.input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94A3B8;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
 .password-toggle {
-    padding: var(--spacing-2) var(--spacing-3);
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: var(--spacing-2) var(--spacing-2);
     border: none;
     background: transparent;
     color: var(--color-primary);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-semibold);
     cursor: pointer;
+    transition: color 0.15s ease;
 }
 
 .password-toggle:disabled {
