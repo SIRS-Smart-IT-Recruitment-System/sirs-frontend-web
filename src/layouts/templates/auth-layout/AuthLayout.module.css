@@ -576,9 +576,11 @@
 }
 
 .mascotPortrait {
-    width: clamp(64px, 9vw, 96px);
+    width: clamp(76px, 10vw, 112px);
     height: auto;
-    border-radius: 24%;
+    mask-image: linear-gradient(to right, transparent, black 10% 90%, transparent),
+        linear-gradient(to bottom, transparent, black 10% 92%, transparent);
+    mask-composite: intersect;
 }
 
 .logoImg {

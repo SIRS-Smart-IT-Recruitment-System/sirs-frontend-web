@@ -25,6 +25,8 @@ import {
     BookOpen,
 } from "lucide-react";
 import MainLayout from "../../layouts/templates/main-layout/MainLayout";
+import capyBytePortrait from "../../assets/capybyte-official.webp";
+import capyByteJog from "../../assets/capybyte-jog.webp";
 import Spinner from "../../components/common/spinner/Spinner";
 import Badge from "../../components/common/badge/Badge";
 import Button from "../../components/common/button/Button";
@@ -290,7 +292,10 @@ export default function GitVerificationPage() {
                 <div className={styles.loadingScreen}>
                     {isAnalyzing ? (
                         <section className={styles.analysisLoadingCard} aria-labelledby="git-analysis-loading-title">
-                            <div className={styles.runningMascot} aria-hidden="true" />
+                            <picture className={styles.runningMascot} aria-hidden="true">
+                                <source media="(prefers-reduced-motion: no-preference)" srcSet={capyByteJog} />
+                                <img src={capyBytePortrait} alt="" width={360} height={360} />
+                            </picture>
                             <h1 id="git-analysis-loading-title" tabIndex={-1} ref={focusSection}>
                                 Đang phân tích và chấm điểm Git
                             </h1>

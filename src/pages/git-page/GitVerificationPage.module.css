@@ -45,24 +45,30 @@
 }
 
 .runningMascot {
+    position: relative;
+    display: block;
+    isolation: isolate;
     width: min(12rem, 100%);
-    aspect-ratio: 1;
+}
+
+.runningMascot img {
+    width: 100%;
+    height: auto;
     border-radius: 18%;
-    background: url("../../assets/capybyte-official.webp") center / contain no-repeat;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .runningMascot {
+    .runningMascot img {
         border-radius: 0;
-        background-image: url("../../assets/capybyte-run.webp");
-        background-size: 600% 100%;
-        animation: mascotRun 720ms steps(6, jump-none) infinite;
     }
-}
 
-@keyframes mascotRun {
-    from { background-position-x: 0%; }
-    to { background-position-x: 100%; }
+    .runningMascot::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 92% 22% 0;
+        background: radial-gradient(ellipse, rgb(29 51 82 / 20%), transparent 70%);
+    }
 }
 
 /* ==========================================================
