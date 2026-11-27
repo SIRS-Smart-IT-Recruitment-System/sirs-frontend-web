@@ -13,6 +13,37 @@
     color: var(--color-text-primary, #0F172A);
 }
 
+.loadingScreen {
+    display: grid;
+    min-height: 65vh;
+    min-height: 65dvh;
+    padding: 24px;
+    place-items: center;
+}
+
+.analysisLoadingCard {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    width: min(100%, 480px);
+    padding: 32px 24px;
+    border: 1px solid var(--color-border, #E2E8F0);
+    border-radius: 20px;
+    background: #FFFFFF;
+    text-align: center;
+}
+
+.analysisLoadingCard h1 {
+    margin: 8px 0 0;
+    color: var(--color-text-primary, #0F172A);
+    font-size: clamp(1.125rem, 3vw, 1.5rem);
+}
+
+.analysisLoadingCard p {
+    margin: 0;
+    color: var(--color-text-secondary, #475569);
+}
+
 /* ==========================================================
    1. TOP VIBRANT HERO BANNER
 ========================================================== */

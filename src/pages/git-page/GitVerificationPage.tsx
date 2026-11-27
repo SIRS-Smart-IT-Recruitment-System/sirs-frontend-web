@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, useMemo } from "react";
+import { isAxiosError } from "axios";
 import {
     GitFork,
     Star,
@@ -30,6 +31,7 @@ import Button from "../../components/common/button/Button";
 import { getCandidateProfile } from "../../services/candidateProfileService";
 import { gitAnalysisService } from "../../services/gitAnalysisService";
 import type {
+    GitAnalysisStatus,
     GithubAccount,
     GithubRepository,
     GitVerificationReport,
@@ -58,6 +60,79 @@ const LANGUAGE_COLORS: Record<string, string> = {
     Vue: "#41b883",
 };
 
+type GitPageData = GitAnalysisStatus & {
+    candidateId: string;
+    error?: string;
+    justConnected?: boolean;
+};
+
+type ReportSummary = {
+    scoringVersion?: number;
+    evaluatedReposCount?: number;
+    strengths?: string[];
+    weaknesses?: string[];
+    recommendation?: string;
+};
+
+const OAUTH_STATE_KEY = "sirs.github.oauthState";
+
+function errorMessage(error: unknown, fallback: string) {
+    if (isAxiosError<{ message?: string }>(error)) {
+        if (error.response?.status === 401) return "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.";
+        return error.response?.data?.message || fallback;
+    }
+    return fallback;
+}
+
+async function loadGitPage(): Promise<GitPageData> {
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get("code");
+    const state = url.searchParams.get("state");
+    const oauthError = url.searchParams.get("error");
+    let expectedState: string | null = null;
+    if (code || oauthError) {
+        for (const key of ["code", "state", "error", "error_description", "error_uri"]) {
+            url.searchParams.delete(key);
+        }
+        window.history.replaceState(window.history.state, "", url);
+        expectedState = sessionStorage.getItem(OAUTH_STATE_KEY);
+        if (state && state === expectedState) sessionStorage.removeItem(OAUTH_STATE_KEY);
+    }
+
+    const profile = await getCandidateProfile();
+    const candidateId = profile?.candidateId;
+    if (!candidateId) throw new Error("Không tìm thấy hồ sơ ứng viên.");
+
+    let error: string | undefined;
+    if ((code || oauthError) && (!state || state !== expectedState)) {
+        error = "Phiên ủy quyền GitHub không hợp lệ. Vui lòng bắt đầu kết nối lại.";
+    } else if (oauthError) {
+        error = "Bạn chưa cấp quyền GitHub. Bạn có thể thử kết nối lại.";
+    } else if (code && state) {
+        try {
+            const result = await gitAnalysisService.handleOAuthCallback(candidateId, code, state);
+            return { ...result, candidateId, report: null, justConnected: true };
+        } catch (err: unknown) {
+            error = errorMessage(err, "Ủy quyền GitHub thất bại. Vui lòng kết nối lại.");
+        }
+    }
+
+    const status = await gitAnalysisService.getStatus(candidateId);
+    return { ...status, candidateId, error };
+}
+
+function parseSummary(json: string): ReportSummary {
+    try {
+        return JSON.parse(json) ?? {};
+    } catch {
+        return {};
+    }
+}
+
+function focusSection(element: HTMLElement | null) {
+    element?.focus();
+}
+
 export default function GitVerificationPage() {
     const [candidateId, setCandidateId] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -71,7 +146,6 @@ export default function GitVerificationPage() {
 
     // GitHub account state
     const [account, setAccount] = useState<GithubAccount | null>(null);
-    const [isConnected, setIsConnected] = useState(false);
 
     // Repositories & Report state
     const [repos, setRepos] = useState<GithubRepository[]>([]);
@@ -80,174 +154,97 @@ export default function GitVerificationPage() {
     const [selectedLanguageFilter, setSelectedLanguageFilter] = useState<string>("ALL");
     const [report, setReport] = useState<GitVerificationReport | null>(null);
 
-    const hasProcessedCode = useRef(false);
+    const initialLoad = useRef<Promise<GitPageData> | null>(null);
 
-    // Initialize: load candidate profile & handle OAuth code from URL if present
     useEffect(() => {
-        const init = async () => {
-            try {
-                setIsLoading(true);
-                const profile = await getCandidateProfile();
-                if (profile && profile.candidateId) {
-                    setCandidateId(profile.candidateId);
-
-                    const searchParams = new URLSearchParams(window.location.search);
-                    const code = searchParams.get("code");
-
-                    if (code && !hasProcessedCode.current) {
-                        hasProcessedCode.current = true;
-                        window.history.replaceState({}, document.title, window.location.pathname);
-                        await handleOAuthCallback(profile.candidateId, code);
-                    } else {
-                        await loadData(profile.candidateId);
-                    }
-                }
-            } catch (err: any) {
-                console.error("Lỗi khởi tạo hồ sơ:", err);
-                setError("Không thể tải thông tin ứng viên.");
-            } finally {
-                setIsLoading(false);
+        let active = true;
+        // React Strict Mode can re-run the effect while the one-use OAuth code is being exchanged.
+        initialLoad.current ??= loadGitPage();
+        void initialLoad.current.then((data) => {
+            if (!active) return;
+            setCandidateId(data.candidateId);
+            setAccount(data.account);
+            setRepos(data.repositories);
+            setSelectedRepoIds(data.repositories.filter((repo) => repo.isSelected).map((repo) => repo.id));
+            setReport(data.report);
+            setCurrentStep(data.report ? "report" : "connect");
+            setError(data.error ?? null);
+            if (data.justConnected) {
+                setSuccessMessage("Đã kết nối GitHub. Bạn có thể chọn từ 1 đến 5 repository để phân tích.");
             }
-        };
-        init();
+        }).catch((err: unknown) => {
+            if (active) setError(errorMessage(err, "Không thể tải hồ sơ Git. Vui lòng thử lại."));
+        }).finally(() => {
+            if (active) setIsLoading(false);
+        });
+        return () => { active = false; };
     }, []);
 
-    // Handle OAuth Callback from GitHub
-    const handleOAuthCallback = async (cId: string, code: string) => {
-        try {
-            setIsSyncing(true);
-            setError(null);
-            const res = await gitAnalysisService.handleOAuthCallback(cId, code);
-            if (res) {
-                setAccount(res.account);
-                setIsConnected(true);
-                setRepos(res.repositories || []);
-                const selected = (res.repositories || []).filter((r) => r.isSelected).map((r) => r.id);
-                setSelectedRepoIds(selected);
-                setSuccessMessage("Kết nối thành công với GitHub! Hãy chọn tối đa 5 repositories tiêu biểu.");
-                setCurrentStep("connect");
-            }
-        } catch (err: any) {
-            console.error(err);
-            setError("Ủy quyền GitHub thất bại hoặc mã xác thực đã hết hạn. Vui lòng thử lại.");
-            await loadData(cId);
-        } finally {
-            setIsSyncing(false);
-        }
-    };
+    const isConnected = account !== null;
 
-    // Load initial data
-    const loadData = async (cId: string) => {
-        try {
-            let hasRepos = false;
-            let hasReport = false;
-
-            try {
-                const repoData = await gitAnalysisService.getRepositories(cId);
-                if (repoData && repoData.length > 0) {
-                    setRepos(repoData);
-                    setIsConnected(true);
-                    hasRepos = true;
-                    const selected = repoData.filter((r) => r.isSelected).map((r) => r.id);
-                    setSelectedRepoIds(selected);
-                }
-            } catch {
-                // Not connected yet
-            }
-
-            try {
-                const repData = await gitAnalysisService.getLatestReport(cId);
-                if (repData && repData.overallScore !== undefined) {
-                    setReport(repData);
-                    hasReport = true;
-                }
-            } catch {
-                // No report yet
-            }
-
-            if (hasReport) {
-                setCurrentStep("report");
-            } else if (hasRepos) {
-                // Stay on connect view to show the success card or select
-                setCurrentStep("connect");
-            } else {
-                setCurrentStep("connect");
-            }
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
-    // 1-Click OAuth Connect
     const handleConnectOAuth = async () => {
+        setError(null);
+        setSuccessMessage(null);
+        setIsSyncing(true);
         try {
-            setError(null);
-            setIsSyncing(true);
-            const res = await gitAnalysisService.getOAuthAuthorizeUrl();
-            if (res?.authorizeUrl) {
-                window.location.href = res.authorizeUrl;
-            } else {
-                throw new Error("Không nhận được URL ủy quyền từ hệ thống.");
+            const { authorizeUrl } = await gitAnalysisService.getOAuthAuthorizeUrl();
+            const target = new URL(authorizeUrl);
+            const state = target.searchParams.get("state");
+            if (target.origin !== "https://github.com" || target.pathname !== "/login/oauth/authorize" || !state) {
+                throw new Error("Không nhận được URL ủy quyền hợp lệ.");
             }
-        } catch (err: any) {
-            console.error(err);
-            const msg = err.response?.data?.message || err.message || "Chưa cấu hình GitHub OAuth trên server.";
-            setError(`${msg} Vui lòng thử lại sau.`);
+            sessionStorage.setItem(OAUTH_STATE_KEY, state);
+            window.location.assign(target.href);
+        } catch (err: unknown) {
+            setError(errorMessage(err, "Không thể khởi tạo kết nối GitHub."));
             setIsSyncing(false);
         }
     };
 
-    // Re-sync repositories from GitHub
     const handleSyncRepos = async () => {
         if (!candidateId) return;
+        setIsSyncing(true);
+        setError(null);
+        setSuccessMessage(null);
         try {
-            setIsSyncing(true);
-            setError(null);
-            const syncRepos = await gitAnalysisService.syncRepositories(candidateId);
-            setRepos(syncRepos || []);
-            setSuccessMessage("Đã đồng bộ danh sách repository mới nhất từ GitHub!");
-        } catch (err: any) {
-            setError("Đồng bộ thất bại. Vui lòng thử lại sau.");
+            const syncedRepos = await gitAnalysisService.syncRepositories(candidateId);
+            const availableIds = new Set(syncedRepos.map((repo) => repo.id));
+            setRepos(syncedRepos);
+            setSelectedRepoIds((selected) => selected.filter((id) => availableIds.has(id)));
+            setSuccessMessage("Đã đồng bộ danh sách repository mới nhất từ GitHub.");
+        } catch (err: unknown) {
+            setError(errorMessage(err, "Đồng bộ thất bại. Vui lòng thử lại."));
         } finally {
             setIsSyncing(false);
         }
     };
 
-    // Toggle repository selection (max 5)
     const toggleSelectRepo = (repoId: string) => {
+        if (isAnalyzing) return;
         if (selectedRepoIds.includes(repoId)) {
             setSelectedRepoIds(selectedRepoIds.filter((id) => id !== repoId));
-        } else {
-            if (selectedRepoIds.length >= 5) {
-                alert("Bạn chỉ được chọn tối đa 5 repositories tiêu biểu nhất!");
-                return;
-            }
+        } else if (selectedRepoIds.length < 5) {
             setSelectedRepoIds([...selectedRepoIds, repoId]);
+        } else {
+            alert("Bạn chỉ được chọn tối đa 5 repository.");
         }
     };
 
-    // Analyze selected repositories
     const handleAnalyze = async () => {
-        if (!candidateId) return;
-        if (selectedRepoIds.length === 0) {
-            alert("Vui lòng chọn ít nhất 1 repository để phân tích!");
-            return;
-        }
+        if (!candidateId || isAnalyzing || isSyncing || selectedRepoIds.length === 0) return;
 
+        setIsAnalyzing(true);
+        setError(null);
+        setSuccessMessage(null);
         try {
-            setIsAnalyzing(true);
-            setError(null);
-            await gitAnalysisService.selectRepositories(candidateId, selectedRepoIds);
-            const reportData = await gitAnalysisService.analyzeGit(candidateId);
+            const reportData = await gitAnalysisService.analyzeGit(candidateId, selectedRepoIds);
+            const evaluated = new Map(reportData.evaluatedRepositories.map((repo) => [repo.id, repo]));
+            setRepos((current) => current.map((repo) => evaluated.get(repo.id) ?? { ...repo, isSelected: false }));
             setReport(reportData);
-            setSuccessMessage("Phân tích và chấm điểm hoàn tất!");
-
-            const repoData = await gitAnalysisService.getRepositories(candidateId);
-            setRepos(repoData || []);
+            setSuccessMessage("Phân tích và chấm điểm hoàn tất.");
             setCurrentStep("report");
-        } catch (err: any) {
-            console.error(err);
-            setError("Có lỗi trong quá trình phân tích. Vui lòng thử lại.");
+        } catch (err: unknown) {
+            setError(errorMessage(err, "Có lỗi trong quá trình phân tích. Vui lòng thử lại."));
         } finally {
             setIsAnalyzing(false);
         }
@@ -283,23 +280,27 @@ export default function GitVerificationPage() {
         });
     }, [repos, searchKeyword, selectedLanguageFilter]);
 
-    // Parse summary JSON
-    const parseSummary = (jsonStr?: string) => {
-        if (!jsonStr) return { strengths: [], weaknesses: [], recommendation: "" };
-        try {
-            return JSON.parse(jsonStr);
-        } catch {
-            return { strengths: [], weaknesses: [], recommendation: "" };
-        }
-    };
-
     const summary = report ? parseSummary(report.summaryJson) : null;
+    const isLegacyReport = report !== null && summary?.scoringVersion !== 2;
+    const evaluatedRepoCount = summary?.evaluatedReposCount ?? report?.evaluatedRepositories.length ?? 0;
 
-    if (isLoading) {
+    if (isLoading || isAnalyzing) {
         return (
             <MainLayout role="candidate">
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "65vh" }}>
-                    <Spinner size="lg" />
+                <div className={styles.loadingScreen}>
+                    {isAnalyzing ? (
+                        <section className={styles.analysisLoadingCard} aria-labelledby="git-analysis-loading-title">
+                            <div aria-hidden="true">
+                                <Spinner size="lg" />
+                            </div>
+                            <h1 id="git-analysis-loading-title" tabIndex={-1} ref={focusSection}>
+                                Đang phân tích và chấm điểm Git
+                            </h1>
+                            <p>Đang xử lý {selectedRepoIds.length} repository bạn đã chọn.</p>
+                        </section>
+                    ) : (
+                        <Spinner size="lg" />
+                    )}
                 </div>
             </MainLayout>
         );
@@ -419,7 +420,7 @@ export default function GitVerificationPage() {
 
                 {/* Alerts */}
                 {error && (
-                    <div className={styles.alertError}>
+                    <div className={styles.alertError} role="alert">
                         <AlertCircle size={18} />
                         <span>{error}</span>
                     </div>
@@ -478,9 +479,19 @@ export default function GitVerificationPage() {
                                         type="button"
                                         className={styles.nextPillBtn}
                                         onClick={() => setCurrentStep("select")}
+                                        disabled={isSyncing || repos.length === 0}
                                     >
                                         <span>Sang bước chọn Repository</span>
                                         <ChevronRight size={16} />
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className={styles.resyncPillBtn}
+                                        onClick={handleConnectOAuth}
+                                        disabled={isSyncing}
+                                    >
+                                        Kết nối lại GitHub
                                     </button>
                                 </div>
 
@@ -499,14 +510,14 @@ export default function GitVerificationPage() {
 
                                 <h3 className={styles.connectedHeading}>Kết nối tài khoản GitHub của bạn</h3>
                                 <p className={styles.connectedSubtext}>
-                                    Chỉ với 1 click, hệ thống sẽ tự động đồng bộ danh sách dự án công khai, số commit và lịch sử đóng góp để nhà tuyển dụng có cái nhìn thực tế và khách quan nhất về năng lực của bạn.
+                                    Kết nối để đồng bộ các repository mà GitHub cho phép truy cập. Bạn chọn repository nào sẽ được đưa vào báo cáo.
                                 </p>
 
                                 <button
                                     type="button"
                                     className={styles.oauthDirectBtn}
                                     onClick={handleConnectOAuth}
-                                    disabled={isSyncing}
+                                    disabled={isSyncing || !candidateId}
                                 >
                                     <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
                                         <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
@@ -792,10 +803,10 @@ export default function GitVerificationPage() {
                                     boxShadow: "0 4px 14px rgba(37, 99, 235, 0.4)",
                                 }}
                                 onClick={handleAnalyze}
-                                disabled={isAnalyzing || selectedRepoIds.length === 0}
+                                disabled={isSyncing || selectedRepoIds.length === 0}
                             >
                                 <Sparkles size={16} />
-                                {isAnalyzing ? "Đang phân tích & Chấm điểm..." : "Bắt đầu Phân tích & Chấm điểm"}
+                                Bắt đầu Phân tích & Chấm điểm
                             </button>
                         </div>
                     </div>
@@ -805,7 +816,12 @@ export default function GitVerificationPage() {
                    BƯỚC 3: BÁO CÁO & BẢNG ĐIỂM (EXECUTIVE SCORECARD)
                 ========================================================================= */}
                 {currentStep === "report" && report && (
-                    <div className={styles.reportDashboard}>
+                    <section
+                        className={styles.reportDashboard}
+                        aria-label="Kết quả chấm điểm Git"
+                        tabIndex={-1}
+                        ref={focusSection}
+                    >
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
                             <Button variant="outline" onClick={() => setCurrentStep("select")}>
                                 <ArrowLeft size={16} style={{ marginRight: 6 }} />
@@ -855,38 +871,32 @@ export default function GitVerificationPage() {
 
                                     <div>
                                         <div style={{ display: "inline-block", background: "rgba(16, 185, 129, 0.2)", color: "#6EE7B7", border: "1px solid #10B981", padding: "4px 12px", borderRadius: 999, fontSize: 12, fontWeight: 700, marginBottom: 8 }}>
-                                            {report.overallScore >= 80 ? "🏆 Xuất sắc (Top Tier Contributor)" : report.overallScore >= 60 ? "⭐ Năng lực Tốt (Strong Standard)" : "⚡ Tiềm năng (Developing Standard)"}
+                                            {isLegacyReport ? "Báo cáo theo cách chấm cũ" : "Đã phân tích"}
                                         </div>
                                         <h2 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 6px 0", color: "#FFFFFF" }}>
                                             Chỉ số Năng lực Kỹ thuật Git
                                         </h2>
                                         <p style={{ fontSize: 13.5, color: "#94A3B8", margin: 0, lineHeight: 1.5 }}>
-                                            Điểm số tổng hợp được phân tích tự động từ metadata của <strong>{report.evaluatedRepositories?.length || selectedRepoIds.length}</strong> repository tiêu biểu trên GitHub của bạn.
+                                            Điểm tổng hợp từ dữ liệu đóng góp, quy chuẩn dự án, hoạt động và quy mô repository.
                                         </p>
                                     </div>
 
                                     <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 14, padding: 18, display: "flex", flexDirection: "column", gap: 12 }}>
                                         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13 }}>
                                             <span style={{ color: "#94A3B8" }}>Dự án chấm:</span>
-                                            <strong style={{ color: "white" }}>{report.evaluatedRepositories?.length || selectedRepoIds.length} Repos</strong>
-                                        </div>
-                                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13 }}>
-                                            <span style={{ color: "#94A3B8" }}>Trạng thái:</span>
-                                            <strong style={{ color: "#10B981" }}>ĐÃ XÁC THỰC</strong>
-                                        </div>
-                                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13 }}>
-                                            <span style={{ color: "#94A3B8" }}>Cấp độ:</span>
-                                            <strong style={{ color: "#60A5FA" }}>
-                                                {report.overallScore >= 80 ? "Senior Level" : report.overallScore >= 60 ? "Middle Level" : "Junior Level"}
-                                            </strong>
+                                            <strong style={{ color: "white" }}>{evaluatedRepoCount} repo</strong>
                                         </div>
                                     </div>
                                 </div>
                             );
                         })()}
 
+                        {isLegacyReport && (
+                            <p>Hãy phân tích lại để cập nhật điểm từng tiêu chí và lưu chi tiết các repository được chấm.</p>
+                        )}
+
                         {/* 4 Metric Cards */}
-                        <div className={styles.metrics4Grid}>
+                        {!isLegacyReport && <div className={styles.metrics4Grid}>
                             <div className={styles.metricCardItem}>
                                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                     <span style={{ fontSize: 13, fontWeight: 700, color: "#64748B", textTransform: "uppercase" }}>1. Đóng góp thực tế</span>
@@ -954,10 +964,9 @@ export default function GitVerificationPage() {
                                     Độ đa dạng ngôn ngữ và mức độ quan tâm từ cộng đồng (Stars / Forks).
                                 </p>
                             </div>
-                        </div>
+                        </div>}
 
-                        {/* AI Insights */}
-                        {summary && (
+                        {summary && !isLegacyReport && (
                             <div style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: 16, padding: 24 }}>
                                 <h4 style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 16, fontWeight: 700, margin: "0 0 16px 0", color: "#0F172A" }}>
                                     <Sparkles size={18} color="#2563EB" />
@@ -969,7 +978,7 @@ export default function GitVerificationPage() {
                                         <strong style={{ fontSize: 13, color: "#10B981", display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
                                             <Check size={15} /> Thế mạnh nổi bật:
                                         </strong>
-                                        {summary.strengths?.length > 0 ? (
+                                        {summary.strengths?.length ? (
                                             summary.strengths.map((s: string, idx: number) => (
                                                 <div key={idx} style={{ fontSize: 13, color: "#065F46", background: "#ECFDF5", padding: "6px 10px", borderRadius: 6, marginBottom: 6 }}>
                                                     • {s}
@@ -984,7 +993,7 @@ export default function GitVerificationPage() {
                                         <strong style={{ fontSize: 13, color: "#F59E0B", display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
                                             <BookOpen size={15} /> Khuyến nghị cải thiện:
                                         </strong>
-                                        {summary.weaknesses?.length > 0 ? (
+                                        {summary.weaknesses?.length ? (
                                             summary.weaknesses.map((w: string, idx: number) => (
                                                 <div key={idx} style={{ fontSize: 13, color: "#92400E", background: "#FFFBEB", padding: "6px 10px", borderRadius: 6, marginBottom: 6 }}>
                                                     • {w}
@@ -1006,9 +1015,9 @@ export default function GitVerificationPage() {
                         )}
 
                         {/* Detailed Table */}
-                        <div className={styles.tableCleanCard}>
+                        {!isLegacyReport && <div className={styles.tableCleanCard}>
                             <h4 style={{ fontSize: 16, fontWeight: 700, margin: "0 0 14px 0", color: "#0F172A" }}>
-                                Chi tiết {report.evaluatedRepositories?.length || selectedRepoIds.length} Repository được Chấm điểm
+                                Chi tiết {evaluatedRepoCount} repository được chấm điểm
                             </h4>
                             <div style={{ overflowX: "auto" }}>
                                 <table className={styles.cleanTable}>
@@ -1024,7 +1033,7 @@ export default function GitVerificationPage() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {(report.evaluatedRepositories || repos.filter((r) => r.isSelected)).map((r) => (
+                                        {report.evaluatedRepositories.map((r) => (
                                             <tr key={r.id}>
                                                 <td>
                                                     <a
@@ -1056,7 +1065,7 @@ export default function GitVerificationPage() {
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <strong>{r.candidateCommitRatio ? `${Math.round(r.candidateCommitRatio * 100)}%` : "100%"}</strong>
+                                                    <strong>{r.totalCommitCount > 0 ? `${Math.round(r.candidateCommitRatio * 100)}%` : "Chưa có dữ liệu"}</strong>
                                                     <span style={{ fontSize: 11, color: "#94A3B8", display: "block" }}>
                                                         ({r.candidateCommitCount || 0}/{r.totalCommitCount || 0} commits)
                                                     </span>
@@ -1090,7 +1099,7 @@ export default function GitVerificationPage() {
                                                 </td>
                                                 <td>
                                                     <strong style={{ fontSize: 15, color: "#2563EB" }}>
-                                                        {r.repoScore ? `${r.repoScore} đ` : "—"}
+                                                        {r.repoScore == null ? "—" : `${r.repoScore} đ`}
                                                     </strong>
                                                 </td>
                                             </tr>
@@ -1098,8 +1107,8 @@ export default function GitVerificationPage() {
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
+                        </div>}
+                    </section>
                 )}
             </div>
         </MainLayout>
