@@ -47,12 +47,16 @@
 .runningMascot {
     width: min(12rem, 100%);
     aspect-ratio: 1;
-    background: url("../../assets/sirs-mascot-running.webp") left center / 500% 100% no-repeat;
+    border-radius: 18%;
+    background: url("../../assets/capybyte-official.webp") center / contain no-repeat;
 }
 
 @media (prefers-reduced-motion: no-preference) {
     .runningMascot {
-        animation: mascotRun 560ms steps(5, jump-none) infinite;
+        border-radius: 0;
+        background-image: url("../../assets/capybyte-run.webp");
+        background-size: 600% 100%;
+        animation: mascotRun 720ms steps(6, jump-none) infinite;
     }
 }
 

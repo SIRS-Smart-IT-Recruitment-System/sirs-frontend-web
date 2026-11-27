@@ -1,4 +1,6 @@
-# React + TypeScript + Vite
+# SIRS Frontend
+
+CapyByte là linh vật chính của SIRS. [Ảnh mẫu](src/assets/capybyte-reference.png) thể hiện CapyByte đeo kính tròn, mặc hoodie xanh tím, đội quả cam có biểu tượng nhánh Git và dùng laptop. Giao diện sử dụng [ảnh WebP](src/assets/capybyte-official.webp) ở trang đăng nhập và đăng ký, cùng [hoạt ảnh chạy](src/assets/capybyte-run.webp) khi chờ chấm điểm repository.
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
