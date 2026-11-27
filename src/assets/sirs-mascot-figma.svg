@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="720" viewBox="0 0 640 720" role="img" aria-labelledby="title">
+  <title id="title">Linh vật tuyển dụng SIRS</title>
+  <defs>
+    <linearGradient id="pearl" x1="0" x2="0.9" y1="0" y2="1"><stop stop-color="#fffefa"/><stop offset=".48" stop-color="#fff6e7"/><stop offset=".83" stop-color="#dfd5c6"/><stop offset="1" stop-color="#b3acac"/></linearGradient>
+    <linearGradient id="navy" x2=".75" y2="1"><stop stop-color="#4b668f"/><stop offset=".55" stop-color="#1e345a"/><stop offset="1" stop-color="#111d39"/></linearGradient>
+    <linearGradient id="glass" x2=".86" y2="1"><stop stop-color="#314365"/><stop offset=".55" stop-color="#0c172e"/><stop offset="1" stop-color="#192f52"/></linearGradient>
+    <linearGradient id="blue" x2=".85" y2=".65"><stop stop-color="#60dfff"/><stop offset=".28" stop-color="#1b9def"/><stop offset=".75" stop-color="#2160bf"/><stop offset="1" stop-color="#173d80"/></linearGradient>
+    <linearGradient id="iris" x1=".4" x2=".55" y2="1"><stop stop-color="#0d1e3c"/><stop offset=".55" stop-color="#124576"/><stop offset="1" stop-color="#34c9ff"/></linearGradient>
+  </defs>
+  <g id="Orbit-back" transform="rotate(-24 350 161)">
+    <ellipse cx="350" cy="161" rx="229" ry="45" fill="none" stroke="#0f64ba" stroke-width="10"/>
+    <ellipse cx="350" cy="158" rx="229" ry="45" fill="none" stroke="#5ed7ff" stroke-width="5"/>
+    <circle cx="567" cy="143" r="14" fill="url(#blue)"/><circle cx="563" cy="137" r="4" fill="#bdf6ff"/>
+  </g>
+  <g id="Legs" stroke="#243550" stroke-width="2.5" stroke-linejoin="round">
+    <g id="Left-leg">
+      <path d="M220 509 Q235 487 288 511 L277 572 Q247 592 210 564Z" fill="url(#pearl)"/>
+      <path d="M219 561 Q238 575 274 570 L268 600 L214 598Z" fill="url(#navy)"/>
+      <path d="M212 586 Q232 575 265 588 Q280 599 274 632 L196 637 Q194 609 212 586Z" fill="url(#pearl)"/>
+      <path d="M203 622 Q232 606 268 625 L281 659 Q271 681 186 672 L178 663 Q180 638 203 622Z" fill="url(#navy)"/>
+      <path d="M180 658 Q226 670 279 654 L281 666 Q248 683 182 673Z" fill="#182847"/>
+      <path d="M201 627 Q223 617 244 619" fill="none" stroke="#61dbff" stroke-width="5" stroke-linecap="round"/>
+    </g>
+    <g id="Right-leg">
+      <path d="M339 512 Q373 498 403 513 L415 564 Q393 584 350 573Z" fill="url(#pearl)"/>
+      <path d="M351 568 Q385 575 408 557 L416 588 L362 604Z" fill="url(#navy)"/>
+      <path d="M361 591 Q389 577 415 585 Q432 600 439 631 L367 641 Q357 618 361 591Z" fill="url(#pearl)"/>
+      <path d="M367 628 Q390 608 422 619 Q452 630 458 656 L455 668 Q417 682 359 671 Q353 648 367 628Z" fill="url(#navy)"/>
+      <path d="M359 659 Q411 670 457 653 L458 665 Q427 683 358 673Z" fill="#182847"/>
+      <path d="M388 619 Q404 615 422 620" fill="none" stroke="#61dbff" stroke-width="5" stroke-linecap="round"/>
+    </g>
+  </g>
+  <g id="Torso">
+    <path d="M233 485 Q298 463 388 479 L393 515 Q330 557 241 527Z" fill="url(#navy)" stroke="#172d50" stroke-width="3"/>
+    <path d="M222 366 Q250 325 314 327 Q381 323 414 360 Q428 397 403 476 Q392 506 351 518 Q299 529 237 502 Q213 477 209 421Z" fill="url(#pearl)" stroke="#b4afaa" stroke-width="3"/>
+    <path d="M234 485 Q259 492 277 497 L272 514 L245 507Z" fill="url(#blue)"/>
+    <path d="M267 328 Q302 343 348 327 L353 344 Q319 362 268 347Z" fill="url(#navy)"/>
+    <rect x="289" y="520" width="40" height="9" rx="4.5" fill="#4fd7ff"/>
+    <g id="SIRS-chest-emblem" transform="rotate(-6 307 418)">
+      <path d="M258 441 C251 466 341 446 362 414 M339 390 Q363 386 363 400" fill="none" stroke="#269ddb" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="350" cy="389" r="5" fill="url(#blue)"/>
+      <text x="253" y="429" font-family="Arial, sans-serif" font-weight="bold" font-style="italic" font-size="38" fill="#163b70">SIRS</text>
+    </g>
+  </g>
+  <g id="Waving-arm" stroke="#263854" stroke-width="2.5" stroke-linejoin="round">
+    <ellipse cx="216" cy="388" rx="24" ry="32" fill="url(#navy)" transform="rotate(25 216 388)"/>
+    <path d="M202 366 Q181 355 159 336 L133 359 Q145 394 184 407 Q206 404 211 385Z" fill="url(#pearl)"/>
+    <path d="M167 371 L183 381" fill="none" stroke="#36adeb" stroke-width="5" stroke-linecap="round"/>
+    <path d="M125 345 L141 363 Q152 368 165 348 L154 327Z" fill="url(#navy)"/>
+    <g id="Waving-hand" fill="url(#navy)" stroke-linecap="round">
+      <path d="M127 347 Q113 342 103 329 L77 297 Q72 288 79 283 Q85 278 91 285 L108 303 L87 271 Q82 261 90 256 Q97 252 104 262 L123 288 L108 257 Q103 247 112 243 Q120 240 125 250 L141 280 Q143 283 145 277 L148 265 Q152 255 160 259 Q166 261 165 271 L161 306 Q163 325 151 337 Q140 348 127 347Z"/>
+      <path d="M111 307 Q121 293 135 295 M125 326 Q122 305 143 295" fill="none" stroke="#526a91" stroke-width="3"/>
+    </g>
+  </g>
+  <g id="Helmet" transform="rotate(-9 341 197)">
+    <ellipse cx="191" cy="221" rx="26" ry="46" fill="url(#navy)" stroke="#102948" stroke-width="4"/>
+    <path d="M185 190 C184 99 262 43 349 47 C433 48 492 96 503 168 Q511 212 496 261 C478 320 423 340 329 338 C250 336 200 318 189 263 Q183 232 185 190Z" fill="url(#pearl)" stroke="#b7b0a9" stroke-width="3"/>
+    <path d="M203 148 Q242 73 337 51 Q373 45 411 57 Q311 61 203 165Z" fill="url(#blue)"/>
+    <path d="M199 193 Q211 143 270 128 Q348 107 420 118 Q464 123 481 159 Q497 203 482 247 C469 291 429 307 344 312 Q240 318 215 283 Q192 252 199 193Z" fill="#afa99f"/>
+    <path d="M205 193 Q217 149 272 134 Q350 114 420 125 Q463 131 476 165 Q488 205 475 245 C462 286 423 301 343 306 Q248 313 220 278 Q199 250 205 193Z" fill="url(#glass)" stroke="#182944" stroke-width="3"/>
+    <path d="M220 176 Q244 143 303 136 L284 151 Q246 155 220 176Z" fill="#5c749a" opacity=".5"/>
+    <g id="Eyes">
+      <ellipse cx="278" cy="222" rx="24" ry="33" fill="#b3e8ff"/>
+      <ellipse cx="283" cy="220" rx="20" ry="30" fill="url(#iris)"/>
+      <circle cx="285" cy="205" r="7" fill="#fff"/>
+      <ellipse cx="401" cy="209" rx="27" ry="34" fill="url(#iris)"/>
+      <circle cx="406" cy="195" r="8" fill="#fff"/>
+      <path d="M253 181 Q265 166 281 171 M379 168 Q393 155 408 163" fill="none" stroke="#70dfff" stroke-width="6" stroke-linecap="round"/>
+    </g>
+    <g id="Smile">
+      <path d="M312 259 Q330 264 349 253 Q351 276 335 282 Q320 285 312 259Z" fill="#181e31" stroke="#080e1d" stroke-width="2.5"/>
+      <path d="M323 274 Q333 263 344 265 Q341 278 334 279 Q328 280 323 274Z" fill="#ff9a91"/>
+      <path d="M241 251 L236 256 M251 253 L246 259 M427 253 L421 259 M437 251 L431 258" stroke="#6ddfff" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <g id="Optical-lens">
+      <ellipse cx="397" cy="204" rx="53" ry="60" fill="#47bfff" fill-opacity=".08" stroke="#142d53" stroke-width="15"/>
+      <ellipse cx="397" cy="202" rx="53" ry="60" fill="none" stroke="url(#blue)" stroke-width="10"/>
+      <path d="M350 176 Q365 141 399 143" fill="none" stroke="#a7efff" stroke-width="3" stroke-linecap="round"/>
+      <rect x="445" y="191" width="39" height="15" rx="6" fill="url(#navy)"/>
+      <circle cx="474" cy="198" r="5.5" fill="#57d5ff"/>
+    </g>
+    <g id="Ear-piece">
+      <ellipse cx="493" cy="206" rx="24" ry="45" fill="url(#pearl)" stroke="#b7b2ac" stroke-width="2.5"/>
+      <ellipse cx="499" cy="206" rx="16" ry="34" fill="url(#navy)" stroke="#258fd8" stroke-width="4"/>
+      <ellipse cx="501" cy="206" rx="9" ry="24" fill="#173054" stroke="#57d5ff" stroke-width="2"/>
+    </g>
+  </g>
+  <g id="Portfolio-arm">
+    <path d="M404 361 Q431 353 443 384 L454 431 L425 447 L398 409Z" fill="url(#pearl)" stroke="#aba9a6" stroke-width="3"/>
+    <path d="M432 422 Q453 413 465 432 L469 455 Q467 480 443 480 L422 460Z" fill="url(#pearl)" stroke="#aba9a6" stroke-width="3"/>
+  </g>
+  <g id="Candidate-portfolio" transform="rotate(-8 412 439)">
+    <path d="M368 384 Q370 376 380 374 L456 362 Q463 361 464 370 L456 477 Q456 484 448 486 L371 504 Q360 506 360 495Z" fill="#152948" stroke="#142440" stroke-width="3"/>
+    <path d="M375 382 L452 369 L449 375 L373 390Z" fill="#dce8f3"/>
+    <path d="M375 390 Q376 383 383 382 L459 369 Q466 368 466 375 L458 482 Q458 489 450 491 L377 509 Q369 511 369 502Z" fill="url(#navy)" stroke="#142643" stroke-width="3"/>
+    <g id="Candidate-symbol" fill="#c8d8e6"><ellipse cx="420" cy="416" rx="8" ry="9"/><path d="M403 445 Q404 430 416 427 Q427 424 432 437Z"/></g>
+  </g>
+  <g id="Holding-hand" fill="url(#navy)" stroke="#1b2b48" stroke-width="2.5">
+    <path d="M451 436 Q462 432 469 442 Q477 460 466 475 Q459 483 448 480 L438 473Z"/>
+    <rect x="426" y="436" width="34" height="12" rx="6" transform="rotate(-12 443 442)"/>
+    <rect x="430" y="449" width="32" height="12" rx="6" transform="rotate(-12 446 455)"/>
+    <rect x="435" y="462" width="26" height="11" rx="5.5" transform="rotate(-12 448 467)"/>
+  </g>
+</svg>

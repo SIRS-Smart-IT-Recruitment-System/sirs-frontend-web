@@ -290,9 +290,7 @@ export default function GitVerificationPage() {
                 <div className={styles.loadingScreen}>
                     {isAnalyzing ? (
                         <section className={styles.analysisLoadingCard} aria-labelledby="git-analysis-loading-title">
-                            <div aria-hidden="true">
-                                <Spinner size="lg" />
-                            </div>
+                            <div className={styles.runningMascot} aria-hidden="true" />
                             <h1 id="git-analysis-loading-title" tabIndex={-1} ref={focusSection}>
                                 Đang phân tích và chấm điểm Git
                             </h1>

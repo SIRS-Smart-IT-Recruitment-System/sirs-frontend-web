@@ -44,6 +44,23 @@
     color: var(--color-text-secondary, #475569);
 }
 
+.runningMascot {
+    width: min(12rem, 100%);
+    aspect-ratio: 1;
+    background: url("../../assets/sirs-mascot-running.webp") left center / 500% 100% no-repeat;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .runningMascot {
+        animation: mascotRun 560ms steps(5, jump-none) infinite;
+    }
+}
+
+@keyframes mascotRun {
+    from { background-position-x: 0%; }
+    to { background-position-x: 100%; }
+}
+
 /* ==========================================================
    1. TOP VIBRANT HERO BANNER
 ========================================================== */
