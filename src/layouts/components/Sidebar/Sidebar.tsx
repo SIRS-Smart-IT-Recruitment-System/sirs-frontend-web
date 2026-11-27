@@ -1,67 +1,79 @@
-import { NavLink } from "react-router-dom";
-import { navigation } from "../../../constants/navigation.ts";
-import type { SidebarRole } from "../../../constants/navigation.ts";
+import { BrainCircuit, Layers } from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
+
+import { navigation } from "../../../constants/navigation";
+import type { SidebarRole } from "../../../constants/navigation";
+import { ROUTES } from "../../../routers/routePaths";
+
 import styles from "./Sidebar.module.css";
 
 interface SidebarProps {
     role: SidebarRole;
-    progress?: number;
 }
 
-function Sidebar({ role, progress = 80 }: SidebarProps) {
-    const menuItems = navigation[role];
+function Sidebar({ role }: SidebarProps) {
+    const candidate = role === "candidate";
 
     return (
-        <aside className={styles.sidebar}>
-            {/* Logo */}
-            <div className={styles.sidebarLogo}>
-                <span>SIRS</span>
-            </div>
+        <aside className={styles.sidebar} data-candidate={candidate || undefined}>
+            {candidate ? (
+                <Link
+                    className={styles.sidebarLogo}
+                    to={ROUTES.CANDIDATE.DASHBOARD}
+                    aria-label="SIRS AI OS, trang chủ"
+                >
+                    <BrainCircuit size={34} className={styles.brandIcon} />
+                    <span>SIRS AI OS</span>
+                </Link>
+            ) : (
+                <div className={styles.sidebarLogo} aria-label="SIRS">
+                    <Layers size={34} className={styles.brandIcon} />
+                    <span>SIRS</span>
+                </div>
+            )}
 
-            {/* Navigation */}
-            <nav className={styles.sidebarNav}>
-                {menuItems.map((item) => (
-                    <NavLink
-                        key={item.path}
-                        to={item.path}
-                        className={({ isActive }) =>
-                            `${styles.sidebarLink} ${
-                                isActive ? styles.active : ""
-                            }`
-                        }
-                    >
-                        <span className={styles.sidebarIcon}>
-                            {item.icon}
-                        </span>
+            <nav className={styles.sidebarNav} aria-label="Điều hướng chính">
+                {navigation[role].map(({ label, path, icon: Icon, badge }) => {
+                    const content = (
+                        <>
+                            <span className={styles.sidebarIcon} aria-hidden="true">
+                                <Icon size={18} />
+                            </span>
+                            <span>{label}</span>
+                            {badge && <span className={styles.navBadge}>{badge}</span>}
+                        </>
+                    );
 
-                        <span>{item.label}</span>
-                        {item.badge && <span className={styles.navBadge}>{item.badge}</span>}
-                    </NavLink>
-                ))}
+                    if (!path) {
+                        return (
+                            <span
+                                key={label}
+                                className={styles.sidebarLink}
+                                aria-label={label + " · Chưa có giao diện"}
+                                title={label + " · Chưa có giao diện"}
+                            >
+                                {content}
+                            </span>
+                        );
+                    }
+
+                    return (
+                        <NavLink
+                            key={path}
+                            to={path}
+                            title={label}
+                            aria-label={label}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? `${styles.sidebarLink} ${styles.active}`
+                                    : styles.sidebarLink
+                            }
+                        >
+                            {content}
+                        </NavLink>
+                    );
+                })}
             </nav>
-
-            {/* Profile Progress */}
-            <div className={styles.sidebarProgress}>
-                <h4>Tiến độ hồ sơ</h4>
-
-                <div className={styles.progressContent}>
-                    <div className={styles.progressCircle}>
-                        {progress}%
-                    </div>
-
-                    <div className={styles.progressInfo}>
-                        <span>Đã hoàn thành</span>
-                        <small>Hãy bổ sung thông tin còn thiếu</small>
-                    </div>
-                </div>
-
-                <div className={styles.progressBar}>
-                    <div
-                        className={styles.progressBarFill}
-                        style={{ width: `${progress}%` }}
-                    />
-                </div>
-            </div>
         </aside>
     );
 }

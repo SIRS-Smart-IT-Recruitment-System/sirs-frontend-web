@@ -1,0 +1,231 @@
+.hero {
+    --inset: clamp(16px, 2.5cqi, 30px);
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #dfe7f3;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 3px 14px rgb(27 49 84 / 5%);
+}
+
+.cover {
+    min-height: clamp(98px, 12cqi, 140px);
+    background:
+        repeating-radial-gradient(ellipse at 80% -150%, transparent 0 61px, #ffffff21 62px, transparent 64px 82px),
+        linear-gradient(112deg, #4273ee, #5a59de 49%, #42b8e9);
+}
+
+.identity {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+        "avatar name name"
+        "avatar details actions";
+    align-items: start;
+    gap: 16px 20px;
+    padding: 20px var(--inset);
+}
+
+.identity .avatar {
+    grid-area: avatar;
+    position: relative;
+    width: clamp(80px, 10cqi, 112px);
+    height: auto;
+    aspect-ratio: 1;
+    margin-top: -48px;
+    border: 5px solid white;
+    border-radius: 22px;
+    background: #2458dc;
+    box-shadow: 0 5px 16px rgb(28 50 85 / 15%);
+}
+
+.identityDetails {
+    grid-area: details;
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.coverName,
+.meta,
+.detail,
+.profileActions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+}
+
+.coverName {
+    grid-area: name;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.coverName h1 {
+    font-size: clamp(25px, 3cqi, 35px);
+    line-height: 1.17;
+    letter-spacing: -.035em;
+    color: #17233d;
+}
+
+.jobStatus {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    border: 1px solid #bdebd8;
+    padding: 4px 9px;
+    border-radius: 999px;
+    color: #086548;
+    background: #effbf5;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.jobStatus i {
+    width: 7px;
+    height: 7px;
+    flex: none;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.identityDescription {
+    line-height: 1.65;
+    white-space: pre-line;
+    color: #40526e;
+}
+
+.detail {
+    gap: 6px;
+    min-width: 0;
+    color: #526580;
+    font-size: 14px;
+}
+
+.detail svg {
+    flex: none;
+}
+
+.profileActions {
+    grid-area: actions;
+    align-self: end;
+    gap: 8px;
+    scroll-margin-top: 90px;
+}
+
+.secondaryAction {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 9px 13px;
+    border: 1px solid #d7e2f2;
+    border-radius: 8px;
+    color: #294578;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.secondaryAction:hover {
+    background: #f0f5ff;
+}
+
+.indicators {
+    margin-inline: var(--inset);
+    padding: 16px 0 22px;
+    border-top: 1px solid #e3eaf4;
+}
+
+.indicators h2 {
+    margin-bottom: 12px;
+    color: #324463;
+    font-size: 15px;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.metrics > div {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #e4eaf4;
+    border-radius: 12px;
+    background: #f9fbfe;
+    overflow-wrap: anywhere;
+}
+
+.metrics dt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #526582;
+    font-size: 13px;
+}
+
+.metrics svg {
+    flex: none;
+    box-sizing: content-box;
+    padding: 6px;
+    border-radius: 8px;
+    color: #245ad5;
+    background: #e5efff;
+}
+
+.metrics [data-tone="green"] svg {
+    color: #07805b;
+    background: #ddf7eb;
+}
+
+.metrics [data-tone="violet"] svg {
+    color: #5746c7;
+    background: #eeeaff;
+}
+
+.metrics [data-tone="amber"] svg {
+    color: #965900;
+    background: #fff1cc;
+}
+
+.metrics dd {
+    margin: 6px 0 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+@container (max-width: 720px) {
+    .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@container (max-width: 900px) {
+    .identity {
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-areas:
+            "avatar name"
+            "avatar details"
+            ". actions";
+    }
+}
+
+@container (max-width: 480px) {
+    .identity {
+        gap: 12px;
+        grid-template-areas:
+            "avatar name"
+            "details details"
+            "actions actions";
+    }
+
+    .identity .avatar {
+        width: 64px;
+        margin-top: -34px;
+        border-radius: 16px;
+    }
+}

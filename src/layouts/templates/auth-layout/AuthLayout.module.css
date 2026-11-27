@@ -1,538 +1,35 @@
-/* =============================================
-   AUTH LAYOUT — SIRS Apple-style split design
-   Synced 1:1 with login.html
-   ============================================= */
-
-/* ---- Keyframes ---- */
-@keyframes floatSlow {
-    0%   { transform: translateY(0px) rotate(0deg); }
-    50%  { transform: translateY(-10px) rotate(0.5deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-}
-
-@keyframes floatDelayed {
-    0%   { transform: translateY(0px) rotate(0deg); }
-    50%  { transform: translateY(12px) rotate(-0.5deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-}
-
-@keyframes pulseGlow {
-    0%, 100% { opacity: 0.35; transform: scale(1); }
-    50%       { opacity: 0.55; transform: scale(1.08); }
-}
-
-@keyframes ping {
-    75%, 100% {
-        transform: scale(2);
-        opacity: 0;
-    }
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .profileCard,
-    .aiScorePill,
-    .glowOrb,
-    .pingInner,
-    .heroBadgeDot {
-        animation: none !important;
-    }
-}
-
-/* ---- Root container ---- */
 .authContainer {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    background-color: #f8fafc;
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    grid-template-rows: minmax(0, 1fr);
+    height: 100vh;
+    height: 100dvh;
+    background: white;
 }
 
-/* ============================================================
-   LEFT HERO PANEL (50% Desktop)
-   ============================================================ */
 .leftPanel {
     position: relative;
-    width: 50%;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #0a192f 0%, #0f2757 50%, #1556ad 100%);
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 64px; /* lg:p-16 */
-    color: #ffffff;
-}
-
-/* Dot-grid ambient */
-.ambientGrid {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-    background-size: 24px 24px;
-    opacity: 0.25;
-    pointer-events: none;
-}
-
-/* Glow orbs */
-.glowOrb {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    animation: pulseGlow 9s ease-in-out infinite;
-}
-
-.glowOrbTop {
-    top: -128px;
-    left: -128px;
-    width: 384px;
-    height: 384px;
-    background: radial-gradient(circle, rgba(96, 165, 250, 0.25) 0%, transparent 70%);
-    filter: blur(64px);
-}
-
-.glowOrbBottom {
-    bottom: 0;
-    right: 0;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(34, 211, 238, 0.20) 0%, transparent 70%);
-    filter: blur(64px);
-    animation-delay: -3s;
-}
-
-/* ---- Hero top section ---- */
-.heroTop {
-    position: relative;
-    z-index: 10;
-}
-
-.heroBadge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.20);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.025em;
-    color: #bae6fd;
-    margin-bottom: 24px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.heroBadgeDot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 9999px;
-    background-color: #34d399; /* bg-emerald-400 */
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-    flex-shrink: 0;
-}
-
-.heroTitle {
-    font-size: clamp(32px, 3.2vw, 48px);
-    font-weight: 800;
-    line-height: 1.15;
-    color: #ffffff;
-    letter-spacing: -0.025em;
-    margin: 0;
-}
-
-.heroTitleGradient {
-    background: linear-gradient(to right, #bae6fd, #dbeafe, #ffffff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.heroDesc {
-    margin-top: 16px;
-    font-size: 16px;
-    line-height: 1.625;
-    color: rgba(226, 232, 240, 0.9);
-    max-width: 576px;
-    font-weight: 400;
-}
-
-/* ---- Floating cards composition ---- */
-.cardsComposition {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 72px 48px;
-    flex: 1;
-}
-
-/* Decorative glow rings */
-.glowRing {
-    position: absolute;
-    width: 288px;
-    height: 288px;
-    border-radius: 50%;
-    border: 1px solid rgba(125, 211, 252, 0.2);
-    transform: scale(1.25);
-    pointer-events: none;
-}
-
-.glowRingOuter {
-    position: absolute;
-    width: 384px;
-    height: 384px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transform: scale(1.1);
-    pointer-events: none;
-}
-
-/* Card Group — bọc card chính + 2 thẻ nổi ở khoảng cách xa, thoáng đãng */
-.cardGroup {
-    position: relative;
-    width: 100%;
-    max-width: 440px;
-    display: flex;
-    justify-content: center;
-}
-
-/* Floating top badge: 50,000+ Verified (khoảng cách xa thoáng đãng ở góc trên-phải) */
-.floatingBadgeTop {
-    position: absolute;
-    top: -46px;
-    right: -28px;
-    z-index: 20;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.25);
-    color: #ffffff;
-    font-size: 12px;
-    font-weight: 500;
-    white-space: nowrap;
-    animation: floatDelayed 9s ease-in-out infinite;
-}
-
-.pingWrapper {
-    position: relative;
-    display: inline-flex;
-    width: 8px;
-    height: 8px;
-    flex-shrink: 0;
-}
-
-.pingInner {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: #38bdf8;
-    opacity: 0.75;
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-.pingDot {
-    position: relative;
-    display: inline-flex;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #38bdf8;
-}
-
-/* Main candidate profile card (Hero Main Card) */
-.profileCard {
-    width: 100%;
-    max-width: 440px;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    border-radius: 18px; /* rounded-2xl */
-    padding: 22px 22px 28px 22px; /* chừa thêm padding-bottom để chân card luôn thoáng */
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-    transform: rotate(-1deg);
-    transition: transform 0.5s ease;
-    animation: floatSlow 7s ease-in-out infinite;
-}
-
-.profileCard:hover {
-    transform: rotate(0deg);
-}
-
-.cardHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.cardLeft {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 1;
     min-width: 0;
+    min-height: 0;
+    padding: clamp(20px, 5dvh, 64px) clamp(24px, 4vw, 64px);
+    overflow: clip;
+    background: linear-gradient(135deg, #0a192f, #0f2757 50%, #1556ad);
+    color: white;
 }
 
-.avatarWrapper {
-    position: relative;
-    flex-shrink: 0;
-}
-
-.avatarWrapper .avatarCircle {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #2563eb, #38bdf8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 18px;
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
-}
-
-.avatarWrapper .verifiedTooltip {
-    position: absolute;
-    bottom: -4px;
-    right: -4px;
-}
-
-.verifiedBadge {
-    background: #3b82f6;
-    color: #ffffff;
-    border-radius: 50%;
-    padding: 3px;
-    box-shadow: 0 0 0 2px #0f2757;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: default;
-}
-
-.candidateInfo {
-    display: flex;
-    flex-direction: column;
-}
-
-.candidateName {
-    font-size: 16px;
-    font-weight: 600;
-    color: #ffffff;
-    letter-spacing: 0.025em;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.candidateName .activeTag {
-    font-size: 12px;
-    font-weight: 400;
-    background: rgba(16, 185, 129, 0.2);
-    color: #6ee7b7;
-    border: 1px solid rgba(52, 211, 153, 0.4);
-    padding: 2px 8px;
-    border-radius: 9999px;
-}
-
-.candidateRole {
-    font-size: 12px;
-    color: #bae6fd;
-    margin-top: 2px;
-}
-
-.cardHeader .matchScore {
-    font-size: 12px;
-    font-weight: 700;
-    color: #ffffff;
-    background: rgba(37, 99, 235, 0.8);
-    border: 1px solid rgba(96, 165, 250, 0.5);
-    padding: 4px 10px;
-    border-radius: 8px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    white-space: nowrap;
-    flex-shrink: 0;
-    line-height: 1.25;
-}
-
-/* Skills tags */
-.skillTags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 14px;
-}
-
-.skillTags .skillTag {
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    background: rgba(255, 255, 255, 0.10);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.skillTags .skillTagAccent {
-    color: #bae6fd;
-}
-
-.breakLine {
-    flex-basis: 100%;
-    height: 0;
-}
-
-/* Card footer */
-.cardFooter {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 16px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.10);
-    font-size: 12px;
-    color: #cbd5e1;
-}
-
-.readyStatus {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #6ee7b7;
-}
-
-.readyDot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #34d399;
-}
-
-.atsVerified {
-    color: #bae6fd;
-    font-weight: 500;
-}
-
-/* Floating Card 2: AI Profile Score pill (khoảng cách xa thoáng đãng ở góc dưới-trái) */
-.aiScorePill {
-    position: absolute;
-    bottom: -46px;
-    left: -36px;
-    z-index: 20;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 18px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.25);
-    animation: floatDelayed 8.5s ease-in-out infinite;
-    white-space: nowrap;
-}
-
-.aiScoreIcon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: rgba(16, 185, 129, 0.2);
-    border: 1px solid rgba(52, 211, 153, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #6ee7b7;
-    flex-shrink: 0;
-}
-
-.aiScoreIcon svg {
-    width: 20px;
-    height: 20px;
-}
-
-.aiScoreTitle {
-    font-size: 12px;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-.aiScoreSub {
-    font-size: 11px;
-    color: #bae6fd;
-    margin-top: 2px;
-}
-
-/* ---- Bottom status / Social Proof Footer ---- */
-.heroFooter {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.10);
-    font-size: 12px;
-    color: rgba(186, 230, 253, 0.8);
-}
-
-.heroFooterItem {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.shieldIcon {
-    width: 16px;
-    height: 16px;
-    color: #7dd3fc;
-    flex-shrink: 0;
-}
-
-.heroFooterStats {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-/* ============================================================
-   RIGHT AUTH PANEL (50% Desktop)
-   ============================================================ */
 .rightPanel {
-    position: relative;
-    width: 50%;
-    min-height: 100vh;
-    background-color: #ffffff;
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    min-height: 0;
     overflow-y: auto;
 }
 
 .panelHeader {
-    position: absolute;
-    top: 24px;
-    left: 24px;
-    z-index: 20;
+    padding: 12px 16px 0;
 }
 
 .panelHeader .backBtn {
@@ -556,12 +53,14 @@
 }
 
 .centerArea {
-    flex: 1;
+    flex: none;
+    width: 100%;
+    margin-block: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px 32px;
+    padding: clamp(12px, 3dvh, 32px) clamp(16px, 2.5vw, 36px);
 }
 
 /* Brand logo (assets/logo.png — 359x239, đồ họa thực chiếm ~300x138 bên trong) */
@@ -575,7 +74,7 @@
 }
 
 .logoImg {
-    width: 240px;
+    width: clamp(145px, 23dvh, 240px);
     max-width: 100%;
     height: auto;
     object-fit: contain;
@@ -595,61 +94,33 @@
     justify-content: center;
 }
 
-/* ============================================================
-   RESPONSIVE LAYOUT
-   ============================================================ */
-@media screen and (max-width: 1280px) {
-    .floatingBadgeTop {
-        top: -36px;
-        right: -16px;
-    }
-    .aiScorePill {
-        bottom: -36px;
-        left: -20px;
-    }
-}
 
-@media screen and (max-width: 1024px) {
+@media (max-width: 900px) {
     .authContainer {
-        flex-direction: column;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .leftPanel {
-        width: 100%;
-        min-height: 520px;
-        padding: 48px 32px;
-    }
-
-    .rightPanel {
-        width: 100%;
-        min-height: auto;
-    }
-
-    .centerArea {
-        padding: 48px 24px;
+        display: none;
     }
 }
 
-@media screen and (max-width: 640px) {
-    .leftPanel {
-        padding: 32px 20px;
-    }
-
-    .floatingBadgeTop,
-    .aiScorePill {
-        display: none; /* hidden sm:flex theo login.html */
-    }
-
-    .profileCard {
-        transform: none;
+@media (max-height: 720px) {
+    .logoWrapper {
+        margin-bottom: 8px;
     }
 
     .centerArea {
-        padding: 32px 16px;
+        padding-block: 12px;
+    }
+}
+
+@media (max-height: 540px) {
+    .logoWrapper {
+        display: none;
     }
 
-    .logoImg {
-        width: 200px;
-        margin: -22px 0 -16px;
+    .centerArea {
+        padding-block: 8px;
     }
 }

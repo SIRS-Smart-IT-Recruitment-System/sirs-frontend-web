@@ -12,19 +12,21 @@
 }
 
 .input-wrapper {
+    --field-background: var(--color-surface);
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
-    min-height: 42px;
-    background-color: var(--color-surface);
+    min-height: var(--control-height);
+    background-color: var(--field-background);
     border: var(--border-width-thin) var(--border-style-solid) var(--color-border);
     border-radius: var(--radius-md);
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .input-wrapper:focus-within {
-    border-color: var(--color-primary);
+    border-color: var(--color-border-focus);
+    box-shadow: var(--shadow-focus);
 }
 
 .input-wrapper.has-error {
@@ -33,6 +35,8 @@
 
 .input-field {
     flex: 1;
+    width: 100%;
+    border-radius: inherit;
     min-width: 0;
     padding: 10px var(--spacing-3);
     border: none;
@@ -40,6 +44,22 @@
     background: transparent;
     color: var(--color-text-primary);
     font-size: var(--font-size-body-default);
+}
+
+.input-field:focus-visible {
+    outline: none;
+}
+
+.input-field:is(:autofill, :-webkit-autofill) {
+    box-shadow: inset 0 0 0 1000px var(--field-background);
+    -webkit-text-fill-color: var(--color-text-primary);
+    caret-color: var(--color-text-primary);
+}
+
+@media (forced-colors: active) {
+    .input-wrapper:focus-within {
+        outline: 2px solid Highlight;
+    }
 }
 
 .input-wrapper.has-icon .input-field {
@@ -51,15 +71,20 @@
 }
 
 .input-field::placeholder {
-    color: #9CA3AF;
+    color: var(--color-text-muted);
+}
+
+.input-wrapper:has(.input-field:disabled) {
+    --field-background: var(--color-surface-secondary);
 }
 
 .input-field:disabled {
     cursor: not-allowed;
-    opacity: 0.6;
+    color: var(--color-disabled);
 }
 
 .input-icon {
+    z-index: 1;
     position: absolute;
     left: 14px;
     top: 50%;
@@ -85,7 +110,7 @@
     border: none;
     background: transparent;
     color: var(--color-primary);
-    font-size: var(--font-size-label);
+    font-size: var(--font-size-caption);
     font-weight: var(--font-weight-semibold);
     cursor: pointer;
     transition: color 0.15s ease;

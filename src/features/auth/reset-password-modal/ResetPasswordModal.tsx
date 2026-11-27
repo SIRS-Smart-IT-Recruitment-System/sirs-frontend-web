@@ -26,14 +26,14 @@ const ResetPasswordModal = ({
                         Quay lại
                     </button>
 
-                    <Button type="button" variant="primary">
+                    <Button type="button" variant="primary" disabled>
                         Xác nhận
                     </Button>
                 </>
             }
         >
             <p className={styles.subtitle}>
-                Vui lòng nhập mật khẩu mới cho tài khoản.
+                Biểu mẫu xem trước. Mật khẩu tài khoản chưa thể được thay đổi.
             </p>
 
             <div className={styles.formGroup}>

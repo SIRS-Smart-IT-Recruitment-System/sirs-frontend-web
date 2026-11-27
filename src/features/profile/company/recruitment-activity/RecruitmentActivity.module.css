@@ -1,0 +1,45 @@
+.timeline {
+    margin: 0 0 0 6px;
+    padding: 0 0 0 20px;
+    list-style: none;
+    border-inline-start: 2px solid #dce5f6;
+}
+
+.timeline li {
+    position: relative;
+    display: grid;
+    gap: 4px;
+    padding: 0 0 20px;
+}
+
+.timeline li:last-child {
+    padding-bottom: 0;
+}
+
+.timeline li::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: -27px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid white;
+    border-radius: 50%;
+    background: #3173d6;
+    box-shadow: 0 0 0 1px #a8c6ef;
+}
+
+.timeline li:first-child::before {
+    background: #09916b;
+}
+
+.timeline time,
+.timeline p {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+}
+
+.timeline time {
+    color: #355784;
+    font-variant-numeric: tabular-nums;
+}

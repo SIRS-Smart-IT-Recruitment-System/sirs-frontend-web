@@ -1,20 +1,17 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 
 import { Button, Input, Checkbox, Toast } from "../../../components/common";
 import SocialLogin from "../social-login/SocialLogin.tsx";
-import { login } from "../../../services/authService.ts";
-import type { LoginRequest } from "../../../types/authTypes.ts";
-import { ROUTES } from "../../../routers/routePaths.ts";
-import { ROLE } from "../../../constants/role.ts";
+import { login, saveSession } from "../../../services/authService.ts";
+import type { AuthResponse, LoginRequest } from "../../../types/authTypes.ts";
 import styles from "./LoginForm.module.css";
 
 interface LoginFormProps {
     onRegister: () => void;
     onForgotPassword: () => void;
-    onLoginSuccess?: (response: unknown) => void;
+    onLoginSuccess: (response: AuthResponse) => void;
 }
 
 const LoginForm = ({
@@ -22,7 +19,6 @@ const LoginForm = ({
     onForgotPassword,
     onLoginSuccess,
 }: LoginFormProps) => {
-    const navigate = useNavigate();
     const savedEmail = localStorage.getItem("rememberedEmail") || "";
     const [email, setEmail] = useState(savedEmail);
     const [password, setPassword] = useState("");
@@ -76,7 +72,7 @@ const LoginForm = ({
             // Gọi API đăng nhập
             const result = await login(loginData);
 
-            console.log("Login successful:", result);
+            saveSession(result, loginData.email);
 
             // Lưu hoặc xoá email ghi nhớ
             if (rememberMe) {
@@ -85,26 +81,7 @@ const LoginForm = ({
                 localStorage.removeItem("rememberedEmail");
             }
 
-            // Lưu token đăng nhập vào localStorage
-            if (result?.accessToken) {
-                localStorage.setItem("accessToken", result.accessToken);
-            }
-            if (result?.role) {
-                localStorage.setItem("role", result.role);
-            }
-
-            // Chuyển kết quả đăng nhập về auth-page hoặc tự chuyển hướng
-            if (onLoginSuccess) {
-                onLoginSuccess(result);
-            } else {
-                const userRole = (result?.role || "").toUpperCase();
-                if (userRole === ROLE.RECRUITER) {
-                    navigate(ROUTES.RECRUITER.PROFILE);
-                } else {
-                    navigate(ROUTES.CANDIDATE.PROFILE);
-                }
-            }
-
+            onLoginSuccess(result);
         } catch (error) {
             console.error("Login failed:", error);
 
@@ -220,7 +197,7 @@ const LoginForm = ({
                 <div className={styles.forgotPassword}>
                     <Checkbox
                         id="remember-me"
-                        label="Ghi nhớ mật khẩu"
+                        label="Ghi nhớ email"
                         checked={rememberMe}
                         onChange={(e) => setRememberMe(e.target.checked)}
                         className={styles.rememberCheckbox}

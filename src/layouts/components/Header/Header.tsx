@@ -1,45 +1,76 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, matchPath, useLocation, useNavigate } from "react-router-dom";
 
 import {
-    Search,
-    SlidersHorizontal,
-    CircleHelp,
     Bell,
-    ChevronDown,
     UserRound,
     LogOut,
 } from "lucide-react";
 
 import { ROUTES } from "../../../routers/routePaths.ts";
+import { navigation } from "../../../constants/navigation";
 import type { SidebarRole } from "../../../constants/navigation.ts";
 import { HEADER_CONFIG } from "../../../constants/headerConfig.ts";
+import Avatar from "../../../components/common/avatar/Avatar";
 import Modal from "../../../components/common/modal/Modal";
 import Button from "../../../components/common/button/Button";
+import Spinner from "../../../components/common/spinner/Spinner";
 import { logout } from "../../../services/authService";
 
+import type { CandidateProfileResponse } from "../../../types/authTypes";
 import styles from "./Header.module.css";
 
 interface HeaderProps {
-    role: SidebarRole,
-    userName?: string,
-    userRole?: string | undefined
+    role: SidebarRole;
+    profile: CandidateProfileResponse | null;
+    loadingName: boolean;
 }
 
-function Header({ role, userName, userRole }: HeaderProps) {
-    const navigate = useNavigate();
+const detailPages = [
+    { path: ROUTES.CANDIDATE.JOB_DETAIL, label: "Chi tiết tuyển dụng" },
+    { path: ROUTES.RECRUITER.JOB_CREATE, label: "Tạo tin tuyển dụng" },
+];
 
-    const [search, setSearch] = useState("");
+function Header({
+    role,
+    profile,
+    loadingName,
+}: HeaderProps) {
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
+    const [showNotifications, setShowNotifications] = useState(false);
     const [showAccount, setShowAccount] = useState(false);
+    const accountArea = useRef<HTMLDivElement>(null);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+    useEffect(() => {
+        if (!showAccount) return;
+        function closeOutside(event: PointerEvent) {
+            if (event.target instanceof Node && !accountArea.current?.contains(event.target)) {
+                setShowAccount(false);
+            }
+        }
+        document.addEventListener("pointerdown", closeOutside);
+        return () => document.removeEventListener("pointerdown", closeOutside);
+    }, [showAccount]);
 
-    // Lấy cấu hình Header theo role
     const config = HEADER_CONFIG[role];
 
-    // Ưu tiên tên người dùng được truyền từ bên ngoài
+    const accountEmail = localStorage.getItem("accountEmail");
     const displayName =
-        userName?.trim() || config.defaultUserName;
+        profile?.name?.trim() ||
+        accountEmail ||
+        config.defaultUserName;
+    const profilePath = role === "candidate"
+        ? ROUTES.CANDIDATE.PROFILE
+        : ROUTES.RECRUITER.PROFILE;
+
+    const currentPage = [...navigation[role], ...detailPages].find(
+        (item) => item.path && matchPath(item.path, pathname)
+    );
+    const pageTitle = matchPath(profilePath, pathname)
+        ? "Hồ sơ cá nhân"
+        : currentPage?.label;
 
     // Xử lý mở Modal đăng xuất
     const handleOpenLogoutModal = () => {
@@ -70,67 +101,68 @@ function Header({ role, userName, userRole }: HeaderProps) {
 
     return (
         <header className={styles.header}>
-            <div className={styles.searchArea}>
-                <div className={styles.searchBox}>
-                    <Search size={19} />
-
-                    <input
-                        type="text"
-                        placeholder="Tìm kiếm ...."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                </div>
-
-                <button
-                    type="button"
-                    className={styles.filterButton}
-                    title="Bộ lọc"
-                >
-                    <SlidersHorizontal size={20} />
-                </button>
-            </div>
-
+            <nav className={styles.breadcrumb} aria-label="Đường dẫn điều hướng">
+                <span>{config.userRole}</span>
+                {pageTitle && (
+                    <>
+                        <span aria-hidden="true">/</span>
+                        <strong aria-current="page" title={pageTitle}>{pageTitle}</strong>
+                    </>
+                )}
+            </nav>
             <div className={styles.headerRight}>
-                <button
-                    type="button"
-                    className={styles.iconButton}
-                    title="Trợ giúp"
-                >
-                    <CircleHelp size={21} />
-                </button>
-
+                <div className={styles.languageToggle} aria-label="Ngôn ngữ hiện tại: Tiếng Việt">
+                    <span className={styles.languageActive}>VI</span>
+                    <span>EN</span>
+                </div>
                 <button
                     type="button"
                     className={styles.iconButton}
                     title="Thông báo"
+                    onClick={() => {
+                        setShowAccount(false);
+                        setShowNotifications(true);
+                    }}
                 >
-                    <Bell size={21} />
+                    <Bell size={20} />
                 </button>
 
-                <div className={styles.accountArea}>
-                    <div className={styles.accountText}>
-                        <strong>{displayName}</strong>
-                        <span>{userRole || config.userRole}</span>
-                    </div>
-
+                <div className={styles.accountArea} ref={accountArea}>
                     <button
                         type="button"
                         className={styles.avatarButton}
                         onClick={() => setShowAccount(!showAccount)}
                         aria-label="Tài khoản"
+                        title={displayName}
                         aria-expanded={showAccount}
                     >
-                        <UserRound size={27} />
-                        <ChevronDown size={17} />
+                        <Avatar
+                            key={profile?.avatarUrl}
+                            name={displayName}
+                            src={profile?.avatarUrl}
+                            className={styles.avatar}
+                            size="sm"
+                        />
                     </button>
 
                     {showAccount && (
                         <div className={styles.accountDropdown}>
-                            <button type="button">
+                            <div className={styles.accountSummary}>
+                                {loadingName ? (
+                                    <Spinner size="xs" label="Đang tải tên…" />
+                                ) : (
+                                    <strong>{displayName}</strong>
+                                )}
+                                <span>{config.userRole}</span>
+                            </div>
+
+                            <Link
+                                to={profilePath}
+                                onClick={() => setShowAccount(false)}
+                            >
                                 <UserRound size={17} />
-                                Thông tin tài khoản
-                            </button>
+                                Hồ sơ cá nhân
+                            </Link>
 
                             <button
                                 type="button"
@@ -144,6 +176,13 @@ function Header({ role, userName, userRole }: HeaderProps) {
                 </div>
             </div>
 
+            <Modal
+                isOpen={showNotifications}
+                onClose={() => setShowNotifications(false)}
+                title="Thông báo"
+            >
+                <p>Chưa có thông báo để hiển thị.</p>
+            </Modal>
             <Modal
                 isOpen={showLogoutModal}
                 onClose={handleCancelLogout}

@@ -1,0 +1,151 @@
+.sideColumn {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    min-width: 0;
+}
+
+.percent {
+    color: #2460e8;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.completion {
+    width: 100%;
+    height: 8px;
+    margin-top: 5px;
+    accent-color: #405ce9;
+}
+.checkList {
+    display: grid;
+    gap: 11px;
+    margin-top: 13px;
+}
+.checkList li {
+    display: grid;
+    grid-template-columns: 17px minmax(0,1fr) auto;
+    align-items: start;
+    gap: 7px;
+    color: #52647f;
+    font-size: 13px;
+    line-height: 1.45;
+}
+.checkList svg {
+    color: #08a879;
+}
+.checkList b {
+    color: #08a879;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.verifications {
+    display: grid;
+    gap: 8px;
+}
+
+.completeAction {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px;
+    border: 1px solid #d9e5ff;
+    border-radius: 10px;
+    background: #f0f5ff;
+    color: #2354bc;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.completeAction:hover {
+    background: #e6efff;
+}
+
+.verifications article:nth-child(2) .verifyIcon {
+    background: #116a9f;
+}
+
+.verifications article:nth-child(3) .verifyIcon {
+    background: #355bcc;
+}
+.verifications article {
+    display: grid;
+    grid-template-columns: 34px minmax(0,1fr);
+    align-items: center;
+    gap: 9px;
+    padding: 10px;
+    border: 1px solid #e3eaf4;
+    border-radius: 10px;
+    background: #fafbfd;
+}
+.verifyIcon {
+    display: grid;
+    place-items: center;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #14213b;
+}
+.verifications strong,.verifications article div span {
+    display: block;
+}
+.verifications strong {
+    color: #273752;
+    font-size: 12px;
+    line-height: 1.4;
+}
+.verifications article div span {
+    margin-top: 3px;
+    color: #8290a6;
+    font-size: 11px;
+}
+
+.preferences {
+    display: grid;
+    gap: 8px;
+}
+.preferences article {
+    display: flex;
+    gap: 9px;
+    padding: 11px;
+    border: 1px solid #e3eaf4;
+    border-radius: 10px;
+    background: #fafbfd;
+}
+.preferences article > svg {
+    flex: none;
+    color: #1558e8;
+}
+.preferences article span,.preferences article strong {
+    display: block;
+}
+.preferences article span {
+    color: #8592a8;
+    font-size: 12px;
+}
+.preferences article strong {
+    margin-top: 4px;
+    color: #263651;
+    font-size: 13px;
+    line-height: 1.45;
+}
+.preferences > p {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-top: 4px;
+    color: #657690;
+    font-size: 12px;
+}
+
+.checkList li[data-complete="false"] svg,
+.checkList li[data-complete="false"] b {
+    color: #66768d;
+}

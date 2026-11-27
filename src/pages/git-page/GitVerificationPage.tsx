@@ -23,7 +23,6 @@ import {
     SlidersHorizontal,
     BookOpen,
 } from "lucide-react";
-import MainLayout from "../../layouts/templates/main-layout/MainLayout";
 import Spinner from "../../components/common/spinner/Spinner";
 import Badge from "../../components/common/badge/Badge";
 import Button from "../../components/common/button/Button";
@@ -297,16 +296,16 @@ export default function GitVerificationPage() {
 
     if (isLoading) {
         return (
-            <MainLayout role="candidate">
+            <>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "65vh" }}>
                     <Spinner size="lg" />
                 </div>
-            </MainLayout>
+            </>
         );
     }
 
     return (
-        <MainLayout role="candidate">
+        <>
             <div className={styles.page}>
                 {/* 1. TOP VIBRANT HERO BANNER */}
                 <div className={styles.heroBanner}>
@@ -1102,6 +1101,6 @@ export default function GitVerificationPage() {
                     </div>
                 )}
             </div>
-        </MainLayout>
+        </>
     );
 }

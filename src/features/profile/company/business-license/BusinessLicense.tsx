@@ -1,45 +1,38 @@
-import { FileCheck, FileText, Download, Upload } from "lucide-react";
+import { useState } from "react";
+import { FileText } from "lucide-react";
+
+import FileUpload from "../../../../components/common/file-upload/FileUpload";
 import styles from "./BusinessLicense.module.css";
 
 function BusinessLicense() {
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
     return (
         <section className={styles.card}>
             <div className={styles.cardHeader}>
                 <h2>Giấy phép kinh doanh</h2>
-
-                <span className={styles.verified}>
-                    <FileCheck size={14} />
-                    Đã xác thực
-                </span>
             </div>
 
             <div className={styles.document}>
                 <div className={styles.documentIcon}>
-                    <FileText size={28} />
+                    <FileText size={24} aria-hidden="true" />
                 </div>
-
                 <div className={styles.documentInfo}>
-                    <h3>Giấy phép kinh doanh.pdf</h3>
-                    <span>PDF • 2.4 MB</span>
+                    <h3>
+                        {selectedFile ? selectedFile.name : "Chưa có tài liệu"}
+                    </h3>
+                    {selectedFile && <span role="status">Chưa tải lên</span>}
                 </div>
-
-                <button
-                    type="button"
-                    className={styles.downloadButton}
-                    aria-label="Tải giấy phép kinh doanh"
-                    title="Tải xuống"
-                >
-                    <Download size={18} />
-                </button>
             </div>
 
-            <button type="button" className={styles.uploadButton}>
-                <Upload size={17} />
-                Tải lên giấy phép mới
-            </button>
-
+            <FileUpload
+                label="Chọn giấy phép"
+                extensions={[".pdf"]}
+                onSelect={setSelectedFile}
+            />
             <p className={styles.note}>
-                Tài liệu được sử dụng để xác minh thông tin doanh nghiệp.
+                Bạn có thể chọn tệp PDF để xem trước. Hồ sơ công ty hiện chưa
+                hỗ trợ lưu tài liệu này.
             </p>
         </section>
     );

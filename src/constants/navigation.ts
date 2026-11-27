@@ -1,39 +1,55 @@
+import {
+    BriefcaseBusiness,
+    Building2,
+    CalendarDays,
+    GitBranch,
+    LayoutDashboard,
+    House,
+    UserRound,
+    Users,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
+import { ROUTES } from "../routers/routePaths";
+
 export type SidebarRole = "candidate" | "company";
 
 export interface NavigationItem {
     label: string;
-    path: string;
-    icon: string;
+    path?: string;
+    icon: LucideIcon;
     badge?: string;
 }
 
 export const navigation: Record<SidebarRole, NavigationItem[]> = {
     candidate: [
         {
-            label: "Tổng quan",
-            path: "/candidate/dashboard",
-            icon: "▦",
+            label: "Trang chủ",
+            path: ROUTES.CANDIDATE.DASHBOARD,
+            icon: House,
         },
         {
-            label: "Tìm kiếm việc làm",
-            path: "/candidate/jobs",
-            icon: "▣",
+            label: "Vị trí tuyển dụng",
+            path: ROUTES.CANDIDATE.JOBS,
+            icon: BriefcaseBusiness,
         },
         {
             label: "Lịch phỏng vấn",
-            path: "/candidate/interviews",
-            icon: "▦",
+            icon: CalendarDays,
         },
         {
-            label: "Hồ sơ ứng viên",
-            path: "/candidate/profile",
-            icon: "♙",
+            label: "Hồ sơ cá nhân",
+            path: ROUTES.CANDIDATE.PROFILE,
+            icon: UserRound,
         },
         {
             label: "Đánh giá Git",
-            path: "/candidate/git-verification",
-            icon: "⌥",
-            badge: "Mới",
+            path: ROUTES.CANDIDATE.GIT_VERIFICATION,
+            icon: GitBranch,
+        },
+        {
+            label: "Cài đặt",
+            icon: LayoutDashboard,
         },
     ],
 
@@ -41,27 +57,27 @@ export const navigation: Record<SidebarRole, NavigationItem[]> = {
         {
             label: "Tổng quan",
             path: "/company/dashboard",
-            icon: "▦",
+            icon: LayoutDashboard,
         },
         {
             label: "Quản lý tuyển dụng",
             path: "/company/jobs",
-            icon: "▣",
+            icon: BriefcaseBusiness,
         },
         {
             label: "Lịch phỏng vấn",
             path: "/company/interviews",
-            icon: "▦",
+            icon: CalendarDays,
         },
         {
             label: "Quản lý ứng viên",
             path: "/company/candidates",
-            icon: "♙",
+            icon: Users,
         },
         {
             label: "Hồ sơ nhà tuyển dụng",
             path: "/company/profile",
-            icon: "♧",
+            icon: Building2,
         },
     ],
 };

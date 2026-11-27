@@ -13,14 +13,15 @@
 
     /* Background & Surface */
     --color-background: #E3F2FD;
+    --color-workspace: #F3F7FC;
     --color-surface: #FFFFFF;
     --color-surface-secondary: #F8FAFC;
     --color-surface-hover: #F1F5F9;
 
     /* Text */
     --color-text-primary: #0F172A;
-    --color-text-secondary: #64748B;
-    --color-text-muted: #94A3B8;
+    --color-text-secondary: #475569;
+    --color-text-muted: #596A7F;
     --color-text-white: #FFFFFF;
 
     /* Border */
@@ -29,8 +30,8 @@
     --color-border-focus: #1554A5;
 
     /* Status Colors */
-    --color-success: #10B981;
-    --color-danger: #EF4444;
+    --color-success: #067647;
+    --color-danger: #B42318;
     --color-warning: #F59E0B;
     --color-info: #2196F3;
 
@@ -44,7 +45,8 @@
     --color-overlay: rgba(0, 0, 0, 0.5);
 
     /* Focus */
-    --color-focus: #2196F3;
+    --color-focus: #1565C0;
+    --color-disabled: #64748B;
 
 
     /* =================================
@@ -60,8 +62,9 @@
     --font-size-heading-3: 20px;
 
     --font-size-body-large: 16px;
-    --font-size-body-default: 14px;
-    --font-size-label: 12px;
+    --font-size-body-default: 15px;
+    --font-size-label: 14px;
+    --font-size-caption: 12px;
     --font-size-button: 14px;
 
     /* Font Weight */
@@ -72,8 +75,9 @@
 
     /* Line Height */
     --line-height-heading: 1.3;
-    --line-height-body: 1.5;
-    --line-height-label: 1.4;
+    --line-height-body: 1.6;
+    --line-height-label: 1.5;
+    --control-height: 44px;
 
 
     /* =================================
@@ -172,8 +176,9 @@ html {
 }
 
 body {
-    min-width: 320px;
+    min-width: min(320px, 100%);
     min-height: 100vh;
+    min-height: 100dvh;
 
     font-family: var(--font-primary);
     font-size: var(--font-size-body-default);
@@ -190,6 +195,7 @@ body {
 
 #root {
     min-height: 100vh;
+    min-height: 100dvh;
 }
 
 

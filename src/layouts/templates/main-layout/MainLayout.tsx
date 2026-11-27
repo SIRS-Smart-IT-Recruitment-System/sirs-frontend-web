@@ -1,48 +1,37 @@
-
-import type { ReactNode } from "react";
+import { Outlet } from "react-router-dom";
 
 import Sidebar from "../../components/Sidebar/Sidebar.tsx";
 import Header from "../../components/Header/Header.tsx";
 
 import type { SidebarRole } from "../../../constants/navigation.ts";
 
+import { useCandidateAccount } from "../../../features/profile/candidate/useCandidateAccount";
 import styles from "./MainLayout.module.css";
 
 interface MainLayoutProps {
-    children: ReactNode;
     role: SidebarRole;
-    progress?: number;
-    userName?: string;
-    userRole?: string;
 }
 
-function MainLayout({
-                        children,
-                        role,
-                        progress,
-                        userName,
-                        userRole,
-                    }: MainLayoutProps) {
+function MainLayout({ role }: MainLayoutProps) {
+    const account = useCandidateAccount(role === "candidate");
+
     return (
-        <div className={styles.layout}>
+        <div className={styles.layout} data-role={role}>
             <div className={styles.sidebarArea}>
-                <Sidebar
-                    role={role}
-                    progress={progress}
-                />
+                <Sidebar role={role} />
             </div>
 
             <div className={styles.mainArea}>
                 <div className={styles.headerArea}>
                     <Header
                         role={role}
-                        userName={userName}
-                        userRole={userRole}
+                        profile={account.profile}
+                        loadingName={account.loading}
                     />
                 </div>
 
                 <main className={styles.contentArea}>
-                    {children}
+                    <Outlet context={account} />
                 </main>
             </div>
         </div>

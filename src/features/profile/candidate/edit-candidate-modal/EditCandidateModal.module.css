@@ -1,0 +1,22 @@
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-4);
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.modalActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--spacing-3);
+}
+
+@media (max-width: 600px) {
+    .formGrid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

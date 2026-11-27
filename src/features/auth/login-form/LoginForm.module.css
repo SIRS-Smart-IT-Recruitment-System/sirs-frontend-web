@@ -29,64 +29,9 @@
     font-weight: 400;
 }
 
-/* ---- Form groups & Input overrides (scoped inside loginForm) ---- */
+/* ---- Form spacing ---- */
 .formGroup {
     margin-bottom: 16px;
-}
-
-.loginForm :global(.input-group) {
-    gap: 6px;
-}
-
-.loginForm :global(.input-label) {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #334155;
-}
-
-.loginForm :global(.input-wrapper) {
-    min-height: 46px;
-    background-color: rgba(248, 250, 252, 0.6);
-    border-color: #e2e8f0;
-    border-radius: 12px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-
-.loginForm :global(.input-wrapper:focus-within) {
-    border-color: #2563eb;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10), 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-
-.loginForm :global(.input-wrapper.has-error) {
-    border-color: var(--color-danger);
-    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.10);
-}
-
-.loginForm :global(.input-field) {
-    padding: 12px 14px;
-    font-size: 14px;
-}
-
-.loginForm :global(.input-wrapper.has-icon .input-field) {
-    padding-left: 42px;
-}
-
-.loginForm :global(.input-wrapper.has-toggle .input-field) {
-    padding-right: 56px;
-}
-
-.loginForm :global(.password-toggle) {
-    right: 10px;
-    color: #64748b;
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.loginForm :global(.password-toggle:hover) {
-    color: #1e293b;
 }
 
 /* ---- Remember + Forgot row ---- */
@@ -182,4 +127,32 @@
 .registerLinkBtn:hover {
     opacity: 0.75;
     text-decoration: underline;
+}
+
+@media (max-height: 700px) {
+    .heading,
+    .formGroup,
+    .forgotPassword {
+        margin-bottom: 10px;
+    }
+
+    .registerLink {
+        margin-top: 12px;
+    }
+}
+
+@media (max-height: 540px) {
+    .heading p {
+        display: none;
+    }
+
+    .heading h2,
+    .registerLink {
+        margin-block: 4px;
+    }
+
+    .formGroup,
+    .forgotPassword {
+        margin-bottom: 6px;
+    }
 }

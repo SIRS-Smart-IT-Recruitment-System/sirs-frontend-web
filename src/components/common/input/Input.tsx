@@ -6,7 +6,7 @@ interface InputProps
     extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
     label?: string;
     error?: string;
-    type?: "text" | "password" | "email" | "number";
+    type?: "text" | "password" | "email" | "number" | "url";
     leftIcon?: ReactNode;
 }
 

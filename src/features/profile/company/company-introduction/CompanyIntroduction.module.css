@@ -29,23 +29,3 @@
     color: var(--color-text-secondary);
     text-align: justify;
 }
-
-.additionalInfo {
-    margin-top: 20px;
-    padding: 14px;
-    background-color: var(--color-surface-secondary);
-    border-radius: var(--radius-md);
-}
-
-.additionalInfo span {
-    font-size: 13px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-primary);
-}
-
-.additionalInfo p {
-    margin-top: 8px;
-    font-size: 13px;
-    line-height: 1.6;
-    color: var(--color-text-secondary);
-}

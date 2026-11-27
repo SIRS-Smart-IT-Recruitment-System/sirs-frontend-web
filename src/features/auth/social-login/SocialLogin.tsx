@@ -9,18 +9,28 @@ const SocialLogin = () => {
         <div className={styles.socialLogin}>
 
             <div className={styles.divider}>
-                <span>Hoặc đăng nhập bằng</span>
+                <span>Đăng nhập mạng xã hội chưa khả dụng</span>
             </div>
 
             <div className={styles.socialButtons}>
 
-                <Button type="button" variant="outline" className={styles.socialBtn}>
-                    <img src={googleIcon} alt="Google" />
+                <Button
+                    type="button"
+                    variant="outline"
+                    className={styles.socialBtn}
+                    disabled
+                >
+                    <img src={googleIcon} alt="" />
                     <span>Google</span>
                 </Button>
 
-                <Button type="button" variant="outline" className={styles.socialBtn}>
-                    <img src={facebookIcon} alt="Facebook" />
+                <Button
+                    type="button"
+                    variant="outline"
+                    className={styles.socialBtn}
+                    disabled
+                >
+                    <img src={facebookIcon} alt="" />
                     <span>Facebook</span>
                 </Button>
 

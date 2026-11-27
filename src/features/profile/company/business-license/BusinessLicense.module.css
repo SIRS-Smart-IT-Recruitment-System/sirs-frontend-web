@@ -20,15 +20,6 @@
     color: var(--color-text-primary);
 }
 
-.verified {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--color-success);
-    font-size: 12px;
-    white-space: nowrap;
-}
-
 .document {
     display: flex;
     align-items: center;
@@ -56,6 +47,7 @@
 }
 
 .documentInfo h3 {
+    overflow-wrap: anywhere;
     font-size: 13px;
     font-weight: var(--font-weight-medium);
     color: var(--color-text-primary);
@@ -65,50 +57,13 @@
 .documentInfo span {
     display: block;
     margin-top: 5px;
-    font-size: 12px;
+    font-size: var(--font-size-label);
     color: var(--color-text-secondary);
-}
-
-.downloadButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    color: var(--color-primary);
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-}
-
-.downloadButton:hover {
-    background-color: var(--color-background);
-}
-
-.uploadButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    margin-top: 16px;
-    padding: 11px;
-    color: var(--color-primary);
-    background-color: var(--color-surface);
-    border: 1px dashed var(--color-primary);
-    border-radius: var(--radius-md);
-    font-size: 13px;
-    cursor: pointer;
-}
-
-.uploadButton:hover {
-    background-color: var(--color-background);
 }
 
 .note {
     margin-top: 12px;
-    font-size: 12px;
+    font-size: var(--font-size-label);
     line-height: 1.5;
     color: var(--color-text-muted);
 }

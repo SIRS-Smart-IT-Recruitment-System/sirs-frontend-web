@@ -1,114 +1,123 @@
 .header {
-    height: 65px;
+    height: 64px;
     width: 100%;
+    gap: var(--spacing-3);
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 22px;
+    padding: 0 26px;
     background: var(--color-surface);
     box-sizing: border-box;
     border-bottom: 1px solid var(--color-border-light);
 }
 
-.searchArea {
+.breadcrumb {
     display: flex;
+    min-width: 0;
     align-items: center;
     gap: 12px;
+    color: #727b8b;
+    font-size: 17px;
+    line-height: 1.2;
+    white-space: nowrap;
 }
 
-.searchBox {
-    width: 300px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 13px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 25px;
-    box-sizing: border-box;
-    color: var(--color-text-secondary);
+.breadcrumb [aria-hidden] {
+    color: #b0b7c2;
+    font-size: 1em;
+    font-weight: 400;
 }
 
-.searchBox input {
-    width: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: var(--color-text-primary);
-    font-size: 14px;
-}
-
-.filterButton,
-.iconButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: transparent;
-    color: var(--color-text-secondary);
-    cursor: pointer;
-}
-
-.filterButton:hover,
-.iconButton:hover {
-    color: var(--color-primary);
-}
-
-.filterButton {
-    width: 35px;
-    height: 35px;
+.breadcrumb strong {
+    overflow: hidden;
+    color: #171c29;
+    font-weight: 750;
+    text-overflow: ellipsis;
 }
 
 .headerRight {
     display: flex;
     align-items: center;
-    gap: 18px;
+    flex-shrink: 0;
+    gap: 15px;
 }
 
-.iconButton {
-    width: 30px;
-    height: 35px;
-}
-
-.accountArea {
-    position: relative;
+.languageToggle {
     display: flex;
     align-items: center;
-    gap: 9px;
-}
-
-.accountText {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     gap: 2px;
-    font-size: 13px;
+    padding: 4px;
+    border: 1px solid #e0e7f2;
+    border-radius: 9px;
+    background: #f8faff;
+    color: #61728e;
+    font-size: 12px;
 }
 
-.accountText strong {
-    color: var(--color-text-primary);
+.languageToggle span {
+    min-width: 29px;
+    padding: 4px 5px;
+    border-radius: 6px;
+    text-align: center;
 }
 
-.accountText span {
-    color: var(--color-success);
-    font-weight: 600;
+.languageToggle .languageActive {
+    background: white;
+    color: #17233d;
+    box-shadow: 0 1px 3px rgb(35 55 90 / 12%);
 }
 
+.iconButton,
 .avatarButton {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px;
-    border: none;
+    display: grid;
+    place-items: center;
+    border: 0;
+    padding: 0;
     background: transparent;
     color: var(--color-text-secondary);
     cursor: pointer;
 }
 
-.avatarButton:hover {
-    color: var(--color-primary);
+.iconButton {
+    position: relative;
+    width: 32px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+.iconButton:hover {
+    background: var(--color-info-bg);
+}
+
+.iconButton::after {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    border: 2px solid white;
+    border-radius: 50%;
+    background: #f04452;
+    content: "";
+}
+
+.accountArea {
+    position: relative;
+    padding-left: 14px;
+    border-left: 1px solid #e2e8f1;
+}
+
+.avatarButton {
+    border-radius: 50%;
+}
+
+.avatarButton .avatar {
+    width: 36px;
+    height: 36px;
+    background: var(--color-primary);
+    color: white;
+    font-size: 13px;
 }
 
 .accountDropdown {
@@ -124,6 +133,7 @@
     box-shadow: var(--shadow-md);
 }
 
+.accountDropdown a,
 .accountDropdown button {
     width: 100%;
     padding: 10px;
@@ -138,6 +148,7 @@
     cursor: pointer;
 }
 
+.accountDropdown a:hover,
 .accountDropdown button:hover {
     background: var(--color-info-bg);
 }
@@ -149,21 +160,40 @@
     line-height: 1.5;
 }
 
-@media (max-width: 768px) {
+.accountSummary {
+    display: grid;
+    gap: 2px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--color-border-light);
+    overflow-wrap: anywhere;
+}
+
+.accountSummary span {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-caption);
+}
+
+@media (max-width: 640px) {
     .header {
-        padding: 0 10px;
+        padding-inline: 12px;
     }
 
-    .searchBox {
-        width: 180px;
+    .headerRight,
+    .breadcrumb {
+        gap: 7px;
     }
 
-    .accountText,
-    .filterButton {
+    .breadcrumb {
+        font-size: 14px;
+    }
+
+    .accountArea {
+        padding-left: 7px;
+    }
+}
+
+@media (max-width: 440px) {
+    .languageToggle {
         display: none;
-    }
-
-    .headerRight {
-        gap: 8px;
     }
 }

@@ -27,24 +27,29 @@ const ForgotPasswordModal = ({
                     </button>
 
                     <Button type="button" variant="primary" onClick={onContinue}>
-                        Xác nhận mã
+                        Xem bước đặt lại
                     </Button>
                 </>
             }
         >
             <p className={styles.subtitle}>
-                Nhập email để nhận mã xác nhận đặt lại mật khẩu.
+                Bạn đang xem trước biểu mẫu khôi phục. Hệ thống chưa gửi mã.
             </p>
 
             <div className={styles.formGroup}>
                 <div className={styles.emailInput}>
                     <Input
-                        type="text"
+                        type="email"
                         label="Email"
                         placeholder="Nhập email của bạn"
                     />
 
-                    <Button type="button" variant="secondary" className={styles.sendCodeButton}>
+                    <Button
+                        type="button"
+                        variant="secondary"
+                        className={styles.sendCodeButton}
+                        disabled
+                    >
                         Gửi mã
                     </Button>
                 </div>

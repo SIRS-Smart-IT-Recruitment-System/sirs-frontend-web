@@ -67,7 +67,8 @@ const RegisterForm = ({ onLogin, onContinue }: RegisterFormProps) => {
 
                 <div className={styles.formGroup}>
                     <Input
-                        type="text"
+                        type="email"
+                        autoComplete="email"
                         label="Email"
                         placeholder="Nhập email của bạn"
                         value={email}
@@ -82,6 +83,7 @@ const RegisterForm = ({ onLogin, onContinue }: RegisterFormProps) => {
                 <div className={styles.formGroup}>
                     <Input
                         type="password"
+                        autoComplete="new-password"
                         label="Mật khẩu"
                         placeholder="Nhập mật khẩu"
                         value={password}
@@ -96,6 +98,7 @@ const RegisterForm = ({ onLogin, onContinue }: RegisterFormProps) => {
                 <div className={styles.formGroup}>
                     <Input
                         type="password"
+                        autoComplete="new-password"
                         label="Xác nhận mật khẩu"
                         placeholder="Nhập lại mật khẩu"
                         value={confirmPassword}

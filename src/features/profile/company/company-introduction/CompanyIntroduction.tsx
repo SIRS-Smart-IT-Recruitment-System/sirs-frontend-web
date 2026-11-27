@@ -22,13 +22,6 @@ function CompanyIntroduction({
                 {introduction || "Chưa cập nhật thông tin giới thiệu."}
             </p>
 
-            <div className={styles.additionalInfo}>
-                <span>Thông tin về doanh nghiệp</span>
-                <p>
-                    Công ty luôn hướng đến việc phát triển nguồn nhân lực
-                    chất lượng cao và tạo cơ hội nghề nghiệp cho ứng viên.
-                </p>
-            </div>
         </section>
     );
 }

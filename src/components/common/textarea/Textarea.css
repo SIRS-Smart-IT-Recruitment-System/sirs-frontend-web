@@ -29,11 +29,11 @@
 }
 
 .textarea-field::placeholder {
-    color: #9CA3AF;
+    color: var(--color-text-muted);
 }
 
-.textarea-field:focus {
-    border-color: var(--color-primary);
+.textarea-field:focus-visible {
+    border-color: var(--color-border-focus);
     box-shadow: var(--shadow-focus);
 }
 
@@ -43,7 +43,7 @@
 
 .textarea-field:disabled {
     cursor: not-allowed;
-    opacity: 0.6;
+    color: var(--color-disabled);
     background-color: var(--color-surface-secondary);
 }
 

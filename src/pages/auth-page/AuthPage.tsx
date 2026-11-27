@@ -10,11 +10,12 @@ import CompanyForm from "../../features/auth/register/company-form/CompanyForm";
 import ForgotPasswordModal from "../../features/auth/forgot-password-modal/ForgotPasswordModal";
 import ResetPasswordModal from "../../features/auth/reset-password-modal/ResetPasswordModal";
 import Toast from "../../components/common/toast/Toast";
-import { register } from "../../services/authService";
+import { register, saveSession } from "../../services/authService";
 import { createCandidateProfile } from "../../services/candidateProfileService";
 import { createCompanyProfile } from "../../services/companyProfileService";
 
 import type {
+    AuthResponse,
     RegisterRequest,
     CandidateProfileRequest,
     CompanyProfileRequest,
@@ -43,7 +44,9 @@ function AuthPage() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [currentPage, setCurrentPage] = useState<Page>("login");
+    const [currentPage, setCurrentPage] = useState<Page>(() =>
+        location.pathname === ROUTES.REGISTER ? "register" : "login"
+    );
     const [activeModal, setActiveModal] = useState<ModalType>(null);
     const toastMessage = location.state?.toastMessage as string | undefined;
 
@@ -65,13 +68,13 @@ function AuthPage() {
         : undefined;
 
     // Xử lý sau khi đăng nhập thành công: chuyển hướng theo vai trò
-    const handleLoginSuccess = (loginResult: any) => {
-        const userRole = (loginResult?.role || localStorage.getItem("role") || "").toUpperCase();
+    const handleLoginSuccess = (loginResult: AuthResponse) => {
+        const userRole = loginResult.role.toUpperCase();
 
         if (userRole === ROLE.RECRUITER) {
             navigate(ROUTES.RECRUITER.PROFILE);
         } else {
-            navigate(ROUTES.CANDIDATE.PROFILE);
+            navigate(ROUTES.CANDIDATE.DASHBOARD);
         }
     };
 
@@ -93,28 +96,8 @@ function AuthPage() {
 
             const registerResult = await register(accountData);
 
-            console.log(
-                "register account successful:",
-                registerResult
-            );
-
-            // Lưu token và thông tin đăng nhập tự động để bước sau gọi API tạo hồ sơ
-            if (registerResult?.accessToken) {
-                localStorage.setItem("accessToken", registerResult.accessToken);
-            }
-            if (registerResult?.role) {
-                localStorage.setItem("role", registerResult.role);
-            }
-
-            // Bước 2: Tạo hồ sơ Candidate
-            const profileResult = await createCandidateProfile(
-                candidateData
-            );
-
-            console.log(
-                "Create candidate profile successful:",
-                profileResult
-            );
+            saveSession(registerResult, accountData.email);
+            await createCandidateProfile(candidateData);
 
             // Thông báo đăng ký thành công
             alert("Đăng ký tài khoản và hồ sơ thành công!");
@@ -195,26 +178,8 @@ function AuthPage() {
 
             const registerResult = await register(accountData);
 
-            console.log(
-                "register company account successful:",
-                registerResult
-            );
-
-            // Lưu token đăng nhập vào localStorage
-            if (registerResult?.accessToken) {
-                localStorage.setItem("accessToken", registerResult.accessToken);
-            }
-            if (registerResult?.role) {
-                localStorage.setItem("role", registerResult.role);
-            }
-
-            // Bước 2: Tạo hồ sơ Company
-            const profileResult = await createCompanyProfile(companyData);
-
-            console.log(
-                "Create company profile successful:",
-                profileResult
-            );
+            saveSession(registerResult, accountData.email);
+            await createCompanyProfile(companyData);
 
             // Thông báo thành công
             alert("Đăng ký tài khoản và hồ sơ doanh nghiệp thành công!");
@@ -265,7 +230,7 @@ function AuthPage() {
             {/* Đăng nhập */}
             {currentPage === "login" && (
                 <LoginForm
-                    onRegister={() => setCurrentPage("register")}
+                    onRegister={() => navigate(ROUTES.REGISTER)}
                     onForgotPassword={() => setActiveModal("forgot")}
                     onLoginSuccess={handleLoginSuccess}
                 />
@@ -274,7 +239,7 @@ function AuthPage() {
             {/* Đăng ký tài khoản */}
             {currentPage === "register" && (
                 <RegisterForm
-                    onLogin={() => setCurrentPage("login")}
+                    onLogin={() => navigate(ROUTES.LOGIN)}
                     onContinue={(email, password) => {
                         setRegisterData({
                             email,

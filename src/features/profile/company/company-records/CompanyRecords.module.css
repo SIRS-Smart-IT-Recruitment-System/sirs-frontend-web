@@ -1,0 +1,19 @@
+.records {
+    min-width: 0;
+    border: 1px solid var(--color-border-light);
+    border-radius: 16px;
+    padding: 16px 20px;
+    background: white;
+}
+
+.records summary {
+    cursor: pointer;
+    font-weight: 650;
+    color: var(--color-primary);
+}
+
+.content {
+    display: grid;
+    gap: 18px;
+    margin-top: 18px;
+}

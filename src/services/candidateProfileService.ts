@@ -1,63 +1,76 @@
 import api from "./api";
-import axios from "axios";
 
 import type {
     CandidateProfileRequest,
     CandidateProfileResponse,
 } from "../types/authTypes";
 
-// Lấy hồ sơ ứng viên
-export const getCandidateProfile =
-    async (): Promise<CandidateProfileResponse> => {
-        const response = await api.get<CandidateProfileResponse>(
-            "/api/v1/candidates/profile"
-        );
+let cachedProfile: {
+    token: string | null;
+    request: Promise<CandidateProfileResponse>;
+} | undefined;
 
-        return response.data;
-    };
+export function clearCandidateProfileCache() {
+    cachedProfile = undefined;
+}
 
-// Tạo hồ sơ ứng viên
+export function getCandidateProfile(): Promise<CandidateProfileResponse> {
+    const token = localStorage.getItem("accessToken");
+
+    if (cachedProfile?.token === token) {
+        return cachedProfile.request;
+    }
+
+    const request = api
+        .get<CandidateProfileResponse>("/api/v1/candidates/profile")
+        .then((response) => response.data)
+        .catch((error) => {
+            if (cachedProfile?.request === request) {
+                clearCandidateProfileCache();
+            }
+
+            throw error;
+        });
+
+    cachedProfile = { token, request };
+
+    return request;
+}
+
+function cacheSavedProfile(
+    token: string | null,
+    profile: CandidateProfileResponse
+) {
+    if (token === localStorage.getItem("accessToken")) {
+        cachedProfile = {
+            token,
+            request: Promise.resolve(profile),
+        };
+    }
+
+    return profile;
+}
+
 export const createCandidateProfile = async (
     data: CandidateProfileRequest
 ): Promise<CandidateProfileResponse> => {
-    console.log("Create candidate profile request:", data);
-
+    const token = localStorage.getItem("accessToken");
     const response = await api.post<CandidateProfileResponse>(
         "/api/v1/candidates/profile/create",
         data
     );
 
-    console.log("Create candidate profile response:", response.data);
-
-    return response.data;
+    return cacheSavedProfile(token, response.data);
 };
 
-// Cập nhật hồ sơ ứng viên
 export const updateCandidateProfile = async (
     data: CandidateProfileRequest
 ): Promise<CandidateProfileResponse> => {
-    console.log("Update candidate profile request:", data);
+    const token = localStorage.getItem("accessToken");
+    const response = await api.put<CandidateProfileResponse>(
+        "/api/v1/candidates/profile",
+        data
+    );
 
-    try {
-        const response = await api.put<CandidateProfileResponse>(
-            "/api/v1/candidates/profile",
-            data
-        );
-
-        console.log("Update candidate profile response:", response.data);
-
-        return response.data;
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.error("Status:", error.response?.status);
-            console.error("Response data:", error.response?.data);
-            console.error("Request URL:", error.config?.url);
-            console.error("Request method:", error.config?.method);
-            console.error("Request payload:", error.config?.data);
-        }
-
-        console.error("Update candidate profile failed:", error);
-
-        throw error;
-    }
+    return cacheSavedProfile(token, response.data);
 };

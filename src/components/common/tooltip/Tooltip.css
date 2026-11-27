@@ -9,14 +9,15 @@
     padding: var(--spacing-2) var(--spacing-3);
     background-color: #1E293B;
     color: var(--color-text-white);
-    font-size: var(--font-size-label);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-label);
     font-weight: var(--font-weight-regular);
-    border-radius: var(--radius-sm);
-    white-space: nowrap;
+    border-radius: var(--radius-md);
     pointer-events: none;
     box-shadow: var(--shadow-md);
     animation: tooltip-in var(--transition-fast) ease;
-    max-width: 240px;
+    width: max-content;
+    max-width: min(240px, calc(100vw - 32px));
     white-space: normal;
     text-align: center;
 }

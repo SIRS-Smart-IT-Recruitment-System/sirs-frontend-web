@@ -1,69 +1,42 @@
-import {
-    BriefcaseBusiness,
-    Users,
-    CalendarDays,
-} from "lucide-react";
+import { BriefcaseBusiness } from "lucide-react";
+import { Link } from "react-router-dom";
 
+import type { JobPreview } from "../../../jobs/jobPreviewData";
+import { ROUTES } from "../../../../routers/routePaths";
+import panel from "../CompanyPanel.module.css";
 import styles from "./ActiveJobs.module.css";
 
-export interface ActiveJobItem {
-    id: number | string;
-    name: string;
-    applications: number;
-    deadline: string;
-    status: string;
-}
+const stageLabels = ["Sàng lọc", "Đánh giá", "Phỏng vấn", "Đề nghị"];
+const stageCountsByJob: Record<string, number[]> = {
+    "preview-frontend": [10, 4, 3, 1],
+    "preview-backend": [7, 3, 2, 0],
+};
 
-interface ActiveJobsProps {
-    jobs?: ActiveJobItem[];
-}
-
-function ActiveJobs({ jobs = [] }: ActiveJobsProps) {
+function ActiveJobs({ jobs }: { jobs: JobPreview[] }) {
     return (
-        <section className={styles.card}>
-            <div className={styles.cardHeader}>
-                <h2>Tin tuyển dụng đang hoạt động</h2>
-
-                <span className={styles.jobCount}>
-                    {jobs.length} tin
-                </span>
+        <section>
+            <div className={panel.heading}>
+                <h2><BriefcaseBusiness size={20} /> Vị trí đang phụ trách</h2>
+                <Link to={ROUTES.RECRUITER.JOBS}>Quản lý tin →</Link>
             </div>
-
-            <div className={styles.jobList}>
-                {jobs.length === 0 ? (
-                    <p>Chưa có tin tuyển dụng nào.</p>
-                ) : (
-                    jobs.map((job) => (
-                        <div
-                            className={styles.jobItem}
-                            key={job.id}
-                        >
-                            <div className={styles.jobIcon}>
-                                <BriefcaseBusiness size={19} />
-                            </div>
-
-                            <div className={styles.jobInfo}>
-                                <h3>{job.name}</h3>
-
-                                <div className={styles.jobMeta}>
-                                    <span>
-                                        <Users size={14} />
-                                        {job.applications} ứng viên
-                                    </span>
-
-                                    <span>
-                                        <CalendarDays size={14} />
-                                        Hạn: {job.deadline}
-                                    </span>
-                                </div>
-                            </div>
-
-                            <span className={styles.status}>
-                                {job.status}
-                            </span>
+            <div className={styles.list}>
+                {jobs.map((job) => (
+                    <article key={job.id} className={styles.job}>
+                        <div className={styles.title}>
+                            <h3>{job.title}</h3>
+                            <span className={panel.tag}>{job.applicants} hồ sơ</span>
                         </div>
-                    ))
-                )}
+                        <p>{job.category} · {job.location} · {job.salary}</p>
+                        <dl className={styles.stages}>
+                            {stageLabels.map((label, index) => (
+                                <div key={label}>
+                                    <dt>{label}</dt>
+                                    <dd>{stageCountsByJob[job.id]?.[index] ?? "—"}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </article>
+                ))}
             </div>
         </section>
     );

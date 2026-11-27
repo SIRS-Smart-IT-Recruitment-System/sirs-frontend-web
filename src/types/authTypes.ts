@@ -9,6 +9,13 @@ export interface LoginRequest {
     password: string;
 }
 
+export interface AuthResponse {
+    id: string;
+    email: string;
+    role: string;
+    accessToken: string;
+}
+
 // Đồng bộ enum với Backend
 export type CandidateJobStatus =
     | "OPEN_FOR_WORK"
@@ -17,21 +24,21 @@ export type CandidateJobStatus =
 
 export interface CandidateProfileRequest {
     name: string;
-    phoneNumber: string;
-    bio: string;
+    phoneNumber?: string;
+    bio?: string;
     cvUrl?: string;
     avatarUrl?: string;
-    jobStatus: CandidateJobStatus;
+    jobStatus?: CandidateJobStatus;
 }
 
 export interface CandidateProfileResponse {
     candidateId: string;
     userId: string;
     name: string;
-    bio: string;
-    phoneNumber: string;
+    bio?: string;
+    phoneNumber?: string;
     cvUrl?: string;
-    jobStatus: CandidateJobStatus;
+    jobStatus?: CandidateJobStatus;
     avatarUrl?: string;
     createdAt?: string;
     updatedAt?: string;
@@ -51,6 +58,14 @@ export interface CompanyProfileResponse {
     headquartersAddress: string;
     businessRegistrationNumber: string;
     legalRepresentative: string;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface RecruiterProfileResponse {
+    recruiterId: string;
+    userId: string;
+    companyId: string;
     createdAt?: string;
     updatedAt?: string;
 }
