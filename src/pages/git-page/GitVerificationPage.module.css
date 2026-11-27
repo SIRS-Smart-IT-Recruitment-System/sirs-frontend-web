@@ -46,29 +46,91 @@
 
 .runningMascot {
     position: relative;
-    display: block;
-    isolation: isolate;
     width: min(12rem, 100%);
+    aspect-ratio: 1;
+    --stride: 880ms;
 }
 
-.runningMascot img {
+.runningFigure {
+    position: absolute;
+    inset: 0;
+}
+
+.runningFigure img {
+    display: block;
     width: 100%;
     height: auto;
     border-radius: 18%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .runningMascot img {
-        border-radius: 0;
-    }
-
     .runningMascot::before {
         content: "";
         position: absolute;
-        z-index: -1;
-        inset: 92% 22% 0;
-        background: radial-gradient(ellipse, rgb(29 51 82 / 20%), transparent 70%);
+        inset: 89% 22% 3%;
+        background: radial-gradient(ellipse, rgb(29 51 82 / 22%), transparent 70%);
+        animation: capyShadow calc(var(--stride) / 2) ease-in-out infinite;
     }
+
+    .runningFigure {
+        animation: capyBounce calc(var(--stride) / 2) ease-in-out infinite;
+    }
+
+    /* The hoodie overlaps the rounded tops of both complete legs throughout the stride. */
+    .runningFigure::before,
+    .runningFigure::after {
+        content: "";
+        position: absolute;
+        width: 22%;
+        height: 32%;
+        top: 61%;
+        background: center / contain no-repeat;
+        transform-origin: 60% 20%;
+        animation: capyStride var(--stride) ease-in-out infinite;
+    }
+
+    .runningFigure::before {
+        left: 30%;
+        background-image: url("../../assets/capybyte/jog-far-leg.webp");
+        animation-delay: calc(var(--stride) / -2);
+    }
+
+    .runningFigure::after {
+        left: 44%;
+        background-image: url("../../assets/capybyte/jog-near-leg.webp");
+    }
+
+    .runningFigure picture {
+        position: absolute;
+        z-index: 1;
+        width: 52%;
+        left: 23%;
+        top: 2%;
+    }
+
+    .runningFigure img {
+        border-radius: 0;
+    }
+}
+
+@keyframes capyStride {
+    0%, 100% { transform: rotate(25deg); }
+    24% { transform: rotate(1deg) scaleY(1.02); }
+    49% { transform: rotate(-32deg) scaleY(.96); }
+    66% { transform: rotate(-24deg) scaleY(.83); }
+    85% { transform: rotate(10deg) scaleY(.88); }
+}
+
+@keyframes capyBounce {
+    0%, 100% { transform: translateY(0); }
+    24% { transform: translateY(1.1%); }
+    72% { transform: translateY(-1.3%); }
+}
+
+@keyframes capyShadow {
+    0%, 100% { transform: scaleX(1); }
+    24% { transform: scaleX(1.05); }
+    72% { transform: scaleX(.86); }
 }
 
 /* ==========================================================

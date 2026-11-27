@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import MainLayout from "../../layouts/templates/main-layout/MainLayout";
 import capyBytePortrait from "../../assets/capybyte-official.webp";
-import capyByteJog from "../../assets/capybyte-jog.webp";
+import capyByteJogBody from "../../assets/capybyte/jog-body.webp";
 import Spinner from "../../components/common/spinner/Spinner";
 import Badge from "../../components/common/badge/Badge";
 import Button from "../../components/common/button/Button";
@@ -292,10 +292,14 @@ export default function GitVerificationPage() {
                 <div className={styles.loadingScreen}>
                     {isAnalyzing ? (
                         <section className={styles.analysisLoadingCard} aria-labelledby="git-analysis-loading-title">
-                            <picture className={styles.runningMascot} aria-hidden="true">
-                                <source media="(prefers-reduced-motion: no-preference)" srcSet={capyByteJog} />
-                                <img src={capyBytePortrait} alt="" width={360} height={360} />
-                            </picture>
+                            <div className={styles.runningMascot} aria-hidden="true">
+                                <div className={styles.runningFigure}>
+                                    <picture>
+                                        <source media="(prefers-reduced-motion: no-preference)" srcSet={capyByteJogBody} />
+                                        <img src={capyBytePortrait} alt="" width={480} height={480} />
+                                    </picture>
+                                </div>
+                            </div>
                             <h1 id="git-analysis-loading-title" tabIndex={-1} ref={focusSection}>
                                 Đang phân tích và chấm điểm Git
                             </h1>
