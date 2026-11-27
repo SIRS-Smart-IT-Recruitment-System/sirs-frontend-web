@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ROUTES } from "./routePaths";
-import MascotDemo from "../pages/mascot-demo/MascotDemo";
 import AuthPage from "../pages/auth-page/AuthPage.tsx";
 import CompanyProfile from "../pages/profile-pages/company-profile/CompanyProfile.tsx";
 import CandidateProfile from "../pages/profile-pages/candidate-profile/CandidateProfile.tsx";
@@ -19,7 +18,6 @@ function NotFoundPage() {
 function AppRoutes() {
     return (
         <Routes>
-            <Route path={ROUTES.MASCOT} element={<MascotDemo />} />
             <Route
                 path={ROUTES.HOME}
                 element={<Navigate to={ROUTES.LOGIN} replace />}

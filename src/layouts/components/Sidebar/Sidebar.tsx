@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { navigation } from "../../../constants/navigation.ts";
 import type { SidebarRole } from "../../../constants/navigation.ts";
-import CapyDock from "../../../components/mascot/CapyDock";
 import styles from "./Sidebar.module.css";
 
 interface SidebarProps {
@@ -42,7 +41,6 @@ function Sidebar({ role, progress = 80 }: SidebarProps) {
             </nav>
 
             {/* Profile Progress */}
-            <div className={styles.companion}><CapyDock /></div>
             <div className={styles.sidebarProgress}>
                 <h4>Tiến độ hồ sơ</h4>
 

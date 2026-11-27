@@ -1,4 +1,3 @@
-import { celebrateWithCapy } from "../../../components/mascot/events";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Pencil, Eye } from "lucide-react";
@@ -147,7 +146,6 @@ function CompanyProfile() {
                 legalRepresentative: updatedData.legalRepresentative,
             });
             setIsEditing(false);
-            celebrateWithCapy();
             setSuccess("Cập nhật hồ sơ công ty thành công!");
             setTimeout(() => setSuccess(""), 4000);
         } catch (err) {

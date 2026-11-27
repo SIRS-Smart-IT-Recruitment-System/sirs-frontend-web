@@ -81,10 +81,9 @@
 }
 
 /* Profile Progress */
-.companion { margin-top: auto; padding-top: 8px; }
 .sidebar { overflow-y: auto; }
 .sidebarProgress {
-    margin-top: 6px;
+    margin-top: auto;
     padding: var(--spacing-3);
     border: var(--border-width-thin) solid var(--color-border-light);
     border-radius: var(--radius-md);
