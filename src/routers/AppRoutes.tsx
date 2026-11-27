@@ -5,12 +5,15 @@ import CompanyProfile from "../pages/profile-pages/company-profile/CompanyProfil
 import CandidateProfile from "../pages/profile-pages/candidate-profile/CandidateProfile.tsx";
 import GitVerificationPage from "../pages/git-page/GitVerificationPage.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
+import CapyByte from "../components/common/CapyByte.tsx";
 
 function NotFoundPage() {
     return (
-        <div style={{ padding: "40px", textAlign: "center" }}>
-            <h1>404</h1>
-            <p>Trang bạn đang tìm kiếm không tồn tại.</p>
+        <div style={{ padding: "60px 40px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+            <CapyByte size={180} mode="webp" />
+            <h1 style={{ fontSize: 64, margin: 0, fontWeight: 800, color: "#4f46e5" }}>404</h1>
+            <p style={{ fontSize: 18, color: "#6b7280", margin: 0 }}>Trang bạn đang tìm kiếm không tồn tại.</p>
+            <a href="/" style={{ marginTop: 8, color: "#4f46e5", fontWeight: 600, textDecoration: "none" }}>← Về trang chủ</a>
         </div>
     );
 }

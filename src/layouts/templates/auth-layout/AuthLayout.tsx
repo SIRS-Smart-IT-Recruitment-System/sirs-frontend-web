@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Check, ShieldCheck, ArrowLeft } from "lucide-react";
 import { Avatar, Badge, Button, Tooltip } from "../../../components/common";
 import logoSrc from "../../../assets/logo.png";
-import capyByteSrc from "../../../assets/capybyte-official.webp";
+import CapyByte from "../../../components/common/CapyByte";
 import styles from "./AuthLayout.module.css";
 
 interface AuthLayoutProps {
@@ -162,7 +162,7 @@ const AuthLayout = ({ children, onBack }: AuthLayoutProps) => {
                 <div className={styles.centerArea}>
                     {/* Brand logo */}
                     <div className={styles.logoWrapper}>
-                        <img src={capyByteSrc} alt="CapyByte, linh vật của SIRS" className={styles.mascotPortrait} width={96} height={96} />
+                        <CapyByte size={96} className={styles.mascotPortrait} title="CapyByte - Linh vật SIRS" />
                         <img src={logoSrc} alt="SIRS Logo" className={styles.logoImg} />
                     </div>
 
