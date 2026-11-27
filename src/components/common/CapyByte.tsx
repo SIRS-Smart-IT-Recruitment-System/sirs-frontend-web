@@ -4,8 +4,6 @@ import capybyteWebp from '../../assets/capybyte_walking.webp';
 import capybyteGif from '../../assets/capybyte_walking.gif';
 
 /** ---- CSS SPRITE ANIMATION (6 frames, cực mượt) ---- */
-const SPRITE_FRAME_W = 300;   // px mỗi frame trong sprite strip
-const SPRITE_FRAME_H = 300;
 const SPRITE_TOTAL_FRAMES = 6;
 const SPRITE_FPS = 12;        // số frame mỗi giây
 
