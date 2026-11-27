@@ -1,4 +1,5 @@
 
+import { celebrateWithCapy } from "../../../components/mascot/events";
 import { useEffect, useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
@@ -244,6 +245,7 @@ function CandidateProfile() {
             setProfile(updated);
             setIsEditing(false);
 
+            celebrateWithCapy();
             setSuccess("Cập nhật hồ sơ thành công!");
 
             setTimeout(() => {

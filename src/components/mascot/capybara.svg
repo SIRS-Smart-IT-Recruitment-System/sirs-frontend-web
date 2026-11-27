@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 196" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <title>Capy – capybara với chiếc khăn xanh ngọc</title>
+  <ellipse cx="112" cy="174" rx="78" ry="7" fill="#524231" opacity=".14"/>
+  <g stroke="#593c2c" stroke-width="3.2">
+    <!-- The planted feet sit outside the breathing torso. -->
+    <path fill="#ae7047" d="M69 140q-4 9-6 20c-11 1-17 5-15 10 2 4 24 5 32-1l7-25z"/>
+    <g data-part="body">
+      <path fill="#c58a56" d="M72 87c17-18 45-17 69-11 29 6 49 29 52 55 4 27-11 39-36 40l-51-1c-25-1-42-14-43-34-2-16 0-34 9-49z"/>
+      <path fill="#ac7048" stroke="none" d="M192 132c0 24-12 31-35 32l-53-1c-12 0-22-4-30-9 8 11 20 15 32 15l51 1c25-1 37-12 35-38z"/>
+      <path d="M159 97l5 3m3 5 3 2" stroke="#9e693f" stroke-width="2.6"/>
+      <g data-part="scarf" fill="var(--capy-scarf, #389b91)">
+        <path d="M110 90c16 1 26 10 30 25-12-1-24-6-30-17z"/>
+        <path d="M110 93c13 7 17 19 15 32-12-7-17-18-19-29z"/>
+        <path d="M62 91c12 8 38 7 53-3l5 12c-16 13-42 17-58 7-5-3-5-10 0-16z"/>
+        <path d="M65 105c13 5 28 4 42-3" stroke="#fff" opacity=".45" stroke-width="2.4"/>
+        <path d="M107 93q6-7 12-2l2 6q-4 7-11 6z"/>
+      </g>
+      <g data-part="head">
+        <g data-part="far-ear">
+          <path fill="#b67b4d" d="M71 50C58 43 59 25 69 25c8-1 14 8 12 20z"/>
+          <path d="M68 33q6 1 6 8" stroke="#855338"/>
+        </g>
+        <path fill="#d59a61" d="M30 60c7-7 10-13 18-17 13-8 32-10 48-6 24 5 33 22 31 41-2 21-18 30-42 31l-38-1c-19 0-30-6-31-19-1-12 1-22 14-29z"/>
+        <path fill="#e9b780" stroke="none" d="M18 88c0-13 6-22 19-23 14-2 24 4 28 15 4 10 15 18 30 20-10 7-25 7-44 6-20 0-32-4-33-18z"/>
+        <g data-part="ear">
+          <path fill="#c68b58" d="M97 54c-2-9 1-21 10-23 9-2 15 6 11 14-2 5-7 10-12 12"/>
+          <path d="M104 47q0-9 7-9" stroke="#865537" stroke-width="4"/>
+        </g>
+        <path d="M73 55q4-2 8 0" stroke="#9c6844" stroke-width="2.5"/>
+        <g data-part="gaze">
+          <g data-part="eyes" fill="#463125" stroke="none">
+            <ellipse cx="76" cy="64" rx="4" ry="4.6"/>
+            <circle cx="74.9" cy="62.8" r="1.05" fill="#fff6dc"/>
+            <ellipse cx="35.5" cy="60.5" rx="2.4" ry="3.2"/>
+          </g>
+        </g>
+        <path fill="#684734" d="M18 72c3-4 11-5 15-3 2 2-1 7-5 9l-5 1c-4 0-7-4-5-7z"/>
+        <g data-part="mouth">
+          <path d="M25 80l1 6q5 8 15 2" stroke-width="2.6"/>
+        </g>
+        <path d="M81 79l5-2m0 7 5-2" stroke="#bf8158" stroke-width="2.2"/>
+      </g>
+    </g>
+    <path fill="#bb8051" d="M153 146c-13 0-21 7-19 16-8 0-14 4-13 8 1 5 13 5 26 4 12-1 22-6 24-15" />
+    <g data-part="paw">
+      <path fill="#cd915b" d="M78 117c-2 9-1 24-2 37-7 2-14 5-14 11 0 8 19 8 26 2 6-6 9-24 10-35"/>
+      <path d="M68 167q1-4 4-5m2 7q1-4 4-6" stroke="#94613f" stroke-width="2"/>
+    </g>
+    <path d="M127 171q1-4 4-5m3 6q1-4 4-5" stroke="#94613f" stroke-width="2"/>
+  </g>
+  <g data-part="glints" opacity="0" fill="#eda841">
+    <path d="M141 29q2 8 8 10-6 1-8 10-2-9-8-10 6-2 8-10z"/>
+    <path d="M154 23q1 4 5 5-4 1-5 6-1-5-5-6 4-1 5-5z"/>
+  </g>
+</svg>

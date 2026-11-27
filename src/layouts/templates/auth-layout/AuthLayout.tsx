@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Check, ShieldCheck, ArrowLeft } from "lucide-react";
 import { Avatar, Badge, Button, Tooltip } from "../../../components/common";
+import CapyDock from "../../../components/mascot/CapyDock";
 import logoSrc from "../../../assets/logo.png";
 import styles from "./AuthLayout.module.css";
 
@@ -138,6 +139,7 @@ const AuthLayout = ({ children, onBack }: AuthLayoutProps) => {
                         <span>•</span>
                         <span>Cung ứng trong 72h</span>
                     </div>
+                    <CapyDock />
                 </footer>
             </section>
 

@@ -1,0 +1,34 @@
+.page { min-height: 100dvh; background: #faf9f2; color: #243f36; font-family: var(--font-primary); }
+.bar, .main { width: min(100% - 48px, 1040px); margin-inline: auto; }
+.bar { display: flex; align-items: center; justify-content: space-between; padding-block: 24px; border-bottom: 1px solid #dddfd3; }
+.brand { display: flex; align-items: center; gap: 9px; font-size: 20px; font-weight: 750; letter-spacing: -.045em; }
+.brand svg { color: #316f5a; }
+.brand span { margin-left: 6px; padding-left: 14px; border-left: 1px solid #cdd4c8; color: #56675a; font-size: 14px; font-weight: 500; letter-spacing: 0; }
+.bar a, .tip { display: flex; align-items: center; gap: 8px; color: #526459; font-size: 14px; }
+.bar a:hover { text-decoration: underline; }
+.main { padding-block: clamp(34px, 6vh, 72px); }
+.main h1 { font: normal clamp(46px, 6vw, 76px)/1.08 Georgia, serif; letter-spacing: -.055em; }
+.main h1 em { color: #45775d; }
+.intro { margin: 12px 0 25px; color: #57685d; font-size: 16px; }
+.studio { border: 1px solid #cdd6c8; border-radius: 20px; overflow: hidden; background: #fffef9; }
+.scene { position: relative; isolation: isolate; height: clamp(295px, 34vw, 372px); background: #aac9b1 url("./riverbank.svg") center bottom / auto 100% no-repeat; }
+.actor { position: absolute; height: 65%; aspect-ratio: 220/196; left: 50%; bottom: 17.5%; transform: translateX(-50%); }
+.status { position: absolute; z-index: 1; top: 18px; left: 20px; display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 20px; background: #fffff3df; color: #375648; font-size: 12px; font-weight: 600; }
+.status i { width: 7px; height: 7px; border-radius: 50%; background: #638d70; }
+.controls { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 22px 26px; }
+.controls h2 { font: normal 24px/1.25 Georgia, serif; letter-spacing: -.035em; }
+.buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.buttons button { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 15px; border-radius: 32px; border: 1px solid #d4dcd0; background: transparent; color: #365442; }
+.buttons button:hover { background: #edf2e8; }
+.buttons button[aria-pressed=true] { background: #305e49; border-color: #305e49; color: white; }
+.tip { align-items: baseline; margin-top: 18px; line-height: 1.6; }
+.tip svg { align-self: flex-start; flex-shrink: 0; margin-top: 3px; }
+@media (max-width: 760px) {
+    .controls { align-items: flex-start; flex-direction: column; padding: 20px; }
+    .bar, .main { width: calc(100% - 32px); }
+    .main { padding-block: 32px; }
+}
+@media (max-width: 480px) {
+    .buttons { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+    .scene { height: 255px; }
+}

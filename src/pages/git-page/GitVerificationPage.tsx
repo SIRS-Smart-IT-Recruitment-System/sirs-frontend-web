@@ -1,3 +1,4 @@
+import { celebrateWithCapy } from "../../components/mascot/events";
 import { useEffect, useState, useRef, useMemo } from "react";
 import { isAxiosError } from "axios";
 import {
@@ -241,6 +242,7 @@ export default function GitVerificationPage() {
             const evaluated = new Map(reportData.evaluatedRepositories.map((repo) => [repo.id, repo]));
             setRepos((current) => current.map((repo) => evaluated.get(repo.id) ?? { ...repo, isSelected: false }));
             setReport(reportData);
+            celebrateWithCapy();
             setSuccessMessage("Phân tích và chấm điểm hoàn tất.");
             setCurrentStep("report");
         } catch (err: unknown) {
