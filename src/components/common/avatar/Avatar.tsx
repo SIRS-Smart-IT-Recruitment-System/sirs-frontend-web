@@ -7,6 +7,7 @@ interface AvatarProps {
     src?: string;
     alt?: string;
     name?: string;
+    initials?: string;
     size?: AvatarSize;
     className?: string;
 }
@@ -20,11 +21,11 @@ function getInitials(name: string): string {
         .join("");
 }
 
-function Avatar({ src, alt, name, size = "md", className = "" }: AvatarProps) {
+function Avatar({ src, alt, name, initials: customInitials, size = "md", className = "" }: AvatarProps) {
     const [imgError, setImgError] = useState(false);
 
     const showImage = src && !imgError;
-    const initials = name ? getInitials(name) : "?";
+    const initials = customInitials ?? (name ? getInitials(name) : "?");
 
     return (
         <div className={`avatar avatar-${size} ${className}`} aria-label={alt ?? name}>

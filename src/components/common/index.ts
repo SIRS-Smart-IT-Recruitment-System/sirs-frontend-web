@@ -11,3 +11,4 @@ export { default as Spinner } from "./spinner/Spinner";
 export { default as Pagination } from "./pagination/Pagination";
 export { default as Dropdown } from "./dropdown/Dropdown";
 export { default as Tooltip } from "./tooltip/Tooltip";
+export { default as Toast } from "./toast/Toast";

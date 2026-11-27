@@ -1,16 +1,15 @@
-import styles from "./LoginForm.module.css";
-import SocialLogin from "../social-login/SocialLogin.tsx";
-import Button from "../../../components/common/button/Button.tsx";
-import Input from "../../../components/common/input/Input.tsx";
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Mail, Lock, ArrowRight } from "lucide-react";
 
+import { Button, Input, Checkbox, Toast } from "../../../components/common";
+import SocialLogin from "../social-login/SocialLogin.tsx";
 import { login } from "../../../services/authService.ts";
 import type { LoginRequest } from "../../../types/authTypes.ts";
 import { ROUTES } from "../../../routers/routePaths.ts";
 import { ROLE } from "../../../constants/role.ts";
+import styles from "./LoginForm.module.css";
 
 interface LoginFormProps {
     onRegister: () => void;
@@ -19,15 +18,18 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({
-                       onRegister,
-                       onForgotPassword,
-                       onLoginSuccess,
-                   }: LoginFormProps) => {
+    onRegister,
+    onForgotPassword,
+    onLoginSuccess,
+}: LoginFormProps) => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
+    const savedEmail = localStorage.getItem("rememberedEmail") || "";
+    const [email, setEmail] = useState(savedEmail);
     const [password, setPassword] = useState("");
+    const [rememberMe, setRememberMe] = useState(Boolean(savedEmail));
 
     const [isLoading, setIsLoading] = useState(false);
+    const [toastError, setToastError] = useState<string | null>(null);
 
     const [errors, setErrors] = useState({
         email: "",
@@ -64,6 +66,7 @@ const LoginForm = ({
 
         try {
             setIsLoading(true);
+            setToastError(null);
 
             const loginData: LoginRequest = {
                 email: email.trim(),
@@ -74,6 +77,13 @@ const LoginForm = ({
             const result = await login(loginData);
 
             console.log("Login successful:", result);
+
+            // Lưu hoặc xoá email ghi nhớ
+            if (rememberMe) {
+                localStorage.setItem("rememberedEmail", email.trim());
+            } else {
+                localStorage.removeItem("rememberedEmail");
+            }
 
             // Lưu token đăng nhập vào localStorage
             if (result?.accessToken) {
@@ -104,41 +114,41 @@ const LoginForm = ({
                     error.response?.data?.message;
 
                 if (status === 400) {
-                    alert(
+                    setToastError(
                         backendMessage ||
                         "Thông tin đăng nhập không hợp lệ!"
                     );
                 } else if (status === 401) {
-                    alert(
+                    setToastError(
                         backendMessage ||
                         "Email hoặc mật khẩu không chính xác!"
                     );
                 } else if (status === 403) {
-                    alert(
+                    setToastError(
                         backendMessage ||
                         "Bạn không có quyền đăng nhập!"
                     );
                 } else if (status === 404) {
-                    alert(
+                    setToastError(
                         backendMessage ||
                         "Không tìm thấy tài khoản!"
                     );
                 } else if (status !== undefined && status >= 500) {
-                    alert(
+                    setToastError(
                         "Máy chủ đang gặp sự cố. Vui lòng thử lại sau!"
                     );
                 } else if (!error.response) {
-                    alert(
+                    setToastError(
                         "Không thể kết nối đến API Gateway. Vui lòng kiểm tra kết nối mạng!"
                     );
                 } else {
-                    alert(
+                    setToastError(
                         backendMessage ||
                         "Đăng nhập thất bại. Vui lòng thử lại!"
                     );
                 }
             } else {
-                alert("Đã xảy ra lỗi. Vui lòng thử lại!");
+                setToastError("Đã xảy ra lỗi. Vui lòng thử lại!");
             }
 
         } finally {
@@ -148,6 +158,13 @@ const LoginForm = ({
 
     return (
         <div className={styles.loginForm}>
+            {toastError && (
+                <Toast
+                    message={toastError}
+                    type="error"
+                    onClose={() => setToastError(null)}
+                />
+            )}
 
             <div className={styles.heading}>
                 <h2>ĐĂNG NHẬP</h2>
@@ -164,9 +181,11 @@ const LoginForm = ({
 
                 <div className={styles.formGroup}>
                     <Input
-                        type="text"
+                        type="email"
                         label="Email"
                         placeholder="Nhập email của bạn"
+                        autoComplete="email"
+                        leftIcon={<Mail size={18} />}
                         value={email}
                         onChange={(e) => {
                             setEmail(e.target.value);
@@ -184,6 +203,8 @@ const LoginForm = ({
                         type="password"
                         label="Mật khẩu"
                         placeholder="Nhập mật khẩu"
+                        autoComplete="current-password"
+                        leftIcon={<Lock size={18} />}
                         value={password}
                         onChange={(e) => {
                             setPassword(e.target.value);
@@ -197,10 +218,13 @@ const LoginForm = ({
                 </div>
 
                 <div className={styles.forgotPassword}>
-                    <label className={styles.rememberPassword}>
-                        <input type="checkbox" />
-                        <span>Ghi nhớ mật khẩu</span>
-                    </label>
+                    <Checkbox
+                        id="remember-me"
+                        label="Ghi nhớ mật khẩu"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                        className={styles.rememberCheckbox}
+                    />
 
                     <button
                         type="button"
@@ -214,15 +238,16 @@ const LoginForm = ({
                 <Button
                     type="submit"
                     variant="primary"
+                    loading={isLoading}
                     className={styles.submitButton}
-                    disabled={isLoading}
                 >
                     {isLoading ? (
-                            <>
-                            Đang đăng nhập...
-                        </>
+                        "Đang đăng nhập..."
                     ) : (
-                        "Đăng nhập"
+                        <>
+                            <span>Đăng nhập</span>
+                            <ArrowRight size={17} aria-hidden="true" />
+                        </>
                     )}
                 </Button>
 

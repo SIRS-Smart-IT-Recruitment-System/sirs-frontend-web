@@ -8,7 +8,10 @@
     gap: 10px;
     color: var(--color-text-secondary);
     font-size: var(--font-size-label);
-    margin-bottom: 16px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
 }
 
 .divider::before,
@@ -16,19 +19,21 @@
     content: "";
     flex: 1;
     height: 1px;
-    background: var(--color-border);
+    background: var(--color-border-light);
 }
 
 .socialButtons {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
 }
 
-.socialButtons button {
+.socialButtons .socialBtn {
     flex: 1;
-    height: 40px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    height: 42px;
+    padding: 0 16px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 12px;
     background: var(--color-surface);
     display: flex;
     align-items: center;
@@ -37,13 +42,18 @@
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.socialButtons button:hover {
-    background: var(--color-light-blue);
-    border-color: var(--color-primary);
+.socialButtons .socialBtn:hover:not(:disabled) {
+    background: var(--color-surface-hover);
+    border-color: #cbd5e1;
+    color: var(--color-text-primary);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.socialButtons .socialBtn:active:not(:disabled) {
+    transform: scale(0.98);
 }
 
 .socialButtons img {
