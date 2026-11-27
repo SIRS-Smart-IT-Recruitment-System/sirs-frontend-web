@@ -567,7 +567,6 @@
 /* Brand logo (assets/logo.png — 359x239, đồ họa thực chiếm ~300x138 bên trong) */
 .logoWrapper {
     display: flex;
-    gap: clamp(8px, 2vw, 18px);
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -575,17 +574,9 @@
     flex-shrink: 0;
 }
 
-.mascotPortrait {
-    width: clamp(76px, 10vw, 112px);
-    height: auto;
-    mask-image: linear-gradient(to right, transparent, black 10% 90%, transparent),
-        linear-gradient(to bottom, transparent, black 10% 92%, transparent);
-    mask-composite: intersect;
-}
-
 .logoImg {
     width: 240px;
-    max-width: 60%;
+    max-width: 100%;
     height: auto;
     object-fit: contain;
     /* Bù phần lề trong suốt trên/dưới sẵn có trong file logo.png */
