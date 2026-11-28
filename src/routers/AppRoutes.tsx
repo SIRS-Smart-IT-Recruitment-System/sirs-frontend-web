@@ -6,6 +6,12 @@ import CandidateProfile from "../pages/profile-pages/candidate-profile/Candidate
 import GitVerificationPage from "../pages/git-page/GitVerificationPage.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
 
+import { ROLE } from "../constants/role";
+import RecruiterWorkspace from "../features/recruiter/RecruiterWorkspace";
+import CandidatesPage from "../pages/company/candidates/CandidatesPage";
+import InterviewsPage from "../pages/company/interviews/InterviewsPage";
+import DashboardPage from "../pages/company/dashboard/DashboardPage";
+
 function NotFoundPage() {
     return (
         <div style={{ padding: "40px", textAlign: "center" }}>
@@ -59,6 +65,12 @@ function AppRoutes() {
                     </ProtectedRoute>
                 }
             />
+
+            <Route element={<ProtectedRoute requiredRole={ROLE.RECRUITER}><RecruiterWorkspace /></ProtectedRoute>}>
+                <Route path={ROUTES.RECRUITER.CANDIDATES} element={<CandidatesPage />} />
+                <Route path={ROUTES.RECRUITER.INTERVIEWS} element={<InterviewsPage />} />
+                <Route path={ROUTES.RECRUITER.DASHBOARD} element={<DashboardPage />} />
+            </Route>
 
             <Route
                 path={ROUTES.NOT_FOUND}

@@ -1,0 +1,204 @@
+{
+  "openJobs": [
+    "Frontend Engineer",
+    "Backend Engineer",
+    "Product Designer",
+    "QA Engineer"
+  ],
+  "interviewers": [
+    "Ngọc Anh · Kỹ thuật",
+    "Thanh Hà · Nhân sự",
+    "Đức Huy · Sản phẩm"
+  ],
+  "applications": [
+    {
+      "id": "a1",
+      "name": "Mai Anh",
+      "email": "candidate1@example.com",
+      "job": "Frontend Engineer",
+      "city": "Hà Nội",
+      "skills": [
+        "React",
+        "TypeScript"
+      ],
+      "cvSummary": "Mai Anh · Frontend Engineer. Kinh nghiệm mẫu: phát triển dự án với React, TypeScript.",
+      "stage": "Chờ duyệt",
+      "day": 0,
+      "gitReport": {
+        "state": "available",
+        "score": 82
+      }
+    },
+    {
+      "id": "a2",
+      "name": "Minh Quân",
+      "email": "candidate2@example.com",
+      "job": "Backend Engineer",
+      "city": "Đà Nẵng",
+      "skills": [
+        "Java",
+        "PostgreSQL"
+      ],
+      "cvSummary": "Minh Quân · Backend Engineer. Kinh nghiệm mẫu: phát triển dự án với Java, PostgreSQL.",
+      "stage": "Đã duyệt CV",
+      "day": -1,
+      "gitReport": {
+        "state": "unavailable"
+      }
+    },
+    {
+      "id": "a3",
+      "name": "Hà Linh",
+      "email": "candidate3@example.com",
+      "job": "Product Designer",
+      "city": "TP. Hồ Chí Minh",
+      "skills": [
+        "Figma",
+        "Design systems"
+      ],
+      "cvSummary": "Hà Linh · Product Designer. Kinh nghiệm mẫu: phát triển dự án với Figma, Design systems.",
+      "stage": "Chờ duyệt",
+      "day": -2,
+      "gitReport": {
+        "state": "processing"
+      }
+    },
+    {
+      "id": "a4",
+      "name": "Quốc Bảo",
+      "email": "candidate4@example.com",
+      "job": "QA Engineer",
+      "city": "Hà Nội",
+      "skills": [
+        "Playwright",
+        "TypeScript"
+      ],
+      "cvSummary": null,
+      "stage": "Đã duyệt CV",
+      "day": -3,
+      "gitReport": {
+        "state": "available",
+        "score": 74
+      }
+    },
+    {
+      "id": "a5",
+      "name": "Thảo Nguyên",
+      "email": "candidate5@example.com",
+      "job": "Frontend Engineer",
+      "city": "Đà Nẵng",
+      "skills": [
+        "React",
+        "TypeScript"
+      ],
+      "cvSummary": "Thảo Nguyên · Frontend Engineer. Kinh nghiệm mẫu: phát triển dự án với React, TypeScript.",
+      "stage": "Đã duyệt CV",
+      "day": -5,
+      "gitReport": {
+        "state": "available",
+        "score": 91
+      }
+    },
+    {
+      "id": "a6",
+      "name": "Hoàng An",
+      "email": "candidate6@example.com",
+      "job": "Backend Engineer",
+      "city": "TP. Hồ Chí Minh",
+      "skills": [
+        "Java",
+        "PostgreSQL"
+      ],
+      "cvSummary": "Hoàng An · Backend Engineer. Kinh nghiệm mẫu: phát triển dự án với Java, PostgreSQL.",
+      "stage": "Đã từ chối",
+      "day": -8,
+      "gitReport": {
+        "state": "available",
+        "score": 68
+      }
+    },
+    {
+      "id": "a7",
+      "name": "Khánh Minh",
+      "email": "candidate7@example.com",
+      "job": "Product Designer",
+      "city": "Hà Nội",
+      "skills": [
+        "Figma",
+        "Design systems"
+      ],
+      "cvSummary": "Khánh Minh · Product Designer. Kinh nghiệm mẫu: phát triển dự án với Figma, Design systems.",
+      "stage": "Chờ duyệt",
+      "day": -10,
+      "gitReport": {
+        "state": "unavailable"
+      }
+    },
+    {
+      "id": "a8",
+      "name": "Gia Hân",
+      "email": "candidate8@example.com",
+      "job": "QA Engineer",
+      "city": "Đà Nẵng",
+      "skills": [
+        "Playwright",
+        "TypeScript"
+      ],
+      "cvSummary": "Gia Hân · QA Engineer. Kinh nghiệm mẫu: phát triển dự án với Playwright, TypeScript.",
+      "stage": "Đã duyệt CV",
+      "day": -15,
+      "gitReport": {
+        "state": "available",
+        "score": 87
+      }
+    }
+  ],
+  "interviews": [
+    {
+      "id": "i1",
+      "applicationId": "a2",
+      "round": "Phỏng vấn kỹ thuật",
+      "day": 0,
+      "start": "15:00",
+      "end": "16:00",
+      "format": "Trực tuyến",
+      "location": "",
+      "panel": [
+        "Ngọc Anh · Kỹ thuật"
+      ],
+      "notes": "Trao đổi về thiết kế dịch vụ.",
+      "status": "Đã xác nhận"
+    },
+    {
+      "id": "i2",
+      "applicationId": "a5",
+      "round": "Trao đổi chuyên môn",
+      "day": 1,
+      "start": "09:30",
+      "end": "10:30",
+      "format": "Tại văn phòng",
+      "location": "Phòng A",
+      "panel": [
+        "Ngọc Anh · Kỹ thuật",
+        "Thanh Hà · Nhân sự"
+      ],
+      "notes": "Thảo luận về dự án giao diện.",
+      "status": "Chờ xác nhận"
+    },
+    {
+      "id": "i3",
+      "applicationId": "a8",
+      "round": "Sàng lọc hồ sơ",
+      "day": 3,
+      "start": "14:00",
+      "end": "14:45",
+      "format": "Trực tuyến",
+      "location": "",
+      "panel": [
+        "Thanh Hà · Nhân sự"
+      ],
+      "notes": "Trao đổi về kinh nghiệm kiểm thử.",
+      "status": "Chờ xác nhận"
+    }
+  ]
+}

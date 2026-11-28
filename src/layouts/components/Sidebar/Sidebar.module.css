@@ -134,3 +134,16 @@
     background-color: var(--color-primary);
     border-radius: var(--radius-full);
 }
+.workspace {
+    composes: sidebar;
+    width: clamp(200px, 17vw, 255px);
+    min-width: 0;
+    overflow-y: auto;
+    background: #fff;
+}
+.workspace .sidebarLogo { justify-content: flex-start; padding-left: 12px; gap: 10px; }
+.workspace .sidebarLogo svg { background: #1959c2; color: white; padding: 6px; border-radius: 9px; width: 35px; height: 35px; }
+.workspace .sidebarLogo span { font-style: normal; color: #14283e; }
+.workspace .sidebarLink, .unavailable { border-radius: 9px; gap: 12px; padding: 11px; }
+.workspace .active { background: #eaf1ff; color: #164da9; border: 0; font-weight: 600; }
+.unavailable { display: flex; align-items: center; color: #828d9f; }

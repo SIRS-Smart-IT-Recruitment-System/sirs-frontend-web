@@ -37,3 +37,8 @@
     padding: 16px;
     box-sizing: border-box;
 }
+.workspace {
+    composes: layout;
+    background: #f7f9fd;
+}
+.workspace .contentArea { padding: clamp(20px, 2.3vw, 40px); }

@@ -12,6 +12,7 @@ interface MainLayoutProps {
     children: ReactNode;
     role: SidebarRole;
     progress?: number;
+    sectionTitle?: string;
     userName?: string;
     userRole?: string;
 }
@@ -20,15 +21,17 @@ function MainLayout({
                         children,
                         role,
                         progress,
+                        sectionTitle,
                         userName,
                         userRole,
                     }: MainLayoutProps) {
     return (
-        <div className={styles.layout}>
+        <div className={sectionTitle ? styles.workspace : styles.layout}>
             <div className={styles.sidebarArea}>
                 <Sidebar
                     role={role}
                     progress={progress}
+                    workspace={Boolean(sectionTitle)}
                 />
             </div>
 
@@ -36,6 +39,7 @@ function MainLayout({
                 <div className={styles.headerArea}>
                     <Header
                         role={role}
+                        sectionTitle={sectionTitle}
                         userName={userName}
                         userRole={userRole}
                     />

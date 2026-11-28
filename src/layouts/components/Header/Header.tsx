@@ -22,11 +22,12 @@ import styles from "./Header.module.css";
 
 interface HeaderProps {
     role: SidebarRole,
+    sectionTitle?: string,
     userName?: string,
     userRole?: string | undefined
 }
 
-function Header({role, userName, userRole}: HeaderProps) {
+function Header({role, userName, userRole, sectionTitle}: HeaderProps) {
     const navigate = useNavigate();
 
     const [search, setSearch] = useState("");
@@ -70,7 +71,7 @@ function Header({role, userName, userRole}: HeaderProps) {
 
     return (
         <header className={styles.header}>
-            <div className={styles.searchArea}>
+            {sectionTitle ? <div className={styles.breadcrumb}>Nhà tuyển dụng <span>/</span> <strong>{sectionTitle}</strong></div> : <div className={styles.searchArea}>
                 <div className={styles.searchBox}>
                     <Search size={19}/>
 
@@ -89,9 +90,10 @@ function Header({role, userName, userRole}: HeaderProps) {
                 >
                     <SlidersHorizontal size={20}/>
                 </button>
-            </div>
+            </div>}
 
             <div className={styles.headerRight}>
+                {!sectionTitle && <>
                 <button
                     type="button"
                     className={styles.iconButton}
@@ -108,6 +110,7 @@ function Header({role, userName, userRole}: HeaderProps) {
                     <Bell size={21}/>
                 </button>
 
+                </>}
                 <div className={styles.accountArea}>
                     <div className={styles.accountText}>
                         <strong>{displayName}</strong>
@@ -127,7 +130,7 @@ function Header({role, userName, userRole}: HeaderProps) {
 
                     {showAccount && (
                         <div className={styles.accountDropdown}>
-                            <button type="button">
+                            <button type="button" onClick={() => navigate(role === "company" ? ROUTES.RECRUITER.PROFILE : ROUTES.CANDIDATE.PROFILE)}>
                                 <UserRound size={17}/>
                                 Thông tin tài khoản
                             </button>

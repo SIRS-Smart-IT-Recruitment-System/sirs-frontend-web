@@ -168,3 +168,7 @@
         gap: 8px;
     }
 }
+
+.breadcrumb { display: flex; align-items: center; gap: 12px; color: var(--color-text-secondary); }
+.breadcrumb span { color: #a6b1c1; }
+.breadcrumb strong { color: var(--color-text-primary); }

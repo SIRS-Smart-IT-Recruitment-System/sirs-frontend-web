@@ -13,6 +13,8 @@ export const ROUTES = {
     RECRUITER: {
         DASHBOARD: "/company/dashboard",
         PROFILE: "/company/profile",
+        CANDIDATES: "/company/candidates",
+        INTERVIEWS: "/company/interviews",
     },
 
     NOT_FOUND: "*",
